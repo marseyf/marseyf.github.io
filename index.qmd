@@ -1,0 +1,38 @@
+---
+title: "Marvin Seyfarth"
+page-layout: full
+toc: false
+---
+
+::: {.hero}
+## Efficient generative models for medical imaging
+
+I am a researcher working on efficient 3D and 4D generative models, synthetic medical-image evaluation, and trustworthy research workflows.
+
+[Research](research.qmd){.btn .btn-primary} [Research notes](blog.qmd){.btn .btn-outline-primary}
+:::
+
+## Current themes
+
+::: {.grid}
+::: {.g-col-12 .g-col-md-4}
+### Efficient generation
+Architectures and inference methods for high-resolution volumetric and temporal medical imaging.
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### Evaluation
+Fidelity, diversity, memorisation, privacy, anatomy, and downstream utility.
+:::
+
+::: {.g-col-12 .g-col-md-4}
+### Reproducible research
+Practical systems that connect evidence, experiments, code, and scientific communication.
+:::
+:::
+
+## Research notes
+
+Long-form articles will synthesise research questions and evidence into accessible, technically grounded explanations.
+
+[Read the research notes](blog.qmd){.btn .btn-outline-secondary}

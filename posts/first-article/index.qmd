@@ -1,0 +1,9 @@
+---
+title: "First article in preparation"
+description: "Private drafting will begin after topic selection."
+author: "Marvin Seyfarth"
+date: "2026-07-24"
+draft: true
+---
+
+This placeholder is excluded from the public site. It keeps the publication pipeline ready without publishing an unreviewed article.

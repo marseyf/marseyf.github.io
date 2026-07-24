@@ -1,0 +1,49 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - index.qmd
+    - research.qmd
+    - publications.qmd
+    - blog.qmd
+    - about.qmd
+    - "posts/**/*.qmd"
+
+website:
+  title: "Marvin Seyfarth"
+  site-url: "https://marseyf.github.io"
+  description: "Research on efficient generative models for medical imaging."
+  search: true
+  open-graph: true
+  twitter-card: true
+  repo-url: "https://github.com/marseyf/marseyf.github.io"
+  repo-actions: [source, issue]
+  navbar:
+    pinned: true
+    left:
+      - href: index.qmd
+        text: Home
+      - href: research.qmd
+        text: Research
+      - href: publications.qmd
+        text: Publications
+      - href: blog.qmd
+        text: Research Notes
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: "https://github.com/marseyf"
+        aria-label: GitHub
+  page-footer:
+    left: "Content © Marvin Seyfarth"
+    right: "Built with Quarto"
+
+format:
+  html:
+    theme:
+      light: flatly
+      dark: darkly
+    css: styles.css
+    toc: true
+    smooth-scroll: true

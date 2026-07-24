@@ -1,0 +1,6 @@
+---
+title: "Publications"
+description: "Selected publications and research outputs"
+---
+
+A curated publication list with verified links, code, and citation information will be added here.

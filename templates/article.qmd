@@ -1,0 +1,36 @@
+---
+title: "Article title"
+description: "One-sentence public summary"
+author: "Marvin Seyfarth"
+date: "YYYY-MM-DD"
+categories:
+  - medical-imaging
+  - generative-models
+draft: true
+bibliography: references.bib
+---
+
+## The question
+
+Introduce the concrete problem and why it matters.
+
+## The short answer
+
+State the main conclusion and its limits.
+
+## What the evidence shows
+
+Build the argument from public primary sources. Distinguish external evidence, interpretation, and your own results.
+
+## Practical implications
+
+Explain what changes for researchers or practitioners.
+
+## Limitations and open questions
+
+State uncertainty and unresolved questions explicitly.
+
+## References
+
+::: {#refs}
+:::

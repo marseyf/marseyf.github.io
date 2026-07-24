@@ -1,0 +1,11 @@
+---
+title: "About"
+---
+
+I am Marvin Seyfarth, a researcher working on efficient generative models for medical imaging.
+
+This website collects research themes, publications, projects, and long-form research notes. The goal is to make technical ideas understandable without removing the evidence, limitations, or practical context behind them.
+
+## Contact
+
+For now, please use [GitHub](https://github.com/marseyf). Additional professional links will be added after verification.

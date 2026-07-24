@@ -1,0 +1,14 @@
+---
+title: "Research Notes"
+description: "Accessible, technically grounded articles on medical generative modelling and evaluation."
+listing:
+  contents: posts
+  sort: "date desc"
+  type: grid
+  categories: true
+  feed: true
+page-layout: full
+toc: false
+---
+
+These articles are original syntheses informed by research literature and ongoing work. They are reviewed before publication and are not direct exports of private research notes.

@@ -1,0 +1,31 @@
+:root {
+  --research-accent: #176b87;
+}
+
+.hero {
+  padding: 4rem 0 3rem;
+  max-width: 58rem;
+}
+
+.hero h2 {
+  font-size: clamp(2rem, 5vw, 3.6rem);
+  line-height: 1.08;
+  margin-bottom: 1.25rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  max-width: 48rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+
+.quarto-listing-category-title {
+  font-weight: 600;
+}
+
+a {
+  text-underline-offset: 0.16em;
+}

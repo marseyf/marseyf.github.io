@@ -1,0 +1,20 @@
+---
+title: "Research"
+description: "Research themes and projects"
+---
+
+My work focuses on efficient and trustworthy generative modelling for medical imaging.
+
+## Efficient 3D and 4D generation
+
+Designing models that can synthesise high-resolution volumetric and temporal data under realistic memory and compute constraints.
+
+## Medical generation evaluation
+
+Evaluating synthetic data beyond a single realism score, including diversity, memorisation, privacy, anatomical validity, and downstream utility.
+
+## Scientific infrastructure
+
+Building reproducible links between literature, code, experiments, evaluation, and communication.
+
+Project pages and verified public resources will be added as they are ready for release.
