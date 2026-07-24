@@ -16,7 +16,7 @@ quarto preview
 
 ## Publication
 
-A push to `main` runs `.github/workflows/publish.yml` and deploys `_site` through GitHub Pages. Publishing remains approval-gated: drafts are prepared privately and moved into `posts/<slug>/index.qmd` only after review.
+An approved release manually runs `.github/workflows/publish.yml`, which renders `_site` and deploys it through GitHub Pages. Drafts are prepared privately and moved into `posts/<slug>/index.qmd` only after review.
 
 ## Cost
 
