@@ -69,3 +69,30 @@ a {
     transition: none;
   }
 }
+
+.publication-list {
+  max-width: 58rem;
+}
+
+.publication-entry {
+  margin: 1.5rem 0 2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.75rem;
+  background: var(--bs-body-bg);
+}
+
+.publication-entry h3 {
+  margin-top: 0;
+}
+
+.publication-entry .btn {
+  margin: 0.2rem 0.35rem 0.2rem 0;
+}
+
+.code-unavailable {
+  display: inline-block;
+  margin: 0.2rem 0;
+  color: var(--bs-secondary-color);
+  font-size: 0.95rem;
+}

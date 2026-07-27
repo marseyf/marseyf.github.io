@@ -28,7 +28,7 @@ website:
       - href: publications.qmd
         text: Publications
       - href: blog.qmd
-        text: Research Notes
+        text: Blog
       - href: about.qmd
         text: About
     right:
