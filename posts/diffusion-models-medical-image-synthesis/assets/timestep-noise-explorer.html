@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conceptual timestep and noise explorer</title>
+<style>
+  :root { color-scheme: light; --ink:#0f172a; --muted:#475569; --bg:#f8fafc; --card:#ffffff; --blue:#2563eb; --purple:#7c3aed; --green:#059669; --warn:#9a3412; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; background:linear-gradient(135deg,#f8fbff,#eef2ff); color:var(--ink); }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 22px; }
+  .panel { background:rgba(255,255,255,.92); border:1px solid #dbe3ef; border-radius:22px; box-shadow:0 18px 50px rgba(15,23,42,.12); overflow:hidden; }
+  header { padding:20px 22px 14px; border-bottom:1px solid #e2e8f0; }
+  h1 { margin:0 0 8px; font-size:22px; line-height:1.2; }
+  p { margin:0; color:var(--muted); line-height:1.45; }
+  .disclaimer { margin-top:12px; padding:10px 12px; border:1px solid #fed7aa; border-radius:14px; background:#fff7ed; color:var(--warn); font-size:14px; }
+  .grid { display:grid; grid-template-columns: minmax(280px,1fr) 300px; gap:18px; padding:20px 22px 22px; align-items:start; }
+  canvas { width:100%; aspect-ratio: 1.25; border-radius:18px; border:1px solid #cbd5e1; background:#f1f5f9; display:block; }
+  .controls { display:grid; gap:14px; }
+  label { display:block; font-weight:700; font-size:14px; margin-bottom:7px; }
+  input[type=range] { width:100%; accent-color:var(--purple); }
+  .readout { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .metric { border:1px solid #e2e8f0; border-radius:14px; padding:12px; background:#f8fafc; }
+  .metric strong { display:block; font-size:22px; }
+  .legend { display:grid; gap:8px; font-size:14px; color:var(--muted); }
+  .dot { display:inline-block; width:10px; height:10px; border-radius:999px; margin-right:7px; vertical-align:middle; }
+  button { border:0; border-radius:14px; padding:11px 13px; color:white; font-weight:800; background:linear-gradient(90deg,var(--blue),var(--purple)); cursor:pointer; }
+  button.secondary { background:#e2e8f0; color:#0f172a; }
+  .note { font-size:13px; color:#64748b; }
+  @media (max-width:780px) { .grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section class="panel" aria-label="Conceptual timestep and noise explorer">
+    <header>
+      <h1>Timestep/noise explorer</h1>
+      <p>Move the slider to see a stylized signal lose structure in the forward process, then imagine the reverse model estimating which noise to remove.</p>
+      <div class="disclaimer"><strong>Conceptual only:</strong> these are synthetic procedural shapes, not clinical images, not a diagnostic simulation, and not evidence of clinical readiness.</div>
+    </header>
+    <div class="grid">
+      <canvas id="scene" width="760" height="610" aria-label="Procedural anatomy-like shape with controllable noise"></canvas>
+      <aside class="controls">
+        <div>
+          <label for="timestep">Forward timestep t: <span id="tLabel">35</span>%</label>
+          <input id="timestep" type="range" min="0" max="100" value="35">
+        </div>
+        <div class="readout">
+          <div class="metric"><span>signal weight</span><strong id="signal">0.65</strong></div>
+          <div class="metric"><span>noise weight</span><strong id="noise">0.35</strong></div>
+        </div>
+        <div class="legend">
+          <div><span class="dot" style="background:#2563eb"></span>Forward diffusion: known corruption schedule.</div>
+          <div><span class="dot" style="background:#7c3aed"></span>Network target: predict noise or score direction.</div>
+          <div><span class="dot" style="background:#059669"></span>Reverse sampling: repeated denoising under optional conditioning.</div>
+        </div>
+        <button id="play" type="button">Play forward process</button>
+        <button id="reset" type="button" class="secondary">Reset</button>
+        <p class="note">The toy display uses a deterministic pseudo-random texture so the same timestep is reproducible. Real medical diffusion models operate on trained data distributions and require separate fidelity, utility, and privacy tests.</p>
+      </aside>
+    </div>
+  </section>
+</div>
+<script>
+const canvas = document.getElementById('scene');
+const ctx = canvas.getContext('2d');
+const slider = document.getElementById('timestep');
+const tLabel = document.getElementById('tLabel');
+const signal = document.getElementById('signal');
+const noise = document.getElementById('noise');
+const play = document.getElementById('play');
+const reset = document.getElementById('reset');
+let timer = null;
+function rnd(i){ const x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); }
+function drawAnatomy(alpha){
+  ctx.save(); ctx.globalAlpha = alpha;
+  ctx.translate(380, 305);
+  const grad = ctx.createRadialGradient(-40,-60,20,0,0,230);
+  grad.addColorStop(0,'#fce7f3'); grad.addColorStop(.45,'#bfdbfe'); grad.addColorStop(1,'#dcfce7');
+  ctx.fillStyle = grad; ctx.strokeStyle = '#1e40af'; ctx.lineWidth = 8;
+  ctx.beginPath(); ctx.ellipse(0,0,170,220,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
+  ctx.strokeStyle = '#0f172a'; ctx.globalAlpha = alpha*.55; ctx.lineWidth = 7; ctx.lineCap = 'round';
+  for (let k=-2;k<=2;k++) { ctx.beginPath(); ctx.moveTo(-112, k*38); ctx.bezierCurveTo(-40,k*18,40,k*18,112,k*38); ctx.stroke(); }
+  ctx.globalAlpha = alpha*.9; ctx.fillStyle = '#fef3c7'; ctx.strokeStyle = '#d97706'; ctx.lineWidth = 5;
+  ctx.beginPath(); ctx.moveTo(0,-128); ctx.bezierCurveTo(-72,-82,-55,-18,0,4); ctx.bezierCurveTo(58,-22,70,-83,0,-128); ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#a7f3d0'; ctx.strokeStyle = '#047857';
+  ctx.beginPath(); ctx.moveTo(0,12); ctx.bezierCurveTo(-54,42,-48,132,0,168); ctx.bezierCurveTo(50,130,54,42,0,12); ctx.fill(); ctx.stroke();
+  ctx.restore();
+}
+function drawNoise(strength){
+  const n = Math.floor(1600 * strength);
+  for (let i=0;i<n;i++) {
+    const x = rnd(i)*canvas.width, y = rnd(i+999)*canvas.height;
+    const v = Math.floor(70 + rnd(i+222)*170);
+    ctx.fillStyle = `rgba(${v},${v+Math.floor(rnd(i+2)*20)},${Math.min(255,v+50)},${0.08+strength*0.42})`;
+    const r = 1 + rnd(i+333)*3.2;
+    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
+  }
+}
+function draw(){
+  const t = Number(slider.value)/100;
+  const sig = Math.max(0, 1 - t);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const bg = ctx.createLinearGradient(0,0,canvas.width,canvas.height); bg.addColorStop(0,'#eff6ff'); bg.addColorStop(1,'#f5f3ff'); ctx.fillStyle=bg; ctx.fillRect(0,0,canvas.width,canvas.height);
+  drawAnatomy(0.18 + sig*.92);
+  drawNoise(t);
+  ctx.fillStyle = 'rgba(255,255,255,.78)'; ctx.fillRect(26,26,320,82);
+  ctx.fillStyle = '#0f172a'; ctx.font = '700 22px Inter, sans-serif'; ctx.fillText(t < .5 ? 'Forward noising' : 'Mostly noise', 46, 60);
+  ctx.font = '15px Inter, sans-serif'; ctx.fillStyle = '#475569'; ctx.fillText(`x_t = sqrt(alpha_bar_t) x_0 + sqrt(1-alpha_bar_t) epsilon`, 46, 88);
+  tLabel.textContent = Math.round(t*100); signal.textContent = sig.toFixed(2); noise.textContent = t.toFixed(2);
+}
+slider.addEventListener('input', draw);
+play.addEventListener('click', () => { if(timer){clearInterval(timer); timer=null; play.textContent='Play forward process'; return;} play.textContent='Pause'; timer=setInterval(()=>{ let v=Number(slider.value)+1; if(v>100){clearInterval(timer);timer=null;play.textContent='Play forward process';v=100;} slider.value=v; draw(); },45); });
+reset.addEventListener('click',()=>{ slider.value=0; draw(); });
+draw();
+</script>
+</body>
+</html>
