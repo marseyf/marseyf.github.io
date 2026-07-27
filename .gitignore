@@ -1,5 +1,7 @@
 /.quarto/
 /_site/
 /.DS_Store
+**/node_modules/
+**/out/
 
 **/*.quarto_ipynb

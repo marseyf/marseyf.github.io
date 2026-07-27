@@ -1,0 +1,33 @@
+{
+  "name": "diffusion-visuals",
+  "version": "1.0.0",
+  "description": "Remotion source for the medical diffusion explainer graphic and video",
+  "repository": "https://github.com/marseyf/marseyf.github.io",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.499",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.499"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.499",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "9.19.0",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "render:figure": "remotion still DiffusionFigure ../../posts/diffusion-models-medical-image-synthesis/assets/diffusion-process-ct.png",
+    "render:video": "remotion render DiffusionCycle ../../posts/diffusion-models-medical-image-synthesis/assets/diffusion-process-ct.mp4 --codec=h264 --crf=23 --scale=0.6666667",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}

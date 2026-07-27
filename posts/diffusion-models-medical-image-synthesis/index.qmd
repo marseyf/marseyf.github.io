@@ -6,6 +6,8 @@ date: "2026-07-27"
 categories: [medical-imaging, generative-models, diffusion-models]
 draft: false
 bibliography: references.bib
+resources:
+  - assets/source/ct-normal-brain-axial-25.png
 format:
   html:
     toc: true
@@ -28,7 +30,9 @@ My view is that diffusion models are useful here because they match the problem 
 - Synthetic medical images should not be called privacy-preserving or clinically ready without explicit evidence for those claims.
 :::
 
-![Conceptual forward noising and reverse denoising path from a synthetic anatomy-like signal to noise and back. This original figure uses only procedural shapes and is not a clinical image.](assets/diffusion-anatomy-cycle.svg){#fig-diffusion-cycle fig-alt="A polished schematic showing a stylized anatomy-like signal being progressively noised in the forward diffusion process, followed by learned reverse denoising under optional conditioning."}
+![A real axial head CT is shown at five stages of a cosine-scheduled Gaussian diffusion process, from the clean CT through intermediate noisy states to Gaussian noise. Cyan labels mark the known forward corruption process and amber labels mark the idealized learned reverse path.](assets/diffusion-process-ct.png){#fig-diffusion-cycle fig-alt="A real axial head CT at five diffusion timesteps from clean image to Gaussian noise, with arrows identifying forward noising and idealized reverse sampling."}
+
+The clean endpoint is a real CC0 axial CT; every noisy panel uses the same fixed Gaussian field and the forward-process equation below. The reverse arrow describes the learned sampling problem rather than output from a trained model. Visual treatment created with GPT Image 2; CT pixels and diffusion states were composed deterministically. Source CT: [Mikael Häggström, M.D., via Wikimedia Commons](https://commons.wikimedia.org/wiki/File:CT_of_a_normal_brain,_axial_25.png), [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
 
 ## The denoising contract
 
@@ -42,6 +46,14 @@ Here, $x_0$ is the original image or volume, $x_t$ is its noised version, and $\
 
 That objective is modest in a useful way. The model is not asked to invent a scan in one jump. It is asked to solve a family of local denoising problems across noise levels. At sampling time, those small decisions are chained: start with noise, estimate what should be removed, step slightly toward a cleaner sample, and repeat.
 
+::: {.diffusion-video}
+<video id="diffusion-cycle-video" width="1280" height="720" controls autoplay muted loop playsinline preload="metadata" poster="assets/diffusion-process-ct.png" aria-label="Forward noising and idealized reverse sampling animation using a real axial CT">
+  <source src="assets/diffusion-process-ct.mp4" type="video/mp4" />
+</video>
+
+<p><em>Animation:</em> the forward pass applies a known cosine-scheduled Gaussian corruption process. The backward-moving segment is an idealized reverse trajectory: a trained model must estimate the noise at each step.</p>
+:::
+
 For medical imaging, this matters because the model's job can be tied to the structure of the data. A denoiser trained on chest CT volumes, brain MRIs, or cardiac images learns regularities of that distribution at multiple noise scales. At high noise, it must recover coarse structure and layout. At lower noise, it handles texture, boundaries, and modality-specific detail. The resulting sample may be anatomically plausible, but plausibility is still a distributional statement, not a clinical guarantee.
 
 <details>
@@ -50,10 +62,27 @@ For medical imaging, this matters because the model's job can be tied to the str
 Score-based generative modelling frames the same idea through gradients of log density. Instead of saying only that the network predicts noise, we can say it estimates a direction that moves a noisy sample toward regions of higher probability under the data distribution. Song and Ermon introduced generative modelling by estimating gradients of noise-perturbed data distributions [@song2019generative], and the later SDE framework unified DDPM-like and score-based methods as continuous-time forward and reverse stochastic processes [@song2021scorebased]. This view is useful for mathematically inclined readers, but it should not obscure the article's main intuition: denoising estimates which direction makes a corrupted image more data-like.
 </details>
 
-<div style="margin: 1.25rem 0;">
-<iframe src="assets/timestep-noise-explorer.html" title="Conceptual timestep and noise explorer" width="100%" height="620" style="border:1px solid #d8dee9; border-radius:16px;" loading="lazy"></iframe>
-<p><em>Interactive explorer:</em> move the timestep slider to see a procedural anatomy-like shape lose signal and gain noise. The animation is conceptual only, uses no patient data, and is not a diagnostic simulation.</p>
-</div>
+::: {.diffusion-explorer-wrap}
+<iframe id="diffusion-explorer" src="assets/timestep-noise-explorer.html" title="Interactive CT diffusion trajectory explorer" width="100%" height="760" loading="lazy"></iframe>
+
+<p><em>Interactive explorer:</em> scrub the same real CT through the forward corruption process or play the idealized reverse trajectory. The CT is source imaging, not generated output; this remains an educational visualization rather than a diagnostic simulation.</p>
+:::
+
+<script>
+window.addEventListener("message", (event) => {
+  if (event.data?.type !== "diffusion-explorer-height") return;
+  const explorer = document.getElementById("diffusion-explorer");
+  if (explorer && event.source === explorer.contentWindow) {
+    explorer.style.height = `${Math.max(680, event.data.height + 2)}px`;
+  }
+});
+
+const diffusionVideo = document.getElementById("diffusion-cycle-video");
+if (diffusionVideo && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  diffusionVideo.autoplay = false;
+  diffusionVideo.pause();
+}
+</script>
 
 ## Engineering levers: schedules, targets, guidance, and sampling
 

@@ -29,3 +29,43 @@
 a {
   text-underline-offset: 0.16em;
 }
+
+.diffusion-video,
+.diffusion-explorer-wrap {
+  margin: 1.5rem 0;
+}
+
+.diffusion-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #344047;
+  border-radius: 8px;
+  background: #05090c;
+}
+
+.diffusion-video p,
+.diffusion-explorer-wrap p {
+  margin-top: 0.65rem;
+  color: var(--bs-secondary-color);
+  font-size: 0.92rem;
+}
+
+.references a {
+  overflow-wrap: anywhere;
+}
+
+#diffusion-explorer {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 8px;
+  background: #05090c;
+  transition: height 120ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #diffusion-explorer {
+    transition: none;
+  }
+}

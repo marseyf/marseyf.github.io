@@ -3,116 +3,500 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Conceptual timestep and noise explorer</title>
+<title>CT diffusion trajectory explorer</title>
 <style>
-  :root { color-scheme: light; --ink:#0f172a; --muted:#475569; --bg:#f8fafc; --card:#ffffff; --blue:#2563eb; --purple:#7c3aed; --green:#059669; --warn:#9a3412; }
+  :root {
+    color-scheme: dark;
+    --ink: #f4f7f8;
+    --muted: #aab7bc;
+    --bg: #05090c;
+    --panel: #0b1013;
+    --line: #344047;
+    --cyan: #52c7df;
+    --amber: #f0ae55;
+  }
   * { box-sizing: border-box; }
-  body { margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; background:linear-gradient(135deg,#f8fbff,#eef2ff); color:var(--ink); }
-  .wrap { max-width: 980px; margin: 0 auto; padding: 22px; }
-  .panel { background:rgba(255,255,255,.92); border:1px solid #dbe3ef; border-radius:22px; box-shadow:0 18px 50px rgba(15,23,42,.12); overflow:hidden; }
-  header { padding:20px 22px 14px; border-bottom:1px solid #e2e8f0; }
-  h1 { margin:0 0 8px; font-size:22px; line-height:1.2; }
-  p { margin:0; color:var(--muted); line-height:1.45; }
-  .disclaimer { margin-top:12px; padding:10px 12px; border:1px solid #fed7aa; border-radius:14px; background:#fff7ed; color:var(--warn); font-size:14px; }
-  .grid { display:grid; grid-template-columns: minmax(280px,1fr) 300px; gap:18px; padding:20px 22px 22px; align-items:start; }
-  canvas { width:100%; aspect-ratio: 1.25; border-radius:18px; border:1px solid #cbd5e1; background:#f1f5f9; display:block; }
-  .controls { display:grid; gap:14px; }
-  label { display:block; font-weight:700; font-size:14px; margin-bottom:7px; }
-  input[type=range] { width:100%; accent-color:var(--purple); }
-  .readout { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-  .metric { border:1px solid #e2e8f0; border-radius:14px; padding:12px; background:#f8fafc; }
-  .metric strong { display:block; font-size:22px; }
-  .legend { display:grid; gap:8px; font-size:14px; color:var(--muted); }
-  .dot { display:inline-block; width:10px; height:10px; border-radius:999px; margin-right:7px; vertical-align:middle; }
-  button { border:0; border-radius:14px; padding:11px 13px; color:white; font-weight:800; background:linear-gradient(90deg,var(--blue),var(--purple)); cursor:pointer; }
-  button.secondary { background:#e2e8f0; color:#0f172a; }
-  .note { font-size:13px; color:#64748b; }
-  @media (max-width:780px) { .grid { grid-template-columns:1fr; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  button, input { font: inherit; }
+  .explorer {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+    overflow: hidden;
+  }
+  .masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 20px 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+  .subtitle {
+    max-width: 570px;
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .phase {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    flex: 0 0 auto;
+    color: var(--cyan);
+    font-size: 14px;
+    font-weight: 750;
+  }
+  .phase.reverse { color: var(--amber); }
+  .phase-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 18px currentColor;
+  }
+  .workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+    gap: 22px;
+    padding: 22px;
+  }
+  .scan-column { min-width: 0; }
+  .scan-frame {
+    position: relative;
+    width: min(100%, 540px);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    padding: 7px;
+    border: 2px solid var(--cyan);
+    background: #000;
+    box-shadow: 0 18px 46px rgba(0, 0, 0, .34);
+  }
+  .scan-frame.reverse { border-color: var(--amber); }
+  canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+  }
+  .scan-label {
+    position: absolute;
+    left: 16px;
+    bottom: 16px;
+    padding: 6px 9px;
+    border: 1px solid rgba(255, 255, 255, .22);
+    background: rgba(5, 9, 12, .82);
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .timeline {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--cyan);
+  }
+  input[type="range"].reverse { accent-color: var(--amber); }
+  .controls {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .segment {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+  .segment button {
+    min-height: 42px;
+    padding: 8px 12px;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .segment button + button { border-left: 1px solid var(--line); }
+  .segment button[aria-pressed="true"] {
+    background: #142128;
+    color: var(--ink);
+    font-weight: 750;
+  }
+  .segment button[data-direction="reverse"][aria-pressed="true"] {
+    background: #241c13;
+  }
+  .readout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .metric {
+    min-width: 0;
+    padding: 13px;
+    border: 1px solid var(--line);
+    background: #080d10;
+  }
+  .metric span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.3;
+  }
+  .metric strong {
+    display: block;
+    margin-top: 4px;
+    font-size: 28px;
+    font-variant-numeric: tabular-nums;
+  }
+  .equation {
+    padding: 14px;
+    border-left: 4px solid var(--cyan);
+    background: #080d10;
+    color: var(--muted);
+    font-family: "SFMono-Regular", Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .equation.reverse { border-left-color: var(--amber); }
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .actions button {
+    min-height: 44px;
+    padding: 10px 14px;
+    border: 1px solid var(--cyan);
+    border-radius: 6px;
+    background: var(--cyan);
+    color: #041013;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .actions button.secondary {
+    border-color: var(--line);
+    background: transparent;
+    color: var(--ink);
+  }
+  button:focus-visible, input:focus-visible {
+    outline: 3px solid #fff;
+    outline-offset: 3px;
+  }
+  .caveat {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  @media (max-width: 720px) {
+    .masthead { display: block; }
+    .phase { margin-top: 14px; }
+    .workspace { grid-template-columns: 1fr; padding: 16px; }
+    .scan-frame { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .phase-dot { box-shadow: none; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="panel" aria-label="Conceptual timestep and noise explorer">
-    <header>
-      <h1>Timestep/noise explorer</h1>
-      <p>Move the slider to see a stylized signal lose structure in the forward process, then imagine the reverse model estimating which noise to remove.</p>
-      <div class="disclaimer"><strong>Conceptual only:</strong> these are synthetic procedural shapes, not clinical images, not a diagnostic simulation, and not evidence of clinical readiness.</div>
-    </header>
-    <div class="grid">
-      <canvas id="scene" width="760" height="610" aria-label="Procedural anatomy-like shape with controllable noise"></canvas>
-      <aside class="controls">
-        <div>
-          <label for="timestep">Forward timestep t: <span id="tLabel">35</span>%</label>
-          <input id="timestep" type="range" min="0" max="100" value="35">
-        </div>
-        <div class="readout">
-          <div class="metric"><span>signal weight</span><strong id="signal">0.65</strong></div>
-          <div class="metric"><span>noise weight</span><strong id="noise">0.35</strong></div>
-        </div>
-        <div class="legend">
-          <div><span class="dot" style="background:#2563eb"></span>Forward diffusion: known corruption schedule.</div>
-          <div><span class="dot" style="background:#7c3aed"></span>Network target: predict noise or score direction.</div>
-          <div><span class="dot" style="background:#059669"></span>Reverse sampling: repeated denoising under optional conditioning.</div>
-        </div>
-        <button id="play" type="button">Play forward process</button>
-        <button id="reset" type="button" class="secondary">Reset</button>
-        <p class="note">The toy display uses a deterministic pseudo-random texture so the same timestep is reproducible. Real medical diffusion models operate on trained data distributions and require separate fidelity, utility, and privacy tests.</p>
-      </aside>
+<section class="explorer" aria-label="CT diffusion trajectory explorer">
+  <header class="masthead">
+    <div>
+      <h1>CT diffusion trajectory</h1>
+      <p class="subtitle">A real axial CT is corrupted with one fixed Gaussian field. The reverse view retraces that path to show what a learned denoiser must estimate.</p>
     </div>
-  </section>
-</div>
+    <div class="phase" id="phase">
+      <span class="phase-dot" aria-hidden="true"></span>
+      <span id="phaseText">Forward noising q(x_t | x_0)</span>
+    </div>
+  </header>
+
+  <div class="workspace">
+    <div class="scan-column">
+      <div class="scan-frame" id="scanFrame">
+        <canvas id="scene" width="420" height="420" aria-label="Real axial head CT with timestep-dependent Gaussian noise">Your browser does not support Canvas.</canvas>
+        <span class="scan-label" id="scanLabel">real CT · x_0</span>
+      </div>
+      <div class="timeline">
+        <span>x_0</span>
+        <input id="timestep" type="range" min="0" max="1000" value="0" aria-label="Diffusion timestep" aria-valuetext="Timestep 0 of 1000">
+        <span>x_T</span>
+      </div>
+    </div>
+
+    <aside class="controls">
+      <div class="segment" aria-label="Playback direction">
+        <button id="forward" type="button" data-direction="forward" aria-pressed="true">Forward</button>
+        <button id="reverse" type="button" data-direction="reverse" aria-pressed="false">Reverse</button>
+      </div>
+
+      <div class="readout">
+        <div class="metric">
+          <span>signal variance alpha_bar_t</span>
+          <strong id="signal">1.00</strong>
+        </div>
+        <div class="metric">
+          <span>noise variance 1 - alpha_bar_t</span>
+          <strong id="noise">0.00</strong>
+        </div>
+      </div>
+
+      <div class="equation" id="equation">x_t = sqrt(alpha_bar_t) x_0<br>+ sqrt(1 - alpha_bar_t) epsilon</div>
+
+      <div class="actions">
+        <button id="play" type="button">Pause cycle</button>
+        <button id="restart" type="button" class="secondary">Restart</button>
+      </div>
+
+      <p class="caveat"><strong>Educational illustration:</strong> the forward states follow the stated corruption process. The reverse playback is an idealized trajectory, not output from a trained model and not synthetic clinical data.</p>
+    </aside>
+  </div>
+</section>
+
 <script>
-const canvas = document.getElementById('scene');
-const ctx = canvas.getContext('2d');
-const slider = document.getElementById('timestep');
-const tLabel = document.getElementById('tLabel');
-const signal = document.getElementById('signal');
-const noise = document.getElementById('noise');
-const play = document.getElementById('play');
-const reset = document.getElementById('reset');
-let timer = null;
-function rnd(i){ const x = Math.sin(i * 12.9898 + 78.233) * 43758.5453; return x - Math.floor(x); }
-function drawAnatomy(alpha){
-  ctx.save(); ctx.globalAlpha = alpha;
-  ctx.translate(380, 305);
-  const grad = ctx.createRadialGradient(-40,-60,20,0,0,230);
-  grad.addColorStop(0,'#fce7f3'); grad.addColorStop(.45,'#bfdbfe'); grad.addColorStop(1,'#dcfce7');
-  ctx.fillStyle = grad; ctx.strokeStyle = '#1e40af'; ctx.lineWidth = 8;
-  ctx.beginPath(); ctx.ellipse(0,0,170,220,0,0,Math.PI*2); ctx.fill(); ctx.stroke();
-  ctx.strokeStyle = '#0f172a'; ctx.globalAlpha = alpha*.55; ctx.lineWidth = 7; ctx.lineCap = 'round';
-  for (let k=-2;k<=2;k++) { ctx.beginPath(); ctx.moveTo(-112, k*38); ctx.bezierCurveTo(-40,k*18,40,k*18,112,k*38); ctx.stroke(); }
-  ctx.globalAlpha = alpha*.9; ctx.fillStyle = '#fef3c7'; ctx.strokeStyle = '#d97706'; ctx.lineWidth = 5;
-  ctx.beginPath(); ctx.moveTo(0,-128); ctx.bezierCurveTo(-72,-82,-55,-18,0,4); ctx.bezierCurveTo(58,-22,70,-83,0,-128); ctx.fill(); ctx.stroke();
-  ctx.fillStyle = '#a7f3d0'; ctx.strokeStyle = '#047857';
-  ctx.beginPath(); ctx.moveTo(0,12); ctx.bezierCurveTo(-54,42,-48,132,0,168); ctx.bezierCurveTo(50,130,54,42,0,12); ctx.fill(); ctx.stroke();
-  ctx.restore();
-}
-function drawNoise(strength){
-  const n = Math.floor(1600 * strength);
-  for (let i=0;i<n;i++) {
-    const x = rnd(i)*canvas.width, y = rnd(i+999)*canvas.height;
-    const v = Math.floor(70 + rnd(i+222)*170);
-    ctx.fillStyle = `rgba(${v},${v+Math.floor(rnd(i+2)*20)},${Math.min(255,v+50)},${0.08+strength*0.42})`;
-    const r = 1 + rnd(i+333)*3.2;
-    ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fill();
-  }
-}
-function draw(){
-  const t = Number(slider.value)/100;
-  const sig = Math.max(0, 1 - t);
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  const bg = ctx.createLinearGradient(0,0,canvas.width,canvas.height); bg.addColorStop(0,'#eff6ff'); bg.addColorStop(1,'#f5f3ff'); ctx.fillStyle=bg; ctx.fillRect(0,0,canvas.width,canvas.height);
-  drawAnatomy(0.18 + sig*.92);
-  drawNoise(t);
-  ctx.fillStyle = 'rgba(255,255,255,.78)'; ctx.fillRect(26,26,320,82);
-  ctx.fillStyle = '#0f172a'; ctx.font = '700 22px Inter, sans-serif'; ctx.fillText(t < .5 ? 'Forward noising' : 'Mostly noise', 46, 60);
-  ctx.font = '15px Inter, sans-serif'; ctx.fillStyle = '#475569'; ctx.fillText(`x_t = sqrt(alpha_bar_t) x_0 + sqrt(1-alpha_bar_t) epsilon`, 46, 88);
-  tLabel.textContent = Math.round(t*100); signal.textContent = sig.toFixed(2); noise.textContent = t.toFixed(2);
-}
-slider.addEventListener('input', draw);
-play.addEventListener('click', () => { if(timer){clearInterval(timer); timer=null; play.textContent='Play forward process'; return;} play.textContent='Pause'; timer=setInterval(()=>{ let v=Number(slider.value)+1; if(v>100){clearInterval(timer);timer=null;play.textContent='Play forward process';v=100;} slider.value=v; draw(); },45); });
-reset.addEventListener('click',()=>{ slider.value=0; draw(); });
-draw();
+(() => {
+  const canvas = document.getElementById("scene");
+  const context = canvas.getContext("2d", {willReadFrequently: true});
+  const slider = document.getElementById("timestep");
+  const signalReadout = document.getElementById("signal");
+  const noiseReadout = document.getElementById("noise");
+  const scanLabel = document.getElementById("scanLabel");
+  const scanFrame = document.getElementById("scanFrame");
+  const phase = document.getElementById("phase");
+  const phaseText = document.getElementById("phaseText");
+  const equation = document.getElementById("equation");
+  const playButton = document.getElementById("play");
+  const restartButton = document.getElementById("restart");
+  const forwardButton = document.getElementById("forward");
+  const reverseButton = document.getElementById("reverse");
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const size = canvas.width;
+  const clean = new Float32Array(size * size);
+  const epsilon = new Float32Array(size * size);
+  const pixels = context.createImageData(size, size);
+  let ready = false;
+  let timestep = 0;
+  let direction = 1;
+  let playing = !prefersReducedMotion.matches;
+  let fullCycle = true;
+  let lastTime = null;
+  let holdUntil = 0;
+  let frameRequest = null;
+  let visible = true;
+
+  const hash = (value) => {
+    const x = Math.sin(value * 12.9898 + 78.233) * 43758.5453;
+    return x - Math.floor(x);
+  };
+
+  const gaussian = (index) => {
+    const u1 = Math.max(hash(index * 2 + 17), 1e-7);
+    const u2 = hash(index * 2 + 29);
+    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  };
+
+  const alphaBar = (normalizedTimestep) => {
+    const offset = 0.008;
+    const initial = Math.cos((offset / (1 + offset)) * (Math.PI / 2)) ** 2;
+    return Math.cos(((normalizedTimestep + offset) / (1 + offset)) * (Math.PI / 2)) ** 2 / initial;
+  };
+
+  const setDirection = (nextDirection, userInitiated = false) => {
+    direction = nextDirection;
+    phase.classList.toggle("reverse", direction < 0);
+    scanFrame.classList.toggle("reverse", direction < 0);
+    slider.classList.toggle("reverse", direction < 0);
+    equation.classList.toggle("reverse", direction < 0);
+    forwardButton.setAttribute("aria-pressed", String(direction > 0));
+    reverseButton.setAttribute("aria-pressed", String(direction < 0));
+    phaseText.textContent = direction > 0
+      ? "Forward noising q(x_t | x_0)"
+      : "Idealized reverse sampling p_theta(x_(t-1) | x_t, c)";
+    equation.innerHTML = direction > 0
+      ? "x_t = sqrt(alpha_bar_t) x_0<br>+ sqrt(1 - alpha_bar_t) epsilon"
+      : "x_(t-1) = mu_theta(x_t, t, c)<br>+ sigma_t z";
+    if (userInitiated) fullCycle = false;
+  };
+
+  const updateLabels = (variance) => {
+    signalReadout.textContent = variance.toFixed(2);
+    noiseReadout.textContent = (1 - variance).toFixed(2);
+    slider.value = String(Math.round(timestep));
+    slider.setAttribute("aria-valuetext", `Timestep ${Math.round(timestep)} of 1000`);
+    if (timestep < 15) {
+      scanLabel.textContent = "real CT · x_0";
+    } else if (timestep > 985) {
+      scanLabel.textContent = "Gaussian noise · x_T";
+    } else {
+      scanLabel.textContent = `noisy state · x_${Math.round(timestep)}`;
+    }
+  };
+
+  const draw = () => {
+    if (!ready) return;
+    const normalizedTimestep = timestep / 1000;
+    const variance = Math.max(0, Math.min(1, alphaBar(normalizedTimestep)));
+    const signalWeight = Math.sqrt(variance);
+    const noiseWeight = Math.sqrt(1 - variance);
+    for (let index = 0; index < clean.length; index++) {
+      const value = signalWeight * clean[index] + noiseWeight * epsilon[index];
+      const display = Math.round(Math.max(0, Math.min(1, (value + 1) / 2)) * 255);
+      const offset = index * 4;
+      pixels.data[offset] = display;
+      pixels.data[offset + 1] = display;
+      pixels.data[offset + 2] = display;
+      pixels.data[offset + 3] = 255;
+    }
+    context.putImageData(pixels, 0, 0);
+    updateLabels(variance);
+  };
+
+  const tick = (time) => {
+    frameRequest = null;
+    if (!playing || !visible || !ready) return;
+    if (lastTime === null) lastTime = time;
+    const delta = Math.min(50, time - lastTime);
+    lastTime = time;
+
+    if (time >= holdUntil) {
+      timestep += direction * delta * (1000 / 3700);
+      if (timestep >= 1000) {
+        timestep = 1000;
+        if (fullCycle) {
+          setDirection(-1);
+          holdUntil = time + 550;
+        } else {
+          playing = false;
+        }
+      } else if (timestep <= 0) {
+        timestep = 0;
+        if (fullCycle) {
+          setDirection(1);
+          holdUntil = time + 650;
+        } else {
+          playing = false;
+        }
+      }
+      draw();
+    }
+
+    playButton.textContent = playing ? "Pause cycle" : "Play";
+    if (playing) frameRequest = requestAnimationFrame(tick);
+  };
+
+  const startAnimation = () => {
+    if (!playing || !visible || frameRequest !== null) return;
+    lastTime = null;
+    frameRequest = requestAnimationFrame(tick);
+  };
+
+  const image = new Image();
+  image.src = "source/ct-normal-brain-axial-25.png";
+  image.onload = () => {
+    const sourceCanvas = document.createElement("canvas");
+    sourceCanvas.width = size;
+    sourceCanvas.height = size;
+    const sourceContext = sourceCanvas.getContext("2d", {willReadFrequently: true});
+    sourceContext.drawImage(image, 0, 50, 350, 350, 0, 0, size, size);
+    const sourcePixels = sourceContext.getImageData(0, 0, size, size).data;
+    for (let index = 0; index < clean.length; index++) {
+      clean[index] = sourcePixels[index * 4] / 127.5 - 1;
+      epsilon[index] = gaussian(index);
+    }
+    ready = true;
+    draw();
+    startAnimation();
+  };
+
+  slider.addEventListener("input", () => {
+    timestep = Number(slider.value);
+    playing = false;
+    fullCycle = false;
+    playButton.textContent = "Play";
+    draw();
+  });
+
+  forwardButton.addEventListener("click", () => {
+    setDirection(1, true);
+    playing = false;
+    playButton.textContent = "Play forward";
+  });
+
+  reverseButton.addEventListener("click", () => {
+    setDirection(-1, true);
+    playing = false;
+    playButton.textContent = "Play reverse";
+  });
+
+  playButton.addEventListener("click", () => {
+    if (playing) {
+      playing = false;
+      playButton.textContent = "Play";
+      return;
+    }
+    if ((direction > 0 && timestep >= 1000) || (direction < 0 && timestep <= 0)) {
+      timestep = direction > 0 ? 0 : 1000;
+    }
+    playing = true;
+    playButton.textContent = fullCycle ? "Pause cycle" : "Pause";
+    startAnimation();
+  });
+
+  restartButton.addEventListener("click", () => {
+    timestep = 0;
+    fullCycle = true;
+    playing = !prefersReducedMotion.matches;
+    holdUntil = 0;
+    setDirection(1);
+    draw();
+    playButton.textContent = playing ? "Pause cycle" : "Play cycle";
+    startAnimation();
+  });
+
+  const observer = new IntersectionObserver(([entry]) => {
+    visible = entry.isIntersecting;
+    if (!visible && frameRequest !== null) {
+      cancelAnimationFrame(frameRequest);
+      frameRequest = null;
+    } else {
+      startAnimation();
+    }
+  }, {threshold: 0.05});
+  observer.observe(document.querySelector(".explorer"));
+
+  const reportHeight = () => {
+    window.parent.postMessage({
+      type: "diffusion-explorer-height",
+      height: Math.ceil(document.documentElement.scrollHeight),
+    }, "*");
+  };
+  new ResizeObserver(reportHeight).observe(document.body);
+  window.addEventListener("load", reportHeight);
+})();
 </script>
 </body>
 </html>
