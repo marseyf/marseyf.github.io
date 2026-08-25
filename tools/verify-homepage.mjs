@@ -5,18 +5,24 @@ const source = read("index.qmd");
 const html = read("_site/index.html");
 const css = read("styles.css");
 const asset = "posts/diffusion-models-medical-image-synthesis/assets/home-diffusion-ct.webp";
+const skipInclude = read("includes/skip-link.html");
 const failures = [];
 
 function expect(condition, message) {
   if (!condition) failures.push(message);
 }
 
+const homepageH1Count = (html.match(/<h1\b/gi) || []).length;
 const visibleHeroH1 = (html.match(/<h1 id="hero-title"/gi) || []).length;
-expect(visibleHeroH1 === 1, "generated homepage must expose exactly one visible hero H1");
-expect(/#quarto-document-content:has\(\.site-home\) #title-block-header\s*\{\s*display:\s*none/.test(css), "Quarto's duplicate document title must be hidden from the visual and accessibility trees");
+expect(homepageH1Count === 1 && visibleHeroH1 === 1, "generated homepage must have exactly one H1, the hero research statement");
+expect(html.includes("<title>Marvin Seyfarth</title>"), "homepage must retain its document title after removing the visible Quarto title block");
 expect(!/<pre><code>/i.test(html), "homepage source must not render as a code block");
-expect(html.includes('class="skip-link" href="#quarto-document-content"'), "skip link must target Quarto main content");
+expect(html.includes('id="site-skip-link" class="skip-link" href="#quarto-document-content"'), "skip link must target Quarto main content");
+expect(/getElementById\("quarto-header"\)[\s\S]*?header\.before\(skip\)/.test(skipInclude), "skip-link include must move the focus target before navigation");
+expect(Buffer.byteLength(skipInclude) <= 8_192, "homepage-specific skip-link script exceeds the 8 KiB JavaScript budget");
 expect(html.includes('id="main-content"'), "homepage must expose a main-content target");
+expect(html.includes('Mikael Häggström, M.D., via Wikimedia Commons (CC0 1.0)'), "research-note preview must retain full CT provenance");
+expect((html.match(/Conceptual schematic—not a result/g) || []).length === 3, "every work plate must be visibly labelled as conceptual, not a result");
 expect(html.includes('Conceptual 4D scan ledger'), "hero SVG must expose a programmatic name");
 expect(html.includes('contains no patient data or model results'), "hero SVG must expose its non-result description");
 expect(html.includes('home-diffusion-ct.webp'), "homepage must use the compressed research-note derivative");

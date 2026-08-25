@@ -2,9 +2,8 @@
 title: "Marvin Seyfarth"
 page-layout: full
 toc: false
-format:
-  html:
-    title-block-style: none
+filters:
+  - tools/remove-home-title.lua
 ---
 
 <div id="main-content" class="site-home">
@@ -122,7 +121,7 @@ format:
 <i></i><i></i><i></i><i></i><i></i>
 </div>
 <div class="work-plate__body">
-<p class="eyebrow">4D cardiac MRI · conceptual schematic</p>
+<p class="eyebrow">4D cardiac MRI · Conceptual schematic—not a result</p>
 <h3>CardioDiT: Latent Diffusion Transformers for 4D Cardiac MRI Synthesis</h3>
 <p>A fully 4D latent-diffusion framework for short-axis cine CMR synthesis.</p>
 <ul class="tag-list" aria-label="Research themes"><li>4D</li><li>latent diffusion</li><li>transformers</li></ul>
@@ -137,7 +136,7 @@ format:
 <b>token planes</b>
 </div>
 <div class="work-plate__body">
-<p class="eyebrow">Volumetric synthesis · conceptual schematic</p>
+<p class="eyebrow">Volumetric synthesis · Conceptual schematic—not a result</p>
 <h3>VolDiT: Controllable Volumetric Medical Image Synthesis with Diffusion Transformers</h3>
 <p>Transformer-based 3D medical-image synthesis with mask-based spatial control.</p>
 <ul class="tag-list" aria-label="Research themes"><li>3D</li><li>patch tokens</li><li>control</li></ul>
@@ -152,7 +151,7 @@ format:
 <span class="distance-bracket">distribution distance</span>
 </div>
 <div class="work-plate__body">
-<p class="eyebrow">Diversity evaluation · conceptual schematic</p>
+<p class="eyebrow">Diversity evaluation · Conceptual schematic—not a result</p>
 <h3>Rethinking Diversity Metrics in Medical Imaging with Wasserstein Distance</h3>
 <p>A feature-space diversity metric for medical-image datasets.</p>
 <ul class="tag-list" aria-label="Research themes"><li>evaluation</li><li>diversity</li><li>feature space</li></ul>
@@ -178,7 +177,7 @@ format:
 <section class="site-section site-shell research-note" aria-labelledby="research-note-title">
 <figure class="research-note__image">
 <img src="posts/diffusion-models-medical-image-synthesis/assets/home-diffusion-ct.webp" width="720" height="406" loading="lazy" alt="A real axial head CT across five deterministic noising stages, with cyan forward and amber reverse labels." />
-<figcaption>Real CC0 axial CT through a deterministic noising sequence; an educational visualisation, not model output.</figcaption>
+<figcaption>Real CC0 axial head CT by <a href="https://commons.wikimedia.org/wiki/File:CT_of_a_normal_brain,_axial_25.png">Mikael Häggström, M.D., via Wikimedia Commons (CC0 1.0)</a>, shown through a deterministic noising sequence; an educational visualisation, not model output.</figcaption>
 </figure>
 <div class="research-note__copy">
 <p class="eyebrow">Research note / foundations</p>

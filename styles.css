@@ -138,10 +138,6 @@ input:focus-visible {
   overflow: clip;
 }
 
-#quarto-document-content:has(.site-home) #title-block-header {
-  display: none;
-}
-
 .site-shell {
   width: min(100% - (2 * var(--site-gutter)), var(--site-max));
   margin-inline: auto;

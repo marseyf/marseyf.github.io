@@ -1,1 +1,8 @@
-<a class="skip-link" href="#quarto-document-content">Skip to main content</a>
+<a id="site-skip-link" class="skip-link" href="#quarto-document-content">Skip to main content</a>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const skip = document.getElementById("site-skip-link");
+  const header = document.getElementById("quarto-header");
+  if (skip && header) header.before(skip);
+});
+</script>
