@@ -1,20 +1,71 @@
 ---
 title: "Research"
-description: "Research themes and projects"
+description: "Research directions in efficient and trustworthy generative modelling for medical imaging."
 ---
 
-My work focuses on efficient and trustworthy generative modelling for medical imaging.
+<div class="research-page site-shell">
+<section class="research-page__intro" aria-labelledby="research-directions-title">
+<p class="eyebrow">Research directions</p>
+<h2 id="research-directions-title">Efficient and trustworthy generative modelling for medical imaging.</h2>
+<p class="site-lead">The work connects high-resolution generation with evaluation and reproducible scientific practice.</p>
+</section>
 
-## Efficient 3D and 4D generation
+<section class="research-direction-grid" aria-label="Research directions">
+<article class="research-direction research-direction--generation">
+<div class="research-mini-diagram research-mini-diagram--volume" aria-hidden="true">
+<span>volume</span><i></i><span>time</span><i></i><span>generation</span>
+</div>
+<p class="eyebrow">01 / 3D + 4D generation</p>
+<h2>Volume and time, under practical constraints</h2>
+<p>Synthesising high-resolution volumetric and temporal data under realistic memory and compute constraints.</p>
+<details>
+<summary>What this direction holds</summary>
+<p>Method distinctions, model architecture, and examples belong with their specific publication or research note.</p>
+</details>
+</article>
 
-Designing models that can synthesise high-resolution volumetric and temporal data under realistic memory and compute constraints.
+<article class="research-direction research-direction--evaluation">
+<div class="research-mini-diagram research-mini-diagram--evaluation" aria-hidden="true">
+<span>fidelity</span><span>diversity</span><span>privacy</span><span>anatomy</span>
+</div>
+<p class="eyebrow">02 / evaluation</p>
+<h2>Evaluation beyond realism</h2>
+<p>Evaluating diversity, memorisation, privacy, anatomical validity, and downstream utility alongside fidelity.</p>
+<details>
+<summary>What this direction holds</summary>
+<p>Metric definitions, limitations, and use-case-specific evaluation detail stay connected to their source context.</p>
+</details>
+</article>
 
-## Medical generation evaluation
+<article class="research-direction research-direction--systems">
+<div class="research-mini-diagram research-mini-diagram--trace" aria-hidden="true">
+<span>literature</span><i></i><span>code</span><i></i><span>experiments</span><i></i><span>communication</span>
+</div>
+<p class="eyebrow">03 / research systems</p>
+<h2>Scientific infrastructure that keeps context intact</h2>
+<p>Linking literature, code, experiments, evaluation, and communication reproducibly.</p>
+<details>
+<summary>What this direction holds</summary>
+<p>Workflow detail and public resources are shared only where their status and context can be verified.</p>
+</details>
+</article>
+</section>
 
-Evaluating synthetic data beyond a single realism score, including diversity, memorisation, privacy, anatomical validity, and downstream utility.
+<section class="research-route" aria-labelledby="research-route-title">
+<div>
+<p class="eyebrow">Traceable routes</p>
+<h2 id="research-route-title">From a research question to its public record</h2>
+</div>
+<ol class="research-route__steps">
+<li><span>01</span>Research direction</li>
+<li><span>02</span>Publication record</li>
+<li><span>03</span>Research note</li>
+</ol>
+</section>
 
-## Scientific infrastructure
-
-Building reproducible links between literature, code, experiments, evaluation, and communication.
-
-Project pages and verified public resources will be added as they are ready for release.
+<section class="research-page__closing" aria-labelledby="research-next-title">
+<p class="eyebrow">Continue reading</p>
+<h2 id="research-next-title">Follow the work through its publications and explanations.</h2>
+<p class="action-row"><a class="site-button site-button--primary" href="publications.qmd">Selected publications</a> <a class="site-button site-button--secondary" href="blog.qmd">Research notes</a></p>
+</section>
+</div>

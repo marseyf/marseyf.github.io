@@ -3,7 +3,7 @@ title: "Publications"
 description: "Verified publications by Marvin Seyfarth with abstracts, paper links, and public code availability."
 ---
 
-This page lists verified scholarly publications in reverse chronological order. Each entry includes the complete author list, venue or status, a publication link, the full official abstract, and public code availability where an exact repository was verified.
+<p class="publication-intro">Verified scholarly publications, with paper links and public code links where an exact repository is available.</p>
 
 ::: {.publication-list}
 
@@ -12,11 +12,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### CardioDiT: Latent Diffusion Transformers for 4D Cardiac MRI Synthesis
 
-**Authors:** Marvin Seyfarth; Sarah Kaye Müller; Arman Ghanaat; Isabelle Ayx; Fabian Fastenrath; Philipp Wild; Alexander Hertel; Theano Papavassiliu; Salman Ul Hassan Dar; Sandy Engelhardt.
+<p class="publication-focus">A fully 4D latent-diffusion framework for short-axis cine CMR synthesis.</p>
 
-**Venue/status:** arXiv preprint arXiv:2603.25194 [cs.CV], submitted 26 Mar 2026.
+<p class="publication-status">2026 · arXiv preprint</p>
 
 **Links:** [Paper](https://arxiv.org/abs/2603.25194){.btn .btn-sm .btn-outline-primary role="button"} [Code](https://github.com/Cardio-AI/cardiodit){.btn .btn-sm .btn-outline-secondary role="button"}
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> Marvin Seyfarth; Sarah Kaye Müller; Arman Ghanaat; Isabelle Ayx; Fabian Fastenrath; Philipp Wild; Alexander Hertel; Theano Papavassiliu; Salman Ul Hassan Dar; Sandy Engelhardt.</p>
+<p><strong>Venue/status:</strong> arXiv preprint arXiv:2603.25194 [cs.CV], submitted 26 Mar 2026.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
@@ -27,11 +33,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### VolDiT: Controllable Volumetric Medical Image Synthesis with Diffusion Transformers
 
-**Authors:** Marvin Seyfarth; Salman Ul Hassan Dar; Yannik Frisch; Philipp Wild; Norbert Frey; Florian André; Sandy Engelhardt.
+<p class="publication-focus">Transformer-based 3D medical-image synthesis with mask-based spatial control.</p>
 
-**Venue/status:** arXiv preprint arXiv:2603.25181 [cs.CV], submitted 26 Mar 2026.
+<p class="publication-status">2026 · arXiv preprint</p>
 
 **Links:** [Paper](https://arxiv.org/abs/2603.25181){.btn .btn-sm .btn-outline-primary role="button"} [Code](https://github.com/Cardio-AI/voldit){.btn .btn-sm .btn-outline-secondary role="button"}
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> Marvin Seyfarth; Salman Ul Hassan Dar; Yannik Frisch; Philipp Wild; Norbert Frey; Florian André; Sandy Engelhardt.</p>
+<p><strong>Venue/status:</strong> arXiv preprint arXiv:2603.25181 [cs.CV], submitted 26 Mar 2026.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
@@ -42,11 +54,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### Rethinking Diversity Metrics in Medical Imaging with Wasserstein Distance
 
-**Authors:** Marvin Seyfarth; Salman U. H. Dar; Sandy Engelhardt.
+<p class="publication-focus">A feature-space diversity metric for medical-image datasets.</p>
 
-**Venue/status:** BVM Workshop 2026 / Bildverarbeitung für die Medizin 2026, Informatik aktuell, Springer Vieweg, pp. 420–426; version of record.
+<p class="publication-status">2026 · BVM Workshop · version of record</p>
 
 **Links:** [Publication](https://doi.org/10.1007/978-3-658-51100-5_83){.btn .btn-sm .btn-outline-primary role="button"} <span class="code-unavailable">Code repository not publicly available</span>
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> Marvin Seyfarth; Salman U. H. Dar; Sandy Engelhardt.</p>
+<p><strong>Venue/status:</strong> BVM Workshop 2026 / Bildverarbeitung für die Medizin 2026, Informatik aktuell, Springer Vieweg, pp. 420–426; version of record.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
@@ -57,11 +75,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### Latent diffusion for single-pass full 4D cine cardiac magnetic resonance imaging synthesis with spatiotemporal autoencoding
 
-**Authors:** M Seyfarth; S K Mueller; S U H Dar; S Engelhardt.
+<p class="publication-focus">Single-pass full 4D cine cardiac MRI synthesis with spatiotemporal autoencoding.</p>
 
-**Venue/status:** European Heart Journal - Digital Health 7(Supplement_1):ztaf143.028; ESC Digital & AI Summit abstract supplement; open access; DOI record and PMC full text.
+<p class="publication-status">2026 · ESC Digital &amp; AI Summit abstract supplement</p>
 
 **Links:** [Publication](https://doi.org/10.1093/ehjdh/ztaf143.028){.btn .btn-sm .btn-outline-primary role="button"} <span class="code-unavailable">Code repository not publicly available</span>
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> M Seyfarth; S K Mueller; S U H Dar; S Engelhardt.</p>
+<p><strong>Venue/status:</strong> European Heart Journal - Digital Health 7(Supplement_1):ztaf143.028; ESC Digital &amp; AI Summit abstract supplement; open access; DOI record and PMC full text.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
@@ -72,11 +96,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### Beyond visual realism: assessing coronary artery dominance diversity in AI-generated synthetic coronary computed tomography angiography images
 
-**Authors:** A Ghanaat; M Seyfarth; I Ayx; S O Schoenberg; S Engelhardt; S U H Dar.
+<p class="publication-focus">Assessing coronary-artery dominance diversity in synthetic coronary CTA.</p>
 
-**Venue/status:** European Heart Journal - Digital Health 7(Supplement_1):ztaf143.029; ESC Digital & AI Summit abstract supplement; open access PDF/DOI record.
+<p class="publication-status">2026 · ESC Digital &amp; AI Summit abstract supplement</p>
 
 **Links:** [Publication](https://doi.org/10.1093/ehjdh/ztaf143.029){.btn .btn-sm .btn-outline-primary role="button"} <span class="code-unavailable">Code repository not publicly available</span>
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> A Ghanaat; M Seyfarth; I Ayx; S O Schoenberg; S Engelhardt; S U H Dar.</p>
+<p><strong>Venue/status:</strong> European Heart Journal - Digital Health 7(Supplement_1):ztaf143.029; ESC Digital &amp; AI Summit abstract supplement; open access PDF/DOI record.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
@@ -87,11 +117,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### Unconditional latent diffusion models memorize patient imaging data
 
-**Authors:** Salman Ul Hassan Dar; Marvin Seyfarth; Isabelle Ayx; Theano Papavassiliu; Stefan O. Schoenberg; Robert Malte Siepmann; Fabian Christopher Laqua; Jannik Kahmann; Norbert Frey; Bettina Baeßler; Sebastian Foersch; Daniel Truhn; Jakob Nikolas Kather; Sandy Engelhardt.
+<p class="publication-focus">An assessment of patient-data memorization in unconditional latent diffusion models.</p>
 
-**Venue/status:** Nature Biomedical Engineering 10(3):458–472; version of record, published online 11 Aug 2025; issue date March 2026.
+<p class="publication-status">2026 · Nature Biomedical Engineering · version of record</p>
 
 **Links:** [Publication](https://doi.org/10.1038/s41551-025-01468-8){.btn .btn-sm .btn-outline-primary role="button"} [Code](https://github.com/Cardio-AI/memorization-ldm){.btn .btn-sm .btn-outline-secondary role="button"}
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> Salman Ul Hassan Dar; Marvin Seyfarth; Isabelle Ayx; Theano Papavassiliu; Stefan O. Schoenberg; Robert Malte Siepmann; Fabian Christopher Laqua; Jannik Kahmann; Norbert Frey; Bettina Baeßler; Sebastian Foersch; Daniel Truhn; Jakob Nikolas Kather; Sandy Engelhardt.</p>
+<p><strong>Venue/status:</strong> Nature Biomedical Engineering 10(3):458–472; version of record, published online 11 Aug 2025; issue date March 2026.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
@@ -104,11 +140,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### MedLoRD: A Medical Low-Resource Diffusion Model for High-Resolution 3D CT Image Synthesis
 
-**Authors:** Marvin Seyfarth; Salman Ul Hassan Dar; Isabelle Ayx; Matthias Alexander Fink; Stefan O. Schoenberg; Hans-Ulrich Kauczor; Sandy Engelhardt.
+<p class="publication-focus">High-resolution 3D CT image synthesis under limited computational resources.</p>
 
-**Venue/status:** SASHIMI 2025, Lecture Notes in Computer Science, Simulation and Synthesis in Medical Imaging, pp. 1–12; version of record. Preprint: arXiv:2503.13211.
+<p class="publication-status">2025 · SASHIMI · version of record</p>
 
 **Links:** [Publication](https://doi.org/10.1007/978-3-032-05573-6_1){.btn .btn-sm .btn-outline-primary role="button"} [Code](https://github.com/Cardio-AI/medlord){.btn .btn-sm .btn-outline-secondary role="button"}
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> Marvin Seyfarth; Salman Ul Hassan Dar; Isabelle Ayx; Matthias Alexander Fink; Stefan O. Schoenberg; Hans-Ulrich Kauczor; Sandy Engelhardt.</p>
+<p><strong>Venue/status:</strong> SASHIMI 2025, Lecture Notes in Computer Science, Simulation and Synthesis in Medical Imaging, pp. 1–12; version of record. Preprint: arXiv:2503.13211.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
@@ -119,11 +161,17 @@ This page lists verified scholarly publications in reverse chronological order. 
 ::: {.publication-entry}
 ### Latent Pollution Model: The Hidden Carbon Footprint in 3D Image Synthesis
 
-**Authors:** Marvin Seyfarth; Salman Ul Hassan Dar; Sandy Engelhardt.
+<p class="publication-focus">An analysis of carbon emissions in 2D and 3D latent diffusion synthesis.</p>
 
-**Venue/status:** SASHIMI 2024, Lecture Notes in Computer Science, Simulation and Synthesis in Medical Imaging, pp. 146–156; version of record; proceedings volume copyright/print 2025.
+<p class="publication-status">2025 · SASHIMI · version of record</p>
 
 **Links:** [Publication](https://doi.org/10.1007/978-3-031-73281-2_14){.btn .btn-sm .btn-outline-primary role="button"} <span class="code-unavailable">Code repository not publicly available</span>
+
+<details class="publication-citation">
+<summary>Full citation</summary>
+<p><strong>Authors:</strong> Marvin Seyfarth; Salman Ul Hassan Dar; Sandy Engelhardt.</p>
+<p><strong>Venue/status:</strong> SASHIMI 2024, Lecture Notes in Computer Science, Simulation and Synthesis in Medical Imaging, pp. 146–156; version of record; proceedings volume copyright/print 2025.</p>
+</details>
 
 <details class="publication-abstract">
 <summary>Abstract</summary>
