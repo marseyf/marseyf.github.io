@@ -45,5 +45,6 @@ format:
       light: flatly
       dark: darkly
     css: styles.css
+    include-before-body: includes/skip-link.html
     toc: true
     smooth-scroll: true
