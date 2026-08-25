@@ -87,6 +87,13 @@ input:focus-visible {
   outline-offset: 2px;
 }
 
+summary {
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--space-2);
+}
+
 .navbar {
   min-height: 3.25rem;
   background: var(--site-surface-raised) !important;
@@ -106,9 +113,35 @@ input:focus-visible {
 }
 
 .navbar .nav-link {
+  min-width: 44px;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
+}
+
+.navbar-toggler {
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.quarto-navbar-tools .quarto-navigation-tool {
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+#quarto-search .aa-DetachedSearchButton {
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.navbar-toggler,
+.quarto-navbar-tools .quarto-navigation-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar .nav-link:hover,
@@ -733,8 +766,20 @@ input:focus-visible {
   margin-top: 0;
 }
 
+.publication-entry p:has(.btn) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
 .publication-entry .btn {
-  margin: 0.2rem 0.35rem 0.2rem 0;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
 }
 
 .publication-abstract {

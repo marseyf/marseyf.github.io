@@ -3,6 +3,8 @@ import { readFileSync, statSync } from "node:fs";
 const read = (path) => readFileSync(path, "utf8");
 const source = read("index.qmd");
 const html = read("_site/index.html");
+const researchHtml = read("_site/research.html");
+const publicationsHtml = read("_site/publications.html");
 const css = read("styles.css");
 const asset = "posts/diffusion-models-medical-image-synthesis/assets/home-diffusion-ct.webp";
 const skipInclude = read("includes/skip-link.html");
@@ -10,6 +12,43 @@ const failures = [];
 
 function expect(condition, message) {
   if (!condition) failures.push(message);
+}
+
+const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const voidElements = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"]);
+
+function directChildTags(document, className) {
+  const classPattern = escapeRegExp(className);
+  const match = document.match(new RegExp(`<div\\b[^>]*class="[^"]*\\b${classPattern}\\b[^"]*"[^>]*>([\\s\\S]*?)</div>`, "i"));
+  if (!match) return [];
+
+  const tags = [];
+  let depth = 0;
+  for (const tagMatch of match[1].matchAll(/<\/?([a-z][\w:-]*)\b[^>]*>/gi)) {
+    const tag = tagMatch[1].toLowerCase();
+    const closing = tagMatch[0].startsWith("</");
+    const selfClosing = tagMatch[0].endsWith("/>") || voidElements.has(tag);
+    if (closing) {
+      depth -= 1;
+    } else {
+      if (depth === 0) tags.push(tag);
+      if (!selfClosing) depth += 1;
+    }
+  }
+  return tags;
+}
+
+function expectDirectChildren(document, className, expectedTags) {
+  const actualTags = directChildTags(document, className);
+  expect(
+    actualTags.join(",") === expectedTags.join(","),
+    `${className} must render ${expectedTags.join(", ")} as direct children, received ${actualTags.join(", ") || "none"}`,
+  );
+}
+
+function hasDeclarations(selector, declarations) {
+  const block = css.match(new RegExp(`${escapeRegExp(selector)}\\s*\\{([^}]*)\\}`, "m"))?.[1] ?? "";
+  return declarations.every(([property, value]) => new RegExp(`${escapeRegExp(property)}\\s*:\\s*${escapeRegExp(value)}\\s*;?`).test(block));
 }
 
 const homepageH1Count = (html.match(/<h1\b/gi) || []).length;
@@ -22,6 +61,7 @@ expect(/getElementById\("quarto-header"\)[\s\S]*?header\.before\(skip\)/.test(sk
 expect(Buffer.byteLength(skipInclude) <= 8_192, "homepage-specific skip-link script exceeds the 8 KiB JavaScript budget");
 expect(html.includes('id="main-content"'), "homepage must expose a main-content target");
 expect(html.includes('Mikael Häggström, M.D., via Wikimedia Commons (CC0 1.0)'), "research-note preview must retain full CT provenance");
+expect(html.includes("Visual treatment created with GPT Image 2"), "research-note preview must retain the GPT Image 2 visual-treatment disclosure");
 expect((html.match(/Conceptual schematic—not a result/g) || []).length === 3, "every work plate must be visibly labelled as conceptual, not a result");
 expect(html.includes('Conceptual 4D scan ledger'), "hero SVG must expose a programmatic name");
 expect(html.includes('contains no patient data or model results'), "hero SVG must expose its non-result description");
@@ -33,13 +73,32 @@ expect(!/\b(?:cdn|fonts\.googleapis|google-analytics)\b/i.test(html), "homepage 
 expect(statSync("styles.css").size <= 32_768, "styles.css exceeds the 32 KiB source budget");
 expect(statSync(asset).size <= 163_840, "research-note derivative exceeds the 160 KiB asset budget");
 
+expectDirectChildren(html, "project-diagram--time", ["span", "span", "span", "span", "span", "i", "i", "i", "i", "i"]);
+expectDirectChildren(html, "project-diagram--volume", ["span", "span", "span", "span", "span", "span", "span", "span", "span", "b"]);
+expectDirectChildren(html, "evaluation-rail", ["span", "span", "span", "span", "span", "span"]);
+expectDirectChildren(researchHtml, "research-mini-diagram--volume", ["span", "i", "span", "i", "span"]);
+expectDirectChildren(researchHtml, "research-mini-diagram--evaluation", ["span", "span", "span", "span"]);
+expectDirectChildren(researchHtml, "research-mini-diagram--trace", ["span", "i", "span", "i", "span", "i", "span"]);
+
+const publicationButtonCount = (publicationsHtml.match(/class="[^"]*\bbtn-sm\b[^"]*"/gi) || []).length;
+const summaryCount = (publicationsHtml.match(/<summary\b/gi) || []).length + (researchHtml.match(/<summary\b/gi) || []).length;
+const navbarToolCount = (html.match(/class="[^"]*\bquarto-navigation-tool\b[^"]*"/gi) || []).length;
+expect(publicationButtonCount > 0, "generated publications page must retain publication buttons");
+expect(summaryCount > 0, "generated research and publications pages must retain disclosure summaries");
+expect(navbarToolCount > 0, "generated homepage must retain navbar tools");
+expect(hasDeclarations("summary", [["min-width", "44px"], ["min-height", "44px"]]), "all summary controls must have 44px minimum hit targets");
+expect(hasDeclarations(".publication-entry .btn", [["min-width", "44px"], ["min-height", "44px"]]), "publication buttons must have 44px minimum hit targets");
+expect(hasDeclarations(".publication-entry p:has(.btn)", [["display", "flex"], ["gap", "8px"]]), "adjacent publication buttons must be separated by an 8px flex gap");
+expect(hasDeclarations(".navbar .nav-link", [["min-width", "44px"], ["min-height", "44px"]]), "navbar links must have 44px minimum hit targets");
+expect(hasDeclarations(".navbar-toggler", [["min-width", "44px"], ["min-height", "44px"]]), "navbar toggle must have 44px minimum hit targets");
+expect(hasDeclarations(".quarto-navbar-tools .quarto-navigation-tool", [["min-width", "44px"], ["min-height", "44px"]]), "Quarto navbar tools must have 44px minimum hit targets");
+
 const svg = source.match(/<svg\b[\s\S]*?<\/svg>/i)?.[0] ?? "";
 const svgElements = (svg.match(/<(?:svg|defs|pattern|path|rect|g|text)\b/gi) || []).length;
 expect(svg.length > 0 && Buffer.byteLength(svg) <= 24_576, "inline SVG exceeds the 24 KiB budget");
 expect(svgElements <= 80, "inline SVG exceeds the 80-element budget");
 expect(/animation:\s*scan-traverse\s+2\.4s/.test(css), "hero scan traversal must be a single 2.4-second animation");
 expect(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.scan-plane[\s\S]*?animation:\s*none/.test(css), "reduced-motion mode must retain a static scan-plane frame");
-expect(/min-height:\s*44px/.test(css), "interactive controls must retain 44px minimum targets");
 expect(/outline:\s*3px solid var\(--site-focus\)/.test(css), "focus treatment must use a 3px semantic outline");
 expect(!/gradient/i.test(css), "visual system must not use gradients");
 
@@ -59,4 +118,7 @@ console.log(JSON.stringify({
   assetBytes: statSync(asset).size,
   inlineSvgBytes: Buffer.byteLength(svg),
   inlineSvgElements: svgElements,
+  publicationButtonCount,
+  summaryCount,
+  navbarToolCount,
 }, null, 2));

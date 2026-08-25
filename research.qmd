@@ -12,9 +12,11 @@ description: "Research directions in efficient and trustworthy generative modell
 
 <section class="research-direction-grid" aria-label="Research directions">
 <article class="research-direction research-direction--generation">
+```{=html}
 <div class="research-mini-diagram research-mini-diagram--volume" aria-hidden="true">
 <span>volume</span><i></i><span>time</span><i></i><span>generation</span>
 </div>
+```
 <p class="eyebrow">01 / 3D + 4D generation</p>
 <h2>Volume and time, under practical constraints</h2>
 <p>Synthesising high-resolution volumetric and temporal data under realistic memory and compute constraints.</p>
@@ -25,9 +27,11 @@ description: "Research directions in efficient and trustworthy generative modell
 </article>
 
 <article class="research-direction research-direction--evaluation">
+```{=html}
 <div class="research-mini-diagram research-mini-diagram--evaluation" aria-hidden="true">
 <span>fidelity</span><span>diversity</span><span>privacy</span><span>anatomy</span>
 </div>
+```
 <p class="eyebrow">02 / evaluation</p>
 <h2>Evaluation beyond realism</h2>
 <p>Evaluating diversity, memorisation, privacy, anatomical validity, and downstream utility alongside fidelity.</p>
@@ -38,9 +42,11 @@ description: "Research directions in efficient and trustworthy generative modell
 </article>
 
 <article class="research-direction research-direction--systems">
+```{=html}
 <div class="research-mini-diagram research-mini-diagram--trace" aria-hidden="true">
 <span>literature</span><i></i><span>code</span><i></i><span>experiments</span><i></i><span>communication</span>
 </div>
+```
 <p class="eyebrow">03 / research systems</p>
 <h2>Scientific infrastructure that keeps context intact</h2>
 <p>Linking literature, code, experiments, evaluation, and communication reproducibly.</p>
