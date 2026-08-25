@@ -13,8 +13,29 @@ description: "Research directions in efficient and trustworthy generative modell
 <section class="research-direction-grid" aria-label="Research directions">
 <article class="research-direction research-direction--generation">
 ```{=html}
-<div class="research-mini-diagram research-mini-diagram--volume" aria-hidden="true">
-<span>volume</span><i></i><span>time</span><i></i><span>generation</span>
+<div class="research-figure-pair">
+<figure class="research-direction__figure paper-figure">
+<a class="paper-figure__image-link" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">
+<img src="assets/paper-figures/cardiodit-figure-1-framework.jpg" width="1358" height="930" loading="lazy" decoding="async" alt="CardioDiT framework: CMR slices are encoded into a 4D latent volume, denoised by a 4D diffusion transformer, and decoded into a time-resolved cardiac volume." />
+</a>
+<figcaption>
+<span class="eyebrow">Figure 1 / CardioDiT</span>
+<a class="paper-figure__source" href="https://arxiv.org/abs/2603.25194">Figure 1 — CardioDiT framework for 4D cardiac MRI synthesis.</a>
+<span class="paper-figure__provenance">Source: Seyfarth et al. (2026).</span>
+<a class="paper-figure__full" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">Open full-resolution figure</a>
+</figcaption>
+</figure>
+<figure class="research-direction__figure paper-figure">
+<a class="paper-figure__image-link" href="assets/paper-figures/voldit-figure-1-framework.jpg">
+<img src="assets/paper-figures/voldit-figure-1-framework.jpg" width="1472" height="879" loading="lazy" decoding="async" alt="VolDiT architecture from input-image encoding to 3D latent patch tokens and stacked diffusion-transformer blocks, guided by a timestep-gated spatial-control adapter." />
+</a>
+<figcaption>
+<span class="eyebrow">Figure 1 / VolDiT</span>
+<a class="paper-figure__source" href="https://arxiv.org/abs/2603.25181">Figure 1 — VolDiT framework with timestep-gated spatial control.</a>
+<span class="paper-figure__provenance">Source: Seyfarth et al. (2026).</span>
+<a class="paper-figure__full" href="assets/paper-figures/voldit-figure-1-framework.jpg">Open full-resolution figure</a>
+</figcaption>
+</figure>
 </div>
 ```
 <p class="eyebrow">01 / 3D + 4D generation</p>
@@ -28,9 +49,17 @@ description: "Research directions in efficient and trustworthy generative modell
 
 <article class="research-direction research-direction--evaluation">
 ```{=html}
-<div class="research-mini-diagram research-mini-diagram--evaluation" aria-hidden="true">
-<span>fidelity</span><span>diversity</span><span>privacy</span><span>anatomy</span>
-</div>
+<figure class="research-direction__figure paper-figure">
+<a class="paper-figure__image-link" href="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png">
+<img src="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png" width="1615" height="1016" loading="lazy" decoding="async" alt="Four WAD-Div plots for chest X-ray and lung CT show raw and normalized diversity scores increasing with the number of unique samples across exponential and zero reference distributions." />
+</a>
+<figcaption>
+<span class="eyebrow">Figure 2 / WAD-Div</span>
+<a class="paper-figure__source" href="https://doi.org/10.1007/978-3-658-51100-5_83">Figure 2 — Intrinsic dataset diversity measured with WAD-Div.</a>
+<span class="paper-figure__provenance">Source: Seyfarth, Dar &amp; Engelhardt (2026).</span>
+<a class="paper-figure__full" href="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png">Open full-resolution figure</a>
+</figcaption>
+</figure>
 ```
 <p class="eyebrow">02 / evaluation</p>
 <h2>Evaluation beyond realism</h2>
@@ -42,11 +71,6 @@ description: "Research directions in efficient and trustworthy generative modell
 </article>
 
 <article class="research-direction research-direction--systems">
-```{=html}
-<div class="research-mini-diagram research-mini-diagram--trace" aria-hidden="true">
-<span>literature</span><i></i><span>code</span><i></i><span>experiments</span><i></i><span>communication</span>
-</div>
-```
 <p class="eyebrow">03 / research systems</p>
 <h2>Scientific infrastructure that keeps context intact</h2>
 <p>Linking literature, code, experiments, evaluation, and communication reproducibly.</p>

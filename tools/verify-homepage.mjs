@@ -1,4 +1,4 @@
-import { readFileSync, statSync } from "node:fs";
+import { existsSync, readFileSync, statSync } from "node:fs";
 
 const read = (path) => readFileSync(path, "utf8");
 const source = read("index.qmd");
@@ -7,6 +7,11 @@ const researchHtml = read("_site/research.html");
 const publicationsHtml = read("_site/publications.html");
 const css = read("styles.css");
 const asset = "posts/diffusion-models-medical-image-synthesis/assets/home-diffusion-ct.webp";
+const paperAssets = [
+  "assets/paper-figures/cardiodit-figure-1-framework.jpg",
+  "assets/paper-figures/voldit-figure-1-framework.jpg",
+  "assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png",
+];
 const skipInclude = read("includes/skip-link.html");
 const failures = [];
 
@@ -62,9 +67,23 @@ expect(Buffer.byteLength(skipInclude) <= 8_192, "homepage-specific skip-link scr
 expect(html.includes('id="main-content"'), "homepage must expose a main-content target");
 expect(html.includes('Mikael Häggström, M.D., via Wikimedia Commons (CC0 1.0)'), "research-note preview must retain full CT provenance");
 expect(html.includes("Visual treatment created with GPT Image 2"), "research-note preview must retain the GPT Image 2 visual-treatment disclosure");
-expect((html.match(/Conceptual schematic—not a result/g) || []).length === 3, "every work plate must be visibly labelled as conceptual, not a result");
-expect(html.includes('Conceptual 4D scan ledger'), "hero SVG must expose a programmatic name");
-expect(html.includes('contains no patient data or model results'), "hero SVG must expose its non-result description");
+expect(!source.includes("scan-ledger"), "homepage source must not retain the conceptual hero schematic");
+expect(!source.includes("project-diagram"), "homepage source must not retain conceptual work schematics");
+expect(!researchHtml.includes("research-mini-diagram"), "research output must not retain conceptual mini-diagrams");
+expect(!html.includes("Conceptual schematic—not a result"), "homepage must not label authentic paper figures as conceptual");
+expect(!researchHtml.includes("Conceptual schematic"), "research page must not label authentic paper figures as conceptual");
+for (const paperAsset of paperAssets) {
+  expect(existsSync(paperAsset), `missing authentic paper figure asset: ${paperAsset}`);
+  if (existsSync(paperAsset)) expect(statSync(paperAsset).size > 0, `empty authentic paper figure asset: ${paperAsset}`);
+  expect(html.includes(paperAsset), `homepage must include the authentic figure ${paperAsset}`);
+  expect(researchHtml.includes(paperAsset), `research page must include the authentic figure ${paperAsset}`);
+}
+expect(html.includes("CardioDiT framework: CMR slices are encoded into a 4D latent volume"), "homepage CardioDiT figure must retain useful alt text");
+expect(html.includes("VolDiT architecture from input-image encoding to 3D latent patch tokens"), "homepage VolDiT figure must retain useful alt text");
+expect(html.includes("Four WAD-Div plots for chest X-ray and lung CT"), "homepage WAD-Div figure must retain useful alt text");
+expect((html.match(/Open full-resolution figure/g) || []).length === 4, "homepage must expose four full-resolution paper-figure links");
+expect((researchHtml.match(/Open full-resolution figure/g) || []).length === 3, "research page must expose three full-resolution paper-figure links");
+expect(html.includes("Figure 1 — CardioDiT framework") && html.includes("Figure 1 — VolDiT framework") && html.includes("Figure 2 — Intrinsic dataset diversity"), "homepage must visibly caption every authentic paper figure with its figure number and source");
 expect(html.includes('home-diffusion-ct.webp'), "homepage must use the compressed research-note derivative");
 expect(!html.includes('diffusion-process-ct.png'), "homepage must not request the original 2.6 MB PNG");
 expect(!html.includes('diffusion-process-ct.mp4'), "homepage must not request the article MP4");
@@ -73,12 +92,7 @@ expect(!/\b(?:cdn|fonts\.googleapis|google-analytics)\b/i.test(html), "homepage 
 expect(statSync("styles.css").size <= 32_768, "styles.css exceeds the 32 KiB source budget");
 expect(statSync(asset).size <= 163_840, "research-note derivative exceeds the 160 KiB asset budget");
 
-expectDirectChildren(html, "project-diagram--time", ["span", "span", "span", "span", "span", "i", "i", "i", "i", "i"]);
-expectDirectChildren(html, "project-diagram--volume", ["span", "span", "span", "span", "span", "span", "span", "span", "span", "b"]);
 expectDirectChildren(html, "evaluation-rail", ["span", "span", "span", "span", "span", "span"]);
-expectDirectChildren(researchHtml, "research-mini-diagram--volume", ["span", "i", "span", "i", "span"]);
-expectDirectChildren(researchHtml, "research-mini-diagram--evaluation", ["span", "span", "span", "span"]);
-expectDirectChildren(researchHtml, "research-mini-diagram--trace", ["span", "i", "span", "i", "span", "i", "span"]);
 
 const publicationButtonCount = (publicationsHtml.match(/class="[^"]*\bbtn-sm\b[^"]*"/gi) || []).length;
 const summaryCount = (publicationsHtml.match(/<summary\b/gi) || []).length + (researchHtml.match(/<summary\b/gi) || []).length;
@@ -93,12 +107,7 @@ expect(hasDeclarations(".navbar .nav-link", [["min-width", "44px"], ["min-height
 expect(hasDeclarations(".navbar-toggler", [["min-width", "44px"], ["min-height", "44px"]]), "navbar toggle must have 44px minimum hit targets");
 expect(hasDeclarations(".quarto-navbar-tools .quarto-navigation-tool", [["min-width", "44px"], ["min-height", "44px"]]), "Quarto navbar tools must have 44px minimum hit targets");
 
-const svg = source.match(/<svg\b[\s\S]*?<\/svg>/i)?.[0] ?? "";
-const svgElements = (svg.match(/<(?:svg|defs|pattern|path|rect|g|text)\b/gi) || []).length;
-expect(svg.length > 0 && Buffer.byteLength(svg) <= 24_576, "inline SVG exceeds the 24 KiB budget");
-expect(svgElements <= 80, "inline SVG exceeds the 80-element budget");
-expect(/animation:\s*scan-traverse\s+2\.4s/.test(css), "hero scan traversal must be a single 2.4-second animation");
-expect(/@media \(prefers-reduced-motion: reduce\)[\s\S]*?\.scan-plane[\s\S]*?animation:\s*none/.test(css), "reduced-motion mode must retain a static scan-plane frame");
+expect(!/scan-traverse|scan-ledger|project-diagram|research-mini-diagram/.test(css), "styles must not retain removed conceptual-schematic selectors or animation");
 expect(/outline:\s*3px solid var\(--site-focus\)/.test(css), "focus treatment must use a 3px semantic outline");
 expect(!/gradient/i.test(css), "visual system must not use gradients");
 
@@ -116,8 +125,7 @@ console.log(JSON.stringify({
   h1Count: visibleHeroH1,
   cssBytes: statSync("styles.css").size,
   assetBytes: statSync(asset).size,
-  inlineSvgBytes: Buffer.byteLength(svg),
-  inlineSvgElements: svgElements,
+  paperAssetCount: paperAssets.length,
   publicationButtonCount,
   summaryCount,
   navbarToolCount,

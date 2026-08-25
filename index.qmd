@@ -18,57 +18,16 @@ filters:
 </div>
 </div>
 
-<figure class="scan-ledger" aria-labelledby="scan-ledger-title">
-<svg viewBox="0 0 560 420" role="img" aria-labelledby="scan-ledger-title scan-ledger-desc" xmlns="http://www.w3.org/2000/svg">
-<title id="scan-ledger-title">Conceptual 4D scan ledger</title>
-<desc id="scan-ledger-desc">A conceptual illustration of stacked volume slices progressing through five time points. Cyan labels the observed forward path, amber labels the sampled reverse path. It contains no patient data or model results.</desc>
-<defs>
-<pattern id="ledger-grid" width="16" height="16" patternUnits="userSpaceOnUse">
-<path d="M 16 0 L 0 0 0 16" fill="none" class="scan-grid" stroke-width="1"/>
-</pattern>
-</defs>
-<rect class="scan-field" x="16" y="16" width="528" height="340" rx="4"/>
-<rect class="scan-grid-field" x="16" y="16" width="528" height="340" rx="4" fill="url(#ledger-grid)"/>
-<g class="scan-axes" aria-hidden="true">
-<path d="M72 324H494 M72 324V68 M72 324l36-26"/>
-<text x="503" y="330">x</text>
-<text x="62" y="61">y</text>
-<text x="112" y="298">z</text>
-</g>
-<g class="ledger-planes" aria-hidden="true">
-<rect x="116" y="115" width="224" height="150"/>
-<rect x="132" y="104" width="224" height="150"/>
-<rect x="148" y="93" width="224" height="150"/>
-<rect x="164" y="82" width="224" height="150"/>
-<rect x="180" y="71" width="224" height="150"/>
-</g>
-<g class="ledger-contours" aria-hidden="true">
-<path d="M151 189c23-45 95-51 131-12 22 24 25 57 6 81-25 32-91 28-123-1-24-22-30-48-14-68Z"/>
-<path d="M167 177c28-37 90-39 123-2 24 27 19 63-8 83-31 23-85 15-111-14-20-22-21-46-4-67Z"/>
-<path d="M184 164c36-27 91-17 113 21 17 29 6 65-28 78-40 16-85-5-100-38-10-23-5-47 15-61Z"/>
-<path d="M199 151c41-17 89 4 102 42 9 29-8 61-42 68-42 9-78-20-84-54-4-24 3-45 24-56Z"/>
-<path d="M214 139c43-6 81 24 82 61 1 29-24 53-57 50-42-3-70-39-62-73 5-22 16-35 37-38Z"/>
-</g>
-<g class="scan-plane" aria-hidden="true">
-<rect x="180" y="71" width="224" height="150"/>
-<path d="M180 71l16-11M404 71l16-11M404 221l16-11"/>
-</g>
-<g class="ledger-time" aria-hidden="true">
-<path d="M124 292H420"/>
-<path d="M124 288v8M198 288v8M272 288v8M346 288v8M420 288v8"/>
-<text x="116" y="313">t0</text><text x="190" y="313">t1</text><text x="264" y="313">t2</text><text x="338" y="313">t3</text><text x="412" y="313">t4</text>
-<text x="438" y="313">t</text>
-</g>
-<g class="ledger-legend">
-<path class="rail-forward" d="M72 369H262"/>
-<rect class="legend-observed" x="72" y="363" width="12" height="12"/>
-<text x="94" y="374">observed / forward</text>
-<path class="rail-reverse" d="M320 369H510"/>
-<path class="legend-sampled" d="M320 361l7 13h-14Z"/>
-<text x="340" y="374">sampled / reverse</text>
-</g>
-</svg>
-<figcaption><span class="eyebrow">Conceptual schematic</span> A registered ledger for volume, time, and sampling—not patient data or model output.</figcaption>
+<figure class="paper-figure paper-figure--hero">
+<a class="paper-figure__image-link" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">
+<img src="assets/paper-figures/cardiodit-figure-1-framework.jpg" width="1358" height="930" decoding="async" alt="CardioDiT framework: CMR slices are encoded into a 4D latent volume, denoised by a 4D diffusion transformer, and decoded into a time-resolved cardiac volume." />
+</a>
+<figcaption>
+<span class="eyebrow">Figure 1 / CardioDiT</span>
+<a class="paper-figure__source" href="https://arxiv.org/abs/2603.25194">Figure 1 — CardioDiT framework for 4D cardiac MRI synthesis.</a>
+<span class="paper-figure__provenance">Source: Seyfarth et al. (2026).</span>
+<a class="paper-figure__full" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">Open full-resolution figure</a>
+</figcaption>
 </figure>
 </section>
 
@@ -117,13 +76,20 @@ filters:
 <div class="work-plates">
 <article class="work-plate work-plate--wide">
 ```{=html}
-<div class="project-diagram project-diagram--time" aria-hidden="true">
-<span>t0</span><span>t1</span><span>t2</span><span>t3</span><span>t4</span>
-<i></i><i></i><i></i><i></i><i></i>
-</div>
+<figure class="work-plate__figure paper-figure">
+<a class="paper-figure__image-link" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">
+<img src="assets/paper-figures/cardiodit-figure-1-framework.jpg" width="1358" height="930" loading="lazy" decoding="async" alt="CardioDiT framework: CMR slices are encoded into a 4D latent volume, denoised by a 4D diffusion transformer, and decoded into a time-resolved cardiac volume." />
+</a>
+<figcaption>
+<span class="eyebrow">Figure 1 / CardioDiT</span>
+<a class="paper-figure__source" href="https://arxiv.org/abs/2603.25194">Figure 1 — CardioDiT framework for 4D cardiac MRI synthesis.</a>
+<span class="paper-figure__provenance">Source: Seyfarth et al. (2026).</span>
+<a class="paper-figure__full" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">Open full-resolution figure</a>
+</figcaption>
+</figure>
 ```
 <div class="work-plate__body">
-<p class="eyebrow">4D cardiac MRI · Conceptual schematic—not a result</p>
+<p class="eyebrow">4D cardiac MRI · Framework figure</p>
 <h3>CardioDiT: Latent Diffusion Transformers for 4D Cardiac MRI Synthesis</h3>
 <p>A fully 4D latent-diffusion framework for short-axis cine CMR synthesis.</p>
 <ul class="tag-list" aria-label="Research themes"><li>4D</li><li>latent diffusion</li><li>transformers</li></ul>
@@ -134,13 +100,20 @@ filters:
 
 <article class="work-plate">
 ```{=html}
-<div class="project-diagram project-diagram--volume" aria-hidden="true">
-<span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-<b>token planes</b>
-</div>
+<figure class="work-plate__figure paper-figure">
+<a class="paper-figure__image-link" href="assets/paper-figures/voldit-figure-1-framework.jpg">
+<img src="assets/paper-figures/voldit-figure-1-framework.jpg" width="1472" height="879" loading="lazy" decoding="async" alt="VolDiT architecture from input-image encoding to 3D latent patch tokens and stacked diffusion-transformer blocks, guided by a timestep-gated spatial-control adapter." />
+</a>
+<figcaption>
+<span class="eyebrow">Figure 1 / VolDiT</span>
+<a class="paper-figure__source" href="https://arxiv.org/abs/2603.25181">Figure 1 — VolDiT framework with timestep-gated spatial control.</a>
+<span class="paper-figure__provenance">Source: Seyfarth et al. (2026).</span>
+<a class="paper-figure__full" href="assets/paper-figures/voldit-figure-1-framework.jpg">Open full-resolution figure</a>
+</figcaption>
+</figure>
 ```
 <div class="work-plate__body">
-<p class="eyebrow">Volumetric synthesis · Conceptual schematic—not a result</p>
+<p class="eyebrow">Volumetric synthesis · Framework figure</p>
 <h3>VolDiT: Controllable Volumetric Medical Image Synthesis with Diffusion Transformers</h3>
 <p>Transformer-based 3D medical-image synthesis with mask-based spatial control.</p>
 <ul class="tag-list" aria-label="Research themes"><li>3D</li><li>patch tokens</li><li>control</li></ul>
@@ -150,12 +123,21 @@ filters:
 </article>
 
 <article class="work-plate">
-<div class="project-diagram project-diagram--evaluation" aria-hidden="true">
-<div class="distribution distribution--one"></div><div class="distribution distribution--two"></div>
-<span class="distance-bracket">distribution distance</span>
-</div>
+```{=html}
+<figure class="work-plate__figure paper-figure">
+<a class="paper-figure__image-link" href="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png">
+<img src="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png" width="1615" height="1016" loading="lazy" decoding="async" alt="Four WAD-Div plots for chest X-ray and lung CT show raw and normalized diversity scores increasing with the number of unique samples across exponential and zero reference distributions." />
+</a>
+<figcaption>
+<span class="eyebrow">Figure 2 / WAD-Div</span>
+<a class="paper-figure__source" href="https://doi.org/10.1007/978-3-658-51100-5_83">Figure 2 — Intrinsic dataset diversity measured with WAD-Div.</a>
+<span class="paper-figure__provenance">Source: Seyfarth, Dar &amp; Engelhardt (2026).</span>
+<a class="paper-figure__full" href="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png">Open full-resolution figure</a>
+</figcaption>
+</figure>
+```
 <div class="work-plate__body">
-<p class="eyebrow">Diversity evaluation · Conceptual schematic—not a result</p>
+<p class="eyebrow">Diversity evaluation · Result figure</p>
 <h3>Rethinking Diversity Metrics in Medical Imaging with Wasserstein Distance</h3>
 <p>A feature-space diversity metric for medical-image datasets.</p>
 <ul class="tag-list" aria-label="Research themes"><li>evaluation</li><li>diversity</li><li>feature space</li></ul>
