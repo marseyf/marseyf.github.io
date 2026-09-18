@@ -65,7 +65,9 @@ for paper in data:
     if paper['id'] not in pub.ids or paper['id'] not in pages[(SITE / 'index.html').resolve()].ids:
         errors.append(f'Missing publication: {paper["id"]}')
     if paper.get('project_url'):
-        errors.append('Project pages are outside this implementation phase')
+        project_page = (SITE / paper['project_url'] / 'index.html').resolve()
+        if project_page not in pages or pages[project_page].h1 != 1:
+            errors.append(f'Missing project page or invalid H1: {paper["id"]}')
 for key in ['linkedin', 'github', 'lab_github']:
     if profile.get(key) and profile[key] not in home:
         errors.append(f'Missing homepage profile link: {key}')

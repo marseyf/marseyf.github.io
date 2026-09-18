@@ -1,0 +1,104 @@
+[
+  {
+    "export": "public-example-1",
+    "source_collection": "samples_final/CardioDiT/public_l4",
+    "source_file": "sample_0_0.nii.gz",
+    "source_sha256": "3773d28e0a5b229818d89e04ce77d7450b5498cb674b6561a0b9dca130b67fbe",
+    "shape": [
+      256,
+      256,
+      6,
+      32
+    ],
+    "slices_one_based": [
+      2,
+      4,
+      6
+    ],
+    "frame_count": 32,
+    "playback_fps": 8,
+    "percentile_window": [
+      1,
+      99.5
+    ],
+    "display_window": [
+      -0.9996140003204346,
+      -0.15247926056385008
+    ],
+    "orientation": "Transpose H/W for display; no anatomical orientation labels"
+  },
+  {
+    "export": "public-example-2",
+    "source_collection": "samples_final/CardioDiT/public_l4",
+    "source_file": "sample_1_0.nii.gz",
+    "source_sha256": "3e274a3ea3d3f3138bf03c02c6d7b4bb0b13d507d486bc2b50524904ad20a815",
+    "shape": [
+      256,
+      256,
+      6,
+      32
+    ],
+    "slices_one_based": [
+      2,
+      4,
+      6
+    ],
+    "frame_count": 32,
+    "playback_fps": 8,
+    "percentile_window": [
+      1,
+      99.5
+    ],
+    "display_window": [
+      -0.9995085597038269,
+      -0.42233027651905997
+    ],
+    "orientation": "Transpose H/W for display; no anatomical orientation labels"
+  },
+  {
+    "export": "public-example-3",
+    "source_collection": "samples_final/CardioDiT/public_l4",
+    "source_file": "sample_2_0.nii.gz",
+    "source_sha256": "b40ee13150480e8fd270926436914045fa27e1f6a7221dcb5aa8b0d26df52a1d",
+    "shape": [
+      256,
+      256,
+      6,
+      32
+    ],
+    "slices_one_based": [
+      2,
+      4,
+      6
+    ],
+    "frame_count": 32,
+    "playback_fps": 8,
+    "percentile_window": [
+      1,
+      99.5
+    ],
+    "display_window": [
+      -0.9996598362922668,
+      -0.3013131485879421
+    ],
+    "orientation": "Transpose H/W for display; no anatomical orientation labels"
+  },
+  {
+    "export": "development-f07",
+    "source_file": "F07_last_checkpoint_sample_000_quantized_middle_slice.gif",
+    "source_sha256": "54aec6151e34f222ae117ca0cb286f2a25de85b54ca8eb3fa272f40ce0e36618",
+    "training_updates": 300000,
+    "sampling_steps": 100,
+    "output": "quantized",
+    "source_shape": [
+      12,
+      224,
+      224,
+      32
+    ],
+    "slice_zero_based": 6,
+    "frame_count": 32,
+    "playback_fps": 8,
+    "status": "Development example; not a paper benchmark"
+  }
+]

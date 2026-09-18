@@ -48,7 +48,9 @@ Use `type` for Talk, Poster, Workshop, or Panel. Leave optional links null until
 
 Each publication has a stable `id`, authors, summary, abstract, citation, type, and resource URLs. `year` is the citation year. Conference year and online date can differ; preserve those in the citation and optional date fields. Homepage and publication archive use the same renderer: descending citation year, then data-file order within each year. The earlier `featured` fields are retained as metadata but do not restrict the homepage list.
 
-Every current `project_url` is null. Paper titles link to the paper until a real project page exists. No individual project pages or placeholder buttons are part of this redesign. In a later phase, add `projects/<id>/index.qmd`, include `projects/**/*.qmd` in `_quarto.yml`'s render list, and set that publication's `project_url` to `projects/<id>/`. Keep IDs stable so existing publication anchors continue to work. Update the phase-specific project-page check in `tools/verify-site.py` when beginning that phase.
+CardioDiT is the first project page at `projects/cardiodit/`. Publication titles link only to their configured `project_url`; records without a project page use plain titles, with Paper and Code links still available. To add the next page, create `projects/<id>/index.qmd` and set its `project_url` to `projects/<id>/`. The project render glob is already enabled. Keep IDs stable so existing publication anchors continue to work. The verifier requires each configured project URL to resolve to a page with one H1.
+
+The CardioDiT page uses native video controls, three selectable synthetic examples, and a separate development update. Its sources and export details are in `docs/cardiodit-project-sources.md`. Media generation is a separate authoring step; the build serves committed assets. Add project assets referenced only through JavaScript to Quarto resources so they are included in the output.
 
 ## Verification and publishing
 

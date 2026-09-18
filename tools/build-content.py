@@ -56,7 +56,7 @@ def portrait():
 
 
 def resource_links(paper):
-    entries = [("project_url", "Project", "arrow-up-right"), ("paper_url", "Paper", "file-earmark-text"), ("code_url", "Code", "code-slash")]
+    entries = [("paper_url", "Paper", "file-earmark-text"), ("code_url", "Code", "code-slash")]
     return '<div class="resource-links">' + "".join(
         f'<a href="{url(paper[key])}">{icon(symbol)}<span>{label}</span></a>'
         for key, label, symbol in entries if paper.get(key)
@@ -109,7 +109,10 @@ def publication_list(year_heading=2):
         entries = []
         for paper in (p for p in papers if p['year'] == year):
             authors = ', '.join(f'<strong>{e(author)}</strong>' if author in ['Marvin Seyfarth', 'M Seyfarth'] else e(author) for author in paper['authors'])
-            entries.append(f'''<article class="publication-entry" id="{e(paper['id'])}"><p class="eyebrow">{e(paper['display_venue'])} · {e(paper['publication_type'])}</p><h{title_heading} class="publication-title"><a href="{url(paper.get('project_url') or paper['paper_url'])}">{e(paper['title'])}</a></h{title_heading}><p class="publication-authors">{authors}</p><p class="publication-focus">{e(paper['summary'])}</p>{resource_links(paper)}<details><summary>Abstract &amp; citation</summary><div class="publication-detail"><p>{e(paper['abstract'])}</p><p class="citation"><strong>Publication details:</strong> {e(paper['citation'])}</p></div></details></article>''')
+            title = e(paper['title'])
+            if paper.get('project_url'):
+                title = f'<a href="{url(paper["project_url"])}">{title}</a>'
+            entries.append(f'''<article class="publication-entry" id="{e(paper['id'])}"><p class="eyebrow">{e(paper['display_venue'])} · {e(paper['publication_type'])}</p><h{title_heading} class="publication-title">{title}</h{title_heading}><p class="publication-authors">{authors}</p><p class="publication-focus">{e(paper['summary'])}</p>{resource_links(paper)}<details><summary>Abstract &amp; citation</summary><div class="publication-detail"><p>{e(paper['abstract'])}</p><p class="citation"><strong>Publication details:</strong> {e(paper['citation'])}</p></div></details></article>''')
         sections.append(f'<section class="publication-year"><h{year_heading} class="publication-year-label">{year}</h{year_heading}><div>{"".join(entries)}</div></section>')
     return '<div class="publication-list">' + ''.join(sections) + '</div>'
 
