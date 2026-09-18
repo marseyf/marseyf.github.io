@@ -1,13 +1,22 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - assets/fonts/*LICENSE.md
+    - projects/cardiodit/assets/**
+  pre-render:
+    - python3 tools/build-content.py
   render:
     - index.qmd
     - research.qmd
     - publications.qmd
     - blog.qmd
     - about.qmd
+    - news.qmd
+    - outreach.qmd
+    - "projects/**/*.qmd"
     - "posts/**/*.qmd"
+    - "!posts/first-article/**"
 
 website:
   title: "Marvin Seyfarth"
@@ -17,34 +26,39 @@ website:
   open-graph: true
   twitter-card: true
   repo-url: "https://github.com/marseyf/marseyf.github.io"
-  repo-actions: [source, issue]
   navbar:
     pinned: true
     left:
-      - href: index.qmd
-        text: Home
-      - href: research.qmd
-        text: Research
-      - href: publications.qmd
-        text: Publications
-      - href: blog.qmd
-        text: Blog
-      - href: about.qmd
+      - href: index.qmd#about
         text: About
-    right:
-      - icon: github
-        href: "https://github.com/marseyf"
-        aria-label: GitHub
+      - href: index.qmd#news
+        text: News
+      - href: index.qmd#publications
+        text: Publications
+      - href: index.qmd#talks
+        text: Talks
+      - href: index.qmd#notes
+        text: Notes
+    collapse-below: lg
   page-footer:
     left: "Content © Marvin Seyfarth"
-    right: "Built with Quarto"
+    right:
+      - text: About
+        href: index.qmd#about
+      - icon: building
+        href: "https://github.com/Cardio-AI"
+        aria-label: Cardio-AI lab on GitHub
+      - icon: github
+        href: "https://github.com/marseyf"
+        aria-label: Personal GitHub
 
 format:
   html:
     theme:
-      light: flatly
-      dark: darkly
+      light: [flatly, theme.scss]
+      dark: [darkly, theme.scss]
     css: styles.css
     include-before-body: includes/skip-link.html
     toc: true
     smooth-scroll: true
+    anchor-sections: false

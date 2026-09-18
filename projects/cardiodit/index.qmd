@@ -1,0 +1,107 @@
+---
+title: "CardioDiT — Latent Diffusion Transformers for 4D Cardiac MRI Synthesis"
+description: "Joint spatial and temporal modeling for synthetic cardiac cine MRI. Explore CardioDiT's method, generated examples, paper results, and ongoing development."
+image: assets/public-example-1.jpg
+page-layout: full
+body-classes: project-page
+toc: false
+filters:
+  - ../../tools/remove-home-title.lua
+---
+
+```{=html}
+<article class="research-project">
+<header class="project-hero">
+<div class="project-inner">
+<a class="project-back text-link" href="../../index.html#publications"><i class="bi bi-arrow-left" aria-hidden="true"></i> Publications</a>
+<h1>CardioDiT</h1>
+<p class="project-subtitle">Latent Diffusion Transformers<br>for 4D Cardiac MRI Synthesis</p>
+<p class="project-venue">MICCAI 2026</p>
+<p class="project-authors"><a href="../../index.html#about">Marvin Seyfarth</a>, Sarah Kaye Müller, Arman Ghanaat, Isabelle Ayx, Fabian Fastenrath, Philipp Wild, Alexander Hertel, Theano Papavassiliu, Salman Ul Hassan Dar, <a href="https://www.klinikum.uni-heidelberg.de/chirurgische-klinik-zentrum/herzchirurgie/forschung/institute-for-artificial-intelligence-in-cardiovascular-medicine-aicm/#layer=/personen/prof-dr-sandy-engelhardt-7654/">Sandy Engelhardt</a></p>
+<div class="project-resources resource-links">
+<a class="project-primary" href="https://arxiv.org/abs/2603.25194"><span class="project-resource-icon"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></span><span>Paper</span></a>
+<a href="https://github.com/Cardio-AI/cardiodit"><span class="project-resource-icon"><i class="bi bi-github" aria-hidden="true"></i></span><span>Code</span></a>
+<a href="#citation"><span class="project-resource-icon"><i class="bi bi-quote" aria-hidden="true"></i></span><span>Cite this work</span></a>
+</div>
+</div>
+</header>
+
+<section class="project-showcase project-inner" aria-labelledby="examples-title">
+<div class="showcase-heading"><h2 id="examples-title">Synthetic cardiac motion</h2></div>
+<figure class="cine-figure">
+<div class="cine-stage">
+<div class="cine-depth"><span>Depth (through-plane)</span><span class="depth-arrow" aria-hidden="true"></span></div>
+<video id="cardiodit-cine" controls loop playsinline preload="none" poster="assets/public-example-1.jpg" aria-label="Synthetic CardioDiT example 1: three synchronized short-axis slices"><source src="assets/public-example-1.mp4" type="video/mp4">Your browser cannot play this video. <a href="assets/public-example-1.mp4">Open the synthetic cine example.</a></video>
+</div>
+<div class="cine-controls" role="group" aria-label="Choose a synthetic example">
+<span>Explore samples</span>
+<button type="button" data-cine="1" aria-pressed="true" aria-controls="cardiodit-cine">Example 1</button>
+<button type="button" data-cine="2" aria-pressed="false" aria-controls="cardiodit-cine">Example 2</button>
+<button type="button" data-cine="3" aria-pressed="false" aria-controls="cardiodit-cine">Example 3</button>
+</div>
+<noscript><p>Additional examples: <a href="assets/public-example-2.mp4">Example 2</a> · <a href="assets/public-example-3.mp4">Example 3</a>.</p></noscript>
+</figure>
+<nav class="project-jump-links" aria-label="On this project page"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#development">Ongoing work</a><a href="#citation">Citation</a></nav>
+</section>
+
+<section class="project-section" id="overview" aria-labelledby="overview-title"><div class="project-inner project-reading">
+<h2 id="overview-title">A heart in four dimensions</h2>
+<p class="project-lead">A cardiac cine MRI records anatomy through both space and time. Generating convincing individual slices is only part of the task: those slices also need to form a coherent, moving heart.</p>
+<p>CardioDiT models complete 3D+t volumes jointly in a compact latent space. The preprint compares this approach with slice-wise 2D+t and channel-merged 3D+t models, examining image distributions, through-plane consistency, and cardiac function.</p>
+</div></section>
+
+<section class="project-section project-section--tinted" id="method" aria-labelledby="method-title"><div class="project-inner">
+<h2 id="method-title">From slices to a joint 4D representation</h2>
+<figure class="project-framework"><a href="../../assets/paper-figures/cardiodit-figure-1-framework.jpg"><img src="../../assets/paper-figures/cardiodit-figure-1-framework.jpg" width="1358" height="930" loading="lazy" alt="CardioDiT pipeline: encode 2D plus time slices, stack their latents into a full 4D volume, jointly denoise with a diffusion transformer, then decode."></a><figcaption>The CardioDiT framework. Figure 1 from the <a href="https://arxiv.org/html/2603.25194v1#S2.F1">preprint</a>. Select the diagram to enlarge it.</figcaption></figure>
+<div class="method-steps">
+<div><h3>Encode</h3><p>A spatiotemporal autoencoder compresses 2D+t slices. Their latent representations are stacked along depth.</p></div>
+<div><h3>Model jointly</h3><p>A diffusion transformer processes 4D patches with positional information for all four axes.</p></div>
+<div><h3>Decode</h3><p>The generated latent volume is decoded into a complete cine MRI sequence.</p></div>
+</div>
+</div></section>
+
+<section class="project-section" id="results" aria-labelledby="results-title"><div class="project-inner">
+<h2 id="results-title">Results from the preprint</h2>
+<p class="project-reading">On the public-data evaluation, CardioDiT achieves the lowest FID and the highest precision and recall among the three compared generators.</p>
+<div class="project-table-scroll" role="region" aria-label="Public dataset comparison" tabindex="0">
+<table class="project-results"><caption>Public datasets: ACDC and M&amp;Ms-2 · 50 synthetic volumes per model</caption><thead><tr><th scope="col">Model</th><th scope="col">FID ↓</th><th scope="col">Precision ↑</th><th scope="col">Recall ↑</th></tr></thead><tbody>
+<tr><th scope="row">Factorized 2D+t LDM</th><td>100.1</td><td>0.89</td><td>0.17</td></tr>
+<tr><th scope="row">Channel-merged 3D+t U-Net</th><td>221.5</td><td>0.59</td><td>0.64</td></tr>
+<tr class="result-highlight"><th scope="row">CardioDiT</th><td><strong>71.9</strong></td><td><strong>0.97</strong></td><td><strong>0.70</strong></td></tr>
+</tbody></table></div>
+<p class="project-source">Selected metrics from <a href="https://arxiv.org/html/2603.25194v1#S2.T1">Table 1</a>, using CineMA features and the real validation cohort as reference. ↓ Lower is better; ↑ higher is better. Full structural and cardiac-function analyses are in the paper.</p>
+<details class="project-limitations"><summary>Scope and limitations</summary><p>The preprint studies unconditional synthesis with fixed spatial sizes and 32-frame temporal standardization. Cyclic repetition may introduce artificial periodicity. The displayed samples illustrate model outputs; they are not a substitute for the quantitative evaluation or evidence of clinical validation.</p></details>
+</div></section>
+
+<section class="project-section project-section--tinted" id="development" aria-labelledby="development-title"><div class="project-inner">
+<p class="eyebrow">Beyond the preprint · Development update</p>
+<h2 id="development-title">Ongoing work</h2>
+<div class="development-layout"><div>
+<h3>More flexible spatial and temporal modeling</h3><p>The development code adds axis-aware 4D rotary positional encoding and support for variable input shapes and native temporal lengths.</p>
+<h3>Exploring alternative generative training</h3><p>Current experiments investigate flow matching and self-conditioning alongside the original diffusion approach. The example shown here is from a fixed-shape F07 run, using 4D rotary positional encoding.</p>
+<p class="development-note">These are subsequent experiments, separate from the benchmark results above. Comparative quality or speed gains have not yet been established here.</p>
+</div><figure class="development-example"><video controls loop playsinline preload="none" poster="assets/development-f07.jpg" aria-label="Synthetic F07 development example, central short-axis slice over 32 frames" aria-describedby="development-caption"><source src="assets/development-f07.mp4" type="video/mp4">Your browser cannot play this video. <a href="assets/development-f07.mp4">Open the development example.</a></video><figcaption id="development-caption">F07 · 300,000 training updates · 100 sampling steps. Central slice, quantized decoding, EMA weights. A synthetic development example from the local experiment archive.</figcaption></figure></div>
+</div></section>
+
+<section class="project-section" id="citation" aria-labelledby="citation-title"><div class="project-inner">
+<h2 id="citation-title">Citation &amp; resources</h2>
+<p>If this work supports your research, please cite the preprint.</p>
+<pre class="project-bibtex"><code>@misc{seyfarth2026cardiodit,
+  title   = {CardioDiT: Latent Diffusion Transformers for
+             4D Cardiac MRI Synthesis},
+  author  = {Marvin Seyfarth and Sarah Kaye Müller and
+             Arman Ghanaat and Isabelle Ayx and Fabian Fastenrath and
+             Philipp Wild and Alexander Hertel and Theano Papavassiliu and
+             Salman Ul Hassan Dar and Sandy Engelhardt},
+  year    = {2026},
+  eprint  = {2603.25194},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CV},
+  url     = {https://arxiv.org/abs/2603.25194}
+}</code></pre>
+<div class="resource-links"><a href="https://arxiv.org/abs/2603.25194"><i class="bi bi-file-earmark-text" aria-hidden="true"></i> Read the paper</a><a href="https://github.com/Cardio-AI/cardiodit"><i class="bi bi-github" aria-hidden="true"></i> Explore the code</a><a href="assets/cardiodit.bib" download><i class="bi bi-download" aria-hidden="true"></i> Download BibTeX</a></div>
+<p class="project-source">The public repository documents the original two-stage pipeline. Pretrained weights are listed there as forthcoming; the development examples above are from subsequent local experiments.</p>
+</div></section>
+</article>
+<script src="project.js" defer></script>
+```

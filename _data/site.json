@@ -1,0 +1,59 @@
+{
+  "profile": {
+    "name": "Marvin Seyfarth",
+    "role": "PhD Student",
+    "institute": "Institute for Artificial Intelligence in Cardiovascular Medicine",
+    "institution": "University Hospital Heidelberg",
+    "intro": "I develop and evaluate generative models for medical imaging, with a focus on efficient 3D and 4D synthesis.",
+    "portrait": "assets/profile.png",
+    "portrait_alt": "Marvin Seyfarth",
+    "github": "https://github.com/marseyf",
+    "lab_github": "https://github.com/Cardio-AI",
+    "linkedin": "https://de.linkedin.com/in/marvin-seyfarth-375979211"
+  },
+  "news": [
+    {
+      "date": "2026-03-26",
+      "title": "CardioDiT preprint released",
+      "text": "Joint spatial and temporal modeling for 4D cardiac MRI synthesis with diffusion transformers.",
+      "url": "https://arxiv.org/abs/2603.25194"
+    },
+    {
+      "date": "2026-03-26",
+      "title": "VolDiT preprint released",
+      "text": "Transformer-based volumetric medical image synthesis with segmentation-guided spatial control.",
+      "url": "https://arxiv.org/abs/2603.25181"
+    },
+    {
+      "date": "2026-03-12",
+      "title": "Rethinking diversity evaluation",
+      "text": "Our BVM 2026 paper introduces WAD-Div, a feature-based measure of medical-image dataset diversity.",
+      "url": "https://doi.org/10.1007/978-3-658-51100-5_83"
+    },
+    {
+      "date": "2025-09-21",
+      "title": "MedLoRD published online",
+      "text": "Our SASHIMI 2025 paper examines high-resolution 3D CT synthesis under limited computational resources.",
+      "url": "https://doi.org/10.1007/978-3-032-05573-6_1"
+    },
+    {
+      "date": "2025-08-11",
+      "title": "Patient-data memorization study published",
+      "text": "Our Nature Biomedical Engineering study investigates patient-image memorization in unconditional latent diffusion models.",
+      "url": "https://doi.org/10.1038/s41551-025-01468-8"
+    }
+  ],
+  "talks": [
+    {
+      "title": "From papers to models and back: how to become an AI-empowered scientist using AI agents",
+      "type": "Talk",
+      "date": "2026-11-13",
+      "event": "ESC Digital & AI Summit 2026",
+      "location": "Basel, Switzerland",
+      "session": "How to design the flow with OpenClaw and Co: vibe coding across agencies",
+      "url": "https://esc365.escardio.org/ESC-Digital-AI-Summit/sessions/20891-how-to-design-the-flow-with-openclaw-and-co-vibe-coding-across-agencies",
+      "slides": null,
+      "video": null
+    }
+  ]
+}

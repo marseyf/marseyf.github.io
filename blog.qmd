@@ -11,4 +11,4 @@ page-layout: full
 toc: false
 ---
 
-Original, reviewed syntheses of medical generative modelling and evaluation. Articles are public-facing explanations, not direct exports of private research notes.
+Explanations and practical perspectives on generative medical imaging, from the underlying methods to their evaluation.

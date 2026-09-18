@@ -14,6 +14,12 @@ Private evidence notes and pre-publication drafts live in a separate, non-public
 quarto preview
 ```
 
+## Editing the portfolio
+
+See [the maintenance guide](docs/maintaining-the-portfolio.md) for adding news, talks, a portrait, and publication records. Shared content lives in `_data/`; the site builds with Quarto and Python 3, without additional packages.
+
+Run `quarto render` followed by `python3 tools/verify-site.py` to check the generated pages and links.
+
 ## Publication
 
 An approved release manually runs `.github/workflows/publish.yml`, which renders `_site` and deploys it through GitHub Pages. Drafts are prepared privately and moved into `posts/<slug>/index.qmd` only after review.
