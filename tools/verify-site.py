@@ -18,13 +18,19 @@ class Page(HTMLParser):
         self.ids = set()
         self.links = []
         self.h1 = 0
+        self.sections = []
+        self.profile_h1 = 0
         self.feed(path.read_text())
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         if attrs.get('id'):
             self.ids.add(attrs['id'])
+        if tag == 'section':
+            self.sections.append(attrs.get('class', '').split())
         self.h1 += tag == 'h1'
+        if tag == 'h1' and any('profile-band' in classes for classes in self.sections):
+            self.profile_h1 += 1
         if tag == 'img' and 'alt' not in attrs:
             errors.append(f'{self.path}: image without alt text')
         for key in ('href', 'src', 'poster'):
@@ -32,6 +38,10 @@ class Page(HTMLParser):
                 self.links.append(attrs[key])
         if tag == 'a' and attrs.get('href') == '' and 'quarto-color-scheme-toggle' not in attrs.get('class', '').split():
             errors.append(f'{self.path}: empty link')
+
+    def handle_endtag(self, tag):
+        if tag == 'section' and self.sections:
+            self.sections.pop()
 
 
 pages = {p.resolve(): Page(p) for p in SITE.rglob('*.html')}
@@ -56,6 +66,9 @@ for name in routes:
         errors.append(f'Missing page: {name}')
     elif pages[path].h1 != 1:
         errors.append(f'{name}: expected one H1, got {pages[path].h1}')
+
+if pages[(SITE / 'index.html').resolve()].profile_h1 != 1:
+    errors.append('Homepage name must stay inside the colored profile panel')
 
 home = (SITE / 'index.html').read_text()
 pub = pages[(SITE / 'publications.html').resolve()]

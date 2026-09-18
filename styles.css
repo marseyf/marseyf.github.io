@@ -87,6 +87,7 @@ body.quarto-dark .navbar-toggler-icon { filter: brightness(0) invert(1); }
 .section-inner { width: min(980px, calc(100% - 80px)); margin-inline: auto; }
 .profile-band { background: #193f4d; color: #edf6f8; }
 .profile-hero { display: grid; grid-template-columns: 184px minmax(0, 620px); gap: 2.5rem; align-items: center; padding-block: 70px; }
+#title-block-header.profile-copy { margin: 0; }
 .profile-hero h1 { color: #ffffff; margin: 0 0 1rem; font-size: clamp(2.3rem, 4.8vw, 3.2rem); font-weight: 500; letter-spacing: -.025em; }
 .affiliation { font-size: 1rem; line-height: 1.8; margin: 0 0 1.5rem; max-width: 55ch; color: #d1e5eb; }
 .profile-role { display: block; color: #edf6f8; font-weight: 600; }
