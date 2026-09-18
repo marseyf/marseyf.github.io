@@ -16,17 +16,17 @@
       "Sandy Engelhardt."
     ],
     "year": 2026,
-    "status": "arXiv preprint",
+    "status": "Accepted at MICCAI 2026",
     "topic": "Volume + time",
     "summary": "A fully 4D latent-diffusion framework for short-axis cine CMR synthesis.",
-    "citation": "arXiv preprint arXiv:2603.25194 [cs.CV], submitted 26 Mar 2026.",
+    "citation": "Accepted at MICCAI 2026. Preprint: arXiv:2603.25194 [cs.CV], submitted 26 Mar 2026.",
     "abstract": "Latent diffusion models (LDMs) have recently achieved strong performance in 3D medical image synthesis. However, modalities like cine cardiac MRI (CMR), representing a temporally synchronized 3D volume across the cardiac cycle, add an additional dimension that most generative approaches do not model directly. Instead, they factorize space and time or enforce temporal consistency through auxiliary mechanisms such as anatomical masks. Such strategies introduce structural biases that may limit global context integration and lead to subtle spatiotemporal discontinuities or physiologically inconsistent cardiac dynamics. We investigate whether a unified 4D generative model can learn continuous cardiac dynamics without architectural factorization. We propose CardioDiT, a fully 4D latent diffusion framework for short-axis cine CMR synthesis based on diffusion transformers. A spatiotemporal VQ-VAE encodes 2D+t slices into compact latents, which a diffusion transformer then models jointly as complete 3D+t volumes, coupling space and time throughout the generative process. We evaluate CardioDiT on public CMR datasets and a larger private cohort, comparing it to baselines with progressively stronger spatiotemporal coupling. Results show improved inter-slice consistency, temporally coherent motion, and realistic cardiac function distributions, suggesting that explicit 4D modeling with a diffusion transformer provides a principled foundation for spatiotemporal cardiac image synthesis. Code and models trained on public data are available at https://github.com/Cardio-AI/cardiodit.",
     "paper_url": "https://arxiv.org/abs/2603.25194",
     "code_url": "https://github.com/Cardio-AI/cardiodit",
     "project_url": "projects/cardiodit/",
     "featured": true,
-    "display_venue": "arXiv",
-    "publication_type": "Preprint",
+    "display_venue": "MICCAI 2026",
+    "publication_type": "Accepted paper",
     "featured_order": 1
   },
   {

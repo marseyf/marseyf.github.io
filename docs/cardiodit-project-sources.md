@@ -2,6 +2,8 @@
 
 ## Scientific content
 
+MICCAI 2026 acceptance was confirmed by Marvin in the website refinement request. The page and publication listing reflect that status; the paper link and BibTeX still identify the available arXiv version until proceedings details are supplied.
+
 - Paper: https://arxiv.org/abs/2603.25194 (v1, 26 March 2026).
 - Framework: existing `assets/paper-figures/cardiodit-figure-1-framework.jpg`, Figure 1 from the paper.
 - Public-dataset comparison: Table 1, public dataset block. The page reports FID, precision and recall for the three generated-data models, with the sample count and feature extractor. It does not recompute these results or present development samples as paper benchmarks.

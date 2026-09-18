@@ -14,10 +14,10 @@ filters:
 <header class="project-hero">
 <div class="project-inner">
 <a class="project-back text-link" href="../../index.html#publications"><i class="bi bi-arrow-left" aria-hidden="true"></i> Publications</a>
-<p class="eyebrow">Research project · March 2026 · arXiv preprint</p>
 <h1>CardioDiT</h1>
 <p class="project-subtitle">Latent Diffusion Transformers<br>for 4D Cardiac MRI Synthesis</p>
-<p class="project-authors"><a href="../../index.html#about">Marvin Seyfarth</a>, Sarah Kaye Müller, Arman Ghanaat, Isabelle Ayx, Fabian Fastenrath, Philipp Wild, Alexander Hertel, Theano Papavassiliu, Salman Ul Hassan Dar, Sandy Engelhardt</p>
+<p class="project-venue">MICCAI 2026</p>
+<p class="project-authors"><a href="../../index.html#about">Marvin Seyfarth</a>, Sarah Kaye Müller, Arman Ghanaat, Isabelle Ayx, Fabian Fastenrath, Philipp Wild, Alexander Hertel, Theano Papavassiliu, Salman Ul Hassan Dar, <a href="https://www.klinikum.uni-heidelberg.de/chirurgische-klinik-zentrum/herzchirurgie/forschung/institute-for-artificial-intelligence-in-cardiovascular-medicine-aicm/#layer=/personen/prof-dr-sandy-engelhardt-7654/">Sandy Engelhardt</a></p>
 <div class="project-resources resource-links">
 <a class="project-primary" href="https://arxiv.org/abs/2603.25194"><i class="bi bi-file-earmark-text" aria-hidden="true"></i> Paper</a>
 <a href="https://github.com/Cardio-AI/cardiodit"><i class="bi bi-github" aria-hidden="true"></i> Code</a>
@@ -28,10 +28,10 @@ filters:
 </header>
 
 <section class="project-showcase project-inner" aria-labelledby="examples-title">
-<div class="showcase-heading"><h2 id="examples-title">Synthetic cardiac motion</h2><span>Original public-data evaluation</span></div>
+<div class="showcase-heading"><h2 id="examples-title">Synthetic cardiac motion</h2></div>
 <figure class="cine-figure">
 <div class="cine-stage">
-<div class="cine-labels" aria-hidden="true"><span>Slice 2 / 6</span><span>Slice 4 / 6</span><span>Slice 6 / 6</span></div>
+<div class="cine-depth"><span>Depth (through-plane)</span><span class="depth-arrow" aria-hidden="true"></span></div>
 <video id="cardiodit-cine" controls loop playsinline preload="none" poster="assets/public-example-1.jpg" aria-label="Synthetic CardioDiT example 1: three synchronized short-axis slices" aria-describedby="cine-caption"><source src="assets/public-example-1.mp4" type="video/mp4">Your browser cannot play this video. <a href="assets/public-example-1.mp4">Open the synthetic cine example.</a></video>
 </div>
 <div class="cine-controls" role="group" aria-label="Choose a synthetic example">
@@ -40,7 +40,7 @@ filters:
 <button type="button" data-cine="2" aria-pressed="false" aria-controls="cardiodit-cine">Example 2</button>
 <button type="button" data-cine="3" aria-pressed="false" aria-controls="cardiodit-cine">Example 3</button>
 </div>
-<figcaption id="cine-caption"><span id="cine-status" role="status">Example 1.</span> Three slices of the same synthetic volume, shown over all 32 frames. Select play to view their motion in sync. Display playback: 8 frames/s. These examples come from the original public_l4 evaluation collection.</figcaption>
+<figcaption id="cine-caption"><span id="cine-status" role="status">Example 1.</span> Three short-axis slices at increasing depth, shown over 32 frames. Select play to view their motion in sync.</figcaption>
 <noscript><p>Additional examples: <a href="assets/public-example-2.mp4">Example 2</a> · <a href="assets/public-example-3.mp4">Example 3</a>.</p></noscript>
 </figure>
 <nav class="project-jump-links" aria-label="On this project page"><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#development">Ongoing work</a><a href="#citation">Citation</a></nav>
