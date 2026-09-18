@@ -4,7 +4,7 @@
     "institute": "Institute for Artificial Intelligence in Cardiovascular Medicine",
     "institution": "University Hospital Heidelberg",
     "intro": "I develop and evaluate generative models for medical imaging, with a focus on efficient 3D and 4D synthesis.",
-    "portrait": null,
+    "portrait": "assets/profile.png",
     "portrait_alt": "Marvin Seyfarth",
     "github": "https://github.com/marseyf",
     "lab_github": "https://github.com/Cardio-AI",

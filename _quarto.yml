@@ -25,18 +25,18 @@ website:
   navbar:
     pinned: true
     left:
-      - href: research.qmd
+      - href: index.qmd#about
+        text: About
+      - href: index.qmd#news
+        text: News
+      - href: index.qmd#research
         text: Research
       - href: publications.qmd
         text: Publications
-      - href: blog.qmd
+      - href: index.qmd#talks
+        text: Talks
+      - href: index.qmd#notes
         text: Notes
-      - href: news.qmd
-        text: News
-      - href: outreach.qmd
-        text: Talks & Outreach
-      - href: about.qmd
-        text: About
     collapse-below: lg
   page-footer:
     left: "Content © Marvin Seyfarth"

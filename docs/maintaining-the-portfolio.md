@@ -6,7 +6,7 @@ The site stays on Quarto and GitHub Pages. Install Quarto and Python 3, then use
 
 Edit `_data/site.json` for the profile, News, and Talks & Outreach. Edit `_data/publications.json` for papers. Quarto's pre-render hook runs `tools/build-content.py`; the `portfolio` shortcode inserts the resulting HTML. `_generated/` is build output and should not be edited or committed.
 
-The homepage shows the three newest news items and two newest talks. Their full lists have separate pages. ISO dates (`YYYY-MM-DD`) keep sorting reliable; the upcoming label is calculated at build time. Rebuild the site after an event to update that label. Resource links appear only when a URL is supplied.
+The homepage presents one topic at a time: profile, About, News, selected research, Talks & Outreach, and Notes. The navigation jumps to these sections, with a separate link to the full publication archive. The homepage shows the three newest news items and the newest talk; the talk's wider session title stays on the full Outreach page. Their full lists have separate pages. ISO dates (`YYYY-MM-DD`) keep sorting reliable; the upcoming label is calculated at build time. Rebuild the site after an event to update that label. Resource links appear only when a URL is supplied.
 
 ### Portrait and social icons
 

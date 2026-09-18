@@ -63,18 +63,19 @@ def resource_links(paper):
     ) + '</div>'
 
 
-def news_list(limit=None):
+def news_list(limit=None, compact=False):
     items = sorted(site["news"], key=lambda item: item["date"], reverse=True)
     if limit is not None:
         items = items[:limit]
     rows = []
     for item in items:
         when = date.fromisoformat(item["date"])
-        rows.append(f'<li><time datetime="{when.isoformat()}">{when:%d %b %Y}</time><div><h3><a href="{url(item["url"])}">{e(item["title"])}</a></h3><p>{e(item["text"])}</p></div></li>')
+        description = '' if compact else f'<p>{e(item["text"])}</p>'
+        rows.append(f'<li><time datetime="{when.isoformat()}">{when:%d %b %Y}</time><div><h3><a href="{url(item["url"])}">{e(item["title"])}</a></h3>{description}</div></li>')
     return '<ol class="news-list">' + "".join(rows) + '</ol>'
 
 
-def talk_list(limit=None):
+def talk_list(limit=None, compact=False):
     items = sorted(site["talks"], key=lambda item: item["date"], reverse=True)
     if limit is not None:
         items = items[:limit]
@@ -86,7 +87,7 @@ def talk_list(limit=None):
         links = ''.join(f'<a href="{url(item[key])}">{label} {icon("arrow-up-right")}</a>' for key, label in [('slides', 'Slides'), ('video', 'Recording'), ('url', 'Event')] if item.get(key))
         place = ' · '.join(e(item[key]) for key in ['event', 'location'] if item.get(key))
         status = 'Upcoming · ' if when >= date.today() else ''
-        session = f'<p class="talk-session">Session: {e(item["session"])}</p>' if item.get('session') else ''
+        session = f'<p class="talk-session">Session: {e(item["session"])}</p>' if item.get('session') and not compact else ''
         rows.append(f'<article class="talk-entry"><p class="eyebrow">{status}{e(item.get("type", "Talk"))} · <time datetime="{when.isoformat()}">{when:%d %b %Y}</time></p><h3>{e(item["title"])}</h3><p>{place}</p>{session}<div class="resource-links">{links}</div></article>')
     return ''.join(rows)
 
@@ -94,9 +95,9 @@ def talk_list(limit=None):
 def selected_work():
     selected = sorted((p for p in papers if p.get('featured')), key=lambda p: p.get('featured_order', 99))
     rows = []
-    for i, paper in enumerate(selected, 1):
+    for paper in selected:
         suffix = paper['publication_type'] if paper.get('conference_year') else paper['year']
-        rows.append(f'<article class="selected-paper"><span class="paper-number" aria-hidden="true">0{i}</span><div><p class="eyebrow">{e(paper["topic"])}</p><h3><a href="{url(paper.get("project_url") or paper["paper_url"])}">{e(paper["short_title"])}</a></h3><p class="paper-description">{e(paper["summary"])}</p><p class="paper-status">{e(paper["display_venue"])} · {e(suffix)}</p>{resource_links(paper)}</div></article>')
+        rows.append(f'<article class="selected-paper"><p class="paper-status">{e(paper["display_venue"])} · {e(suffix)}</p><h3><a href="{url(paper.get("project_url") or paper["paper_url"])}">{e(paper["short_title"])}</a></h3><p class="paper-description">{e(paper["summary"])}</p>{resource_links(paper)}</article>')
     return ''.join(rows)
 
 
@@ -108,10 +109,12 @@ note_link = 'posts/diffusion-models-medical-image-synthesis/'
 note_card = f'<article class="note-feature"><p class="eyebrow">Research notes / Foundations</p><h3><a href="{note_link}">From noise to anatomy</a></h3><p>Diffusion models for medical image synthesis: denoising, conditioning, latent spaces, and evaluation.</p><a class="text-link" href="{note_link}">Read the article {icon("arrow-up-right")}</a></article>'
 
 write('home', f'''<div class="portfolio-home" id="main-content">
-<section class="profile-hero" aria-labelledby="hero-title"><div class="profile-copy"><p class="eyebrow">Generative medical imaging</p><h1 id="hero-title">{e(profile["name"])}</h1><p class="affiliation">{e(profile["institute"])}<br><span>{e(profile["institution"])}</span></p><p class="profile-intro">{e(profile["intro"])}</p>{socials()}<a class="text-link hero-link" href="research.html">Explore my research {icon("arrow-down-right")}</a></div>{portrait()}</section>
-<div class="research-topics" aria-label="Research interests"><a href="research.html#efficiency"><span>01</span> Efficient synthesis</a><a href="research.html#volume-time"><span>02</span> Volume &amp; time</a><a href="research.html#evaluation"><span>03</span> Evaluation beyond realism</a></div>
-<div class="home-columns"><section id="selected-research">{section_heading('Selected research', 'publications.html', 'All publications')}{selected_work()}</section><section class="home-news" aria-labelledby="news-title"><div class="section-heading"><h2 id="news-title">News</h2><a class="text-link" href="news.html">Archive {icon('arrow-up-right')}</a></div>{news_list(3)}</section></div>
-<div class="home-bottom"><section aria-labelledby="outreach-title"><p class="eyebrow">Beyond the paper</p><h2 id="outreach-title">Talks &amp; outreach</h2>{talk_list(2)}<a class="text-link" href="outreach.html">Presentations &amp; resources {icon('arrow-up-right')}</a></section>{note_card}</div>
+<section class="profile-band" aria-labelledby="hero-title"><div class="section-inner profile-hero"><div class="profile-copy"><p class="profile-field">Generative medical imaging</p><h1 id="hero-title">{e(profile["name"])}</h1><p class="affiliation">{e(profile["institute"])}<br><span>{e(profile["institution"])}</span></p>{socials()}</div>{portrait()}</div></section>
+<section class="home-section" id="about" aria-labelledby="about-title"><div class="section-inner"><h2 id="about-title">About me</h2><div class="about-summary"><p class="section-lead">{e(profile["intro"])}</p><p>My work connects high-resolution image synthesis with the questions that make synthetic data useful: computational efficiency, anatomical and temporal structure, diversity, and memorization.</p></div><a class="text-link" href="about.html">More about me {icon("arrow-up-right")}</a></div></section>
+<section class="home-section home-section--tinted" id="news" aria-labelledby="news-title"><div class="section-inner"><h2 id="news-title">News</h2>{news_list(3)}<a class="text-link section-link" href="news.html">All updates {icon("arrow-up-right")}</a></div></section>
+<section class="home-section" id="research" aria-labelledby="research-title"><div class="section-inner"><h2 id="research-title">Selected research</h2><p class="section-intro">Efficient generation. Coherent anatomy. Careful evaluation.</p><div class="selected-papers">{selected_work()}</div><div class="section-actions"><a class="section-button" href="publications.html">All publications {icon("arrow-up-right")}</a><a class="text-link" href="research.html">Research directions {icon("arrow-up-right")}</a></div></div></section>
+<section class="home-section home-section--tinted" id="talks" aria-labelledby="outreach-title"><div class="section-inner"><h2 id="outreach-title">Talks &amp; outreach</h2>{talk_list(1, compact=True)}<a class="text-link section-link" href="outreach.html">All presentations &amp; resources {icon("arrow-up-right")}</a></div></section>
+<section class="home-section" id="notes" aria-labelledby="notes-title"><div class="section-inner"><h2 id="notes-title">Research notes</h2>{note_card}<a class="text-link section-link" href="blog.html">All notes {icon("arrow-up-right")}</a></div></section>
 </div>''')
 
 write('news', '<div class="news-archive">' + news_list() + '</div>')

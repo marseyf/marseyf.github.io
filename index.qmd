@@ -2,6 +2,7 @@
 title: "Marvin Seyfarth"
 description: "Generative medical imaging research by Marvin Seyfarth at University Hospital Heidelberg: publications, news, talks, and research notes."
 page-layout: full
+body-classes: portfolio-index
 toc: false
 filters:
   - tools/remove-home-title.lua
