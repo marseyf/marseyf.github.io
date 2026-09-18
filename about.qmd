@@ -1,11 +1,8 @@
 ---
 title: "About"
+description: "Marvin Seyfarth, Institute for Artificial Intelligence in Cardiovascular Medicine, University Hospital Heidelberg."
+page-layout: full
+toc: false
 ---
 
-Marvin Seyfarth researches efficient generative models for medical imaging.
-
-This site brings together research themes, publications, projects, and research notes, with technical ideas presented alongside evidence, limitations, and practical context.
-
-## Contact
-
-[GitHub](https://github.com/marseyf)
+{{< portfolio about >}}

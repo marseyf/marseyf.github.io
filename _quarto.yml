@@ -1,13 +1,18 @@
 project:
   type: website
   output-dir: _site
+  pre-render:
+    - python3 tools/build-content.py
   render:
     - index.qmd
     - research.qmd
     - publications.qmd
     - blog.qmd
     - about.qmd
+    - news.qmd
+    - outreach.qmd
     - "posts/**/*.qmd"
+    - "!posts/first-article/**"
 
 website:
   title: "Marvin Seyfarth"
@@ -17,34 +22,41 @@ website:
   open-graph: true
   twitter-card: true
   repo-url: "https://github.com/marseyf/marseyf.github.io"
-  repo-actions: [source, issue]
   navbar:
     pinned: true
     left:
-      - href: index.qmd
-        text: Home
       - href: research.qmd
         text: Research
       - href: publications.qmd
         text: Publications
       - href: blog.qmd
-        text: Blog
+        text: Notes
+      - href: news.qmd
+        text: News
+      - href: outreach.qmd
+        text: Talks & Outreach
       - href: about.qmd
         text: About
-    right:
-      - icon: github
-        href: "https://github.com/marseyf"
-        aria-label: GitHub
+    collapse-below: lg
   page-footer:
     left: "Content © Marvin Seyfarth"
-    right: "Built with Quarto"
+    right:
+      - text: About
+        href: about.qmd
+      - icon: building
+        href: "https://github.com/Cardio-AI"
+        aria-label: Cardio-AI lab on GitHub
+      - icon: github
+        href: "https://github.com/marseyf"
+        aria-label: Personal GitHub
 
 format:
   html:
     theme:
-      light: flatly
-      dark: darkly
+      light: [flatly, theme.scss]
+      dark: [darkly, theme.scss]
     css: styles.css
     include-before-body: includes/skip-link.html
     toc: true
     smooth-scroll: true
+    anchor-sections: false

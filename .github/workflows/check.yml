@@ -1,0 +1,19 @@
+name: Check website
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: quarto-dev/quarto-actions/setup@v2
+      - name: Render website
+        run: quarto render
+      - name: Check generated content and links
+        run: python3 tools/verify-site.py

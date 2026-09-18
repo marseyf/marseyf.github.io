@@ -1,101 +1,27 @@
 ---
 title: "Research"
-description: "Research directions in efficient and trustworthy generative modelling for medical imaging."
+description: "Efficient synthesis, volumetric and temporal modeling, and evaluation of generative models for medical imaging."
+page-layout: full
+toc: false
 ---
 
-<div class="research-page site-shell">
-<section class="research-page__intro" aria-labelledby="research-directions-title">
-<p class="eyebrow">Research directions</p>
-<h2 id="research-directions-title">Efficient and trustworthy generative modelling for medical imaging.</h2>
-<p class="site-lead">The work connects high-resolution generation with evaluation and reproducible scientific practice.</p>
-</section>
+I study how to generate medical images efficiently—and how to evaluate what these models actually learn.
 
-<section class="research-direction-grid" aria-label="Research directions">
-<article class="research-direction research-direction--generation">
 ```{=html}
-<div class="research-figure-pair">
-<figure class="research-direction__figure paper-figure">
-<a class="paper-figure__image-link" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">
-<img src="assets/paper-figures/cardiodit-figure-1-framework.jpg" width="1358" height="930" loading="lazy" decoding="async" alt="CardioDiT framework: CMR slices are encoded into a 4D latent volume, denoised by a 4D diffusion transformer, and decoded into a time-resolved cardiac volume." />
-</a>
-<figcaption>
-<span class="eyebrow">Figure 1 / CardioDiT</span>
-<a class="paper-figure__source" href="https://arxiv.org/abs/2603.25194">Figure 1 — CardioDiT framework for 4D cardiac MRI synthesis.</a>
-<span class="paper-figure__provenance">Source: Seyfarth et al. (2026).</span>
-<a class="paper-figure__full" href="assets/paper-figures/cardiodit-figure-1-framework.jpg">Open full-resolution figure</a>
-</figcaption>
-</figure>
-<figure class="research-direction__figure paper-figure">
-<a class="paper-figure__image-link" href="assets/paper-figures/voldit-figure-1-framework.jpg">
-<img src="assets/paper-figures/voldit-figure-1-framework.jpg" width="1472" height="879" loading="lazy" decoding="async" alt="VolDiT architecture from input-image encoding to 3D latent patch tokens and stacked diffusion-transformer blocks, guided by a timestep-gated spatial-control adapter." />
-</a>
-<figcaption>
-<span class="eyebrow">Figure 1 / VolDiT</span>
-<a class="paper-figure__source" href="https://arxiv.org/abs/2603.25181">Figure 1 — VolDiT framework with timestep-gated spatial control.</a>
-<span class="paper-figure__provenance">Source: Seyfarth et al. (2026).</span>
-<a class="paper-figure__full" href="assets/paper-figures/voldit-figure-1-framework.jpg">Open full-resolution figure</a>
-</figcaption>
-</figure>
+<div class="research-directions">
+<section class="research-direction" id="efficiency">
+<div class="direction-heading"><span class="section-number" aria-hidden="true">01</span><h2>Efficient synthesis</h2></div>
+<div class="direction-body"><p class="direction-question">How can we generate high-resolution medical images with practical computational resources?</p><p>My work explores compact latent representations and diffusion models for 3D CT synthesis. Alongside image quality, I study the computational and environmental cost of training and generation.</p><div class="resource-links"><a href="publications.html#medlord">MedLoRD <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a><a href="publications.html#latent-pollution">Latent Pollution Model <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div></div>
+</section>
+<section class="research-direction" id="volume-time">
+<div class="direction-heading"><span class="section-number" aria-hidden="true">02</span><h2>Volume &amp; time</h2></div>
+<div class="direction-body"><p class="direction-question">How can a generative model capture anatomy across both space and time?</p><p>I investigate diffusion transformers for controllable volumetric synthesis and joint 4D cardiac MRI generation, connecting spatial structure with temporal dynamics.</p><div class="resource-links"><a href="publications.html#cardiodit">CardioDiT <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a><a href="publications.html#voldit">VolDiT <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
+<div class="research-figures"><figure><a href="assets/paper-figures/cardiodit-figure-1-framework.jpg"><img src="assets/paper-figures/cardiodit-figure-1-framework.jpg" width="1358" height="930" loading="lazy" alt="CardioDiT framework: slice encoding, joint 4D diffusion, and decoding into cardiac MRI volumes."></a><figcaption>CardioDiT framework. <a href="https://arxiv.org/abs/2603.25194">Seyfarth et al., 2026, Fig. 1.</a> Select the figure to view full size.</figcaption></figure><figure><a href="assets/paper-figures/voldit-figure-1-framework.jpg"><img src="assets/paper-figures/voldit-figure-1-framework.jpg" width="1472" height="879" loading="lazy" alt="VolDiT framework: volumetric patch tokens and diffusion-transformer blocks with spatial control."></a><figcaption>VolDiT framework. <a href="https://arxiv.org/abs/2603.25181">Seyfarth et al., 2026, Fig. 1.</a> Select the figure to view full size.</figcaption></figure></div></div>
+</section>
+<section class="research-direction" id="evaluation">
+<div class="direction-heading"><span class="section-number" aria-hidden="true">03</span><h2>Evaluation beyond realism</h2></div>
+<div class="direction-body"><p class="direction-question">What makes synthetic data useful beyond looking convincing?</p><p>I study diversity, anatomical variability, and patient-data memorization. These questions help distinguish perceptual quality from the properties that matter when synthetic data is used in research.</p><div class="resource-links"><a href="publications.html#wad-div">WAD-Div <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a><a href="publications.html#memorization-ldm">Memorization study <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a><a href="publications.html#coronary-dominance-diversity">Coronary diversity <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
+<figure class="evaluation-figure"><a href="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png"><img src="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png" width="1615" height="1016" loading="lazy" alt="WAD-Div plots measure intrinsic dataset diversity for chest X-ray and lung CT as the number of unique samples increases."></a><figcaption>Measuring intrinsic diversity with WAD-Div. <a href="https://doi.org/10.1007/978-3-658-51100-5_83">Seyfarth, Dar &amp; Engelhardt, 2026, Fig. 2.</a></figcaption></figure></div>
+</section>
 </div>
 ```
-<p class="eyebrow">01 / 3D + 4D generation</p>
-<h2>Volume and time, under practical constraints</h2>
-<p>Synthesising high-resolution volumetric and temporal data under realistic memory and compute constraints.</p>
-<details>
-<summary>What this direction holds</summary>
-<p>Method distinctions, model architecture, and examples belong with their specific publication or research note.</p>
-</details>
-</article>
-
-<article class="research-direction research-direction--evaluation">
-```{=html}
-<figure class="research-direction__figure paper-figure">
-<a class="paper-figure__image-link" href="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png">
-<img src="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png" width="1615" height="1016" loading="lazy" decoding="async" alt="Four WAD-Div plots for chest X-ray and lung CT show raw and normalized diversity scores increasing with the number of unique samples across exponential and zero reference distributions." />
-</a>
-<figcaption>
-<span class="eyebrow">Figure 2 / WAD-Div</span>
-<a class="paper-figure__source" href="https://doi.org/10.1007/978-3-658-51100-5_83">Figure 2 — Intrinsic dataset diversity measured with WAD-Div.</a>
-<span class="paper-figure__provenance">Source: Seyfarth, Dar &amp; Engelhardt (2026).</span>
-<a class="paper-figure__full" href="assets/paper-figures/wad-div-figure-2-intrinsic-diversity.png">Open full-resolution figure</a>
-</figcaption>
-</figure>
-```
-<p class="eyebrow">02 / evaluation</p>
-<h2>Evaluation beyond realism</h2>
-<p>Evaluating diversity, memorisation, privacy, anatomical validity, and downstream utility alongside fidelity.</p>
-<details>
-<summary>What this direction holds</summary>
-<p>Metric definitions, limitations, and use-case-specific evaluation detail stay connected to their source context.</p>
-</details>
-</article>
-
-<article class="research-direction research-direction--systems">
-<p class="eyebrow">03 / research systems</p>
-<h2>Scientific infrastructure that keeps context intact</h2>
-<p>Linking literature, code, experiments, evaluation, and communication reproducibly.</p>
-<details>
-<summary>What this direction holds</summary>
-<p>Workflow detail and public resources are shared only where their status and context can be verified.</p>
-</details>
-</article>
-</section>
-
-<section class="research-route" aria-labelledby="research-route-title">
-<div>
-<p class="eyebrow">Traceable routes</p>
-<h2 id="research-route-title">From a research question to its public record</h2>
-</div>
-<ol class="research-route__steps">
-<li><span>01</span>Research direction</li>
-<li><span>02</span>Publication record</li>
-<li><span>03</span>Research note</li>
-</ol>
-</section>
-
-<section class="research-page__closing" aria-labelledby="research-next-title">
-<p class="eyebrow">Continue reading</p>
-<h2 id="research-next-title">Follow the work through its publications and explanations.</h2>
-<p class="action-row"><a class="site-button site-button--primary" href="publications.qmd">Selected publications</a> <a class="site-button site-button--secondary" href="blog.qmd">Research notes</a></p>
-</section>
-</div>

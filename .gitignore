@@ -5,3 +5,5 @@
 **/out/
 
 **/*.quarto_ipynb
+
+/_generated/

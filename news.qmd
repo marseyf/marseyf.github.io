@@ -1,0 +1,10 @@
+---
+title: "News"
+description: "Research updates, new publications, and announcements from Marvin Seyfarth."
+page-layout: full
+toc: false
+---
+
+Research updates and new publications.
+
+{{< portfolio news >}}

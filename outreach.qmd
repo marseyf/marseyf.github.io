@@ -1,0 +1,10 @@
+---
+title: "Talks & Outreach"
+description: "Talks, presentations, and research explainers by Marvin Seyfarth."
+page-layout: full
+toc: false
+---
+
+Sharing ideas in medical imaging and artificial intelligence.
+
+{{< portfolio outreach >}}
