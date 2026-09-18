@@ -1,9 +1,8 @@
 // Select among existing synthetic examples. Playback always remains user initiated.
 (() => {
   const video = document.getElementById('cardiodit-cine');
-  const status = document.getElementById('cine-status');
   const buttons = document.querySelectorAll('[data-cine]');
-  if (!video || !status) return;
+  if (!video) return;
   buttons.forEach((button) => button.addEventListener('click', () => {
     if (button.getAttribute('aria-pressed') === 'true') return;
     const sample = button.dataset.cine;
@@ -14,6 +13,5 @@
     video.setAttribute('aria-label', `Synthetic CardioDiT example ${sample}: three synchronized short-axis slices`);
     video.load();
     buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-    status.textContent = `Example ${sample}.`;
   }));
 })();
