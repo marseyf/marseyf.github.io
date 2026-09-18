@@ -6,7 +6,11 @@ The site stays on Quarto and GitHub Pages. Install Quarto and Python 3, then use
 
 Edit `_data/site.json` for the profile, News, and Talks & Outreach. Edit `_data/publications.json` for papers. Quarto's pre-render hook runs `tools/build-content.py`; the `portfolio` shortcode inserts the resulting HTML. `_generated/` is build output and should not be edited or committed.
 
-The homepage presents one topic at a time: profile, About, News, selected research, Talks & Outreach, and Notes. The navigation jumps to these sections, with a separate link to the full publication archive. The homepage shows the three newest news items and the newest talk; the talk's wider session title stays on the full Outreach page. Their full lists have separate pages. ISO dates (`YYYY-MM-DD`) keep sorting reliable; the upcoming label is calculated at build time. Rebuild the site after an event to update that label. Resource links appear only when a URL is supplied.
+The homepage presents one topic at a time: profile, About, News, Publications, Talks & Outreach, and Notes. Navigation jumps to these sections. All publications appear on the homepage, grouped by citation year, with abstracts and citations collapsed by default. News shows the three newest items and reveals the remaining entries inline with a native “See more” disclosure; it needs no JavaScript. The homepage shows the newest talk; the talk's wider session title stays on the full Outreach page. Existing About, News, and Publications URLs remain available for older links. ISO dates (`YYYY-MM-DD`) keep sorting reliable; the upcoming label is calculated at build time. Rebuild the site after an event to update that label. Resource links appear only when a URL is supplied.
+
+### Typography
+
+Headings use Source Serif 4; body text and navigation use Source Sans 3. Variable WOFF2 files are self-hosted in `assets/fonts/`, with upstream revisions and licenses recorded there. Font faces and fallback stacks are defined in `styles.css`; `theme.scss` disables external theme font imports.
 
 ### Portrait and social icons
 
@@ -42,7 +46,7 @@ Use `type` for Talk, Poster, Workshop, or Panel. Leave optional links null until
 
 ## Publications and future project pages
 
-Each publication has a stable `id`, authors, summary, abstract, citation, type, and resource URLs. `year` is the citation year. Conference year and online date can differ; preserve those in the citation and optional date fields. Homepage order follows `featured: true` and `featured_order`.
+Each publication has a stable `id`, authors, summary, abstract, citation, type, and resource URLs. `year` is the citation year. Conference year and online date can differ; preserve those in the citation and optional date fields. Homepage and publication archive use the same renderer: descending citation year, then data-file order within each year. The earlier `featured` fields are retained as metadata but do not restrict the homepage list.
 
 Every current `project_url` is null. Paper titles link to the paper until a real project page exists. No individual project pages or placeholder buttons are part of this redesign. In a later phase, add `projects/<id>/index.qmd`, include `projects/**/*.qmd` in `_quarto.yml`'s render list, and set that publication's `project_url` to `projects/<id>/`. Keep IDs stable so existing publication anchors continue to work. Update the phase-specific project-page check in `tools/verify-site.py` when beginning that phase.
 

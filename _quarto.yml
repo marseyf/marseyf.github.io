@@ -1,6 +1,8 @@
 project:
   type: website
   output-dir: _site
+  resources:
+    - assets/fonts/*LICENSE.md
   pre-render:
     - python3 tools/build-content.py
   render:
@@ -29,9 +31,7 @@ website:
         text: About
       - href: index.qmd#news
         text: News
-      - href: index.qmd#research
-        text: Research
-      - href: publications.qmd
+      - href: index.qmd#publications
         text: Publications
       - href: index.qmd#talks
         text: Talks
@@ -42,7 +42,7 @@ website:
     left: "Content © Marvin Seyfarth"
     right:
       - text: About
-        href: about.qmd
+        href: index.qmd#about
       - icon: building
         href: "https://github.com/Cardio-AI"
         aria-label: Cardio-AI lab on GitHub

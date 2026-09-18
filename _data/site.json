@@ -1,6 +1,7 @@
 {
   "profile": {
     "name": "Marvin Seyfarth",
+    "role": "PhD Student",
     "institute": "Institute for Artificial Intelligence in Cardiovascular Medicine",
     "institution": "University Hospital Heidelberg",
     "intro": "I develop and evaluate generative models for medical imaging, with a focus on efficient 3D and 4D synthesis.",

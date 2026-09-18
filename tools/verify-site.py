@@ -62,7 +62,7 @@ pub = pages[(SITE / 'publications.html').resolve()]
 data = json.loads((ROOT / '_data/publications.json').read_text())
 profile = json.loads((ROOT / '_data/site.json').read_text())['profile']
 for paper in data:
-    if paper['id'] not in pub.ids:
+    if paper['id'] not in pub.ids or paper['id'] not in pages[(SITE / 'index.html').resolve()].ids:
         errors.append(f'Missing publication: {paper["id"]}')
     if paper.get('project_url'):
         errors.append('Project pages are outside this implementation phase')

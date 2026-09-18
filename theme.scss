@@ -1,3 +1,3 @@
 /*-- scss:defaults --*/
-// Use the local system font stack. Bootswatch otherwise imports Google Fonts.
+// Fonts are self-hosted in styles.css. Disable Bootswatch's Google Fonts import.
 $web-font-path: false;

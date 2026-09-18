@@ -63,8 +63,8 @@ def resource_links(paper):
     ) + '</div>'
 
 
-def news_list(limit=None, compact=False):
-    items = sorted(site["news"], key=lambda item: item["date"], reverse=True)
+def news_list(limit=None, compact=False, offset=0):
+    items = sorted(site["news"], key=lambda item: item["date"], reverse=True)[offset:]
     if limit is not None:
         items = items[:limit]
     rows = []
@@ -92,41 +92,44 @@ def talk_list(limit=None, compact=False):
     return ''.join(rows)
 
 
-def selected_work():
-    selected = sorted((p for p in papers if p.get('featured')), key=lambda p: p.get('featured_order', 99))
-    rows = []
-    for paper in selected:
-        suffix = paper['publication_type'] if paper.get('conference_year') else paper['year']
-        rows.append(f'<article class="selected-paper"><p class="paper-status">{e(paper["display_venue"])} · {e(suffix)}</p><h3><a href="{url(paper.get("project_url") or paper["paper_url"])}">{e(paper["short_title"])}</a></h3><p class="paper-description">{e(paper["summary"])}</p>{resource_links(paper)}</article>')
-    return ''.join(rows)
+def home_news():
+    latest = news_list(3)
+    if len(site["news"]) <= 3:
+        return latest
+    return latest + ('<details class="news-more"><summary>'
+                     '<span class="when-collapsed">See more</span>'
+                     '<span class="when-expanded">See less</span>'
+                     '</summary>' + news_list(offset=3) + '</details>')
 
 
-def section_heading(title, href, label):
-    return f'<div class="section-heading"><h2>{title}</h2><a class="text-link" href="{href}">{label} {icon("arrow-up-right")}</a></div>'
+def publication_list(year_heading=2):
+    sections = []
+    title_heading = year_heading + 1
+    for year in sorted({p['year'] for p in papers}, reverse=True):
+        entries = []
+        for paper in (p for p in papers if p['year'] == year):
+            authors = ', '.join(f'<strong>{e(author)}</strong>' if author in ['Marvin Seyfarth', 'M Seyfarth'] else e(author) for author in paper['authors'])
+            entries.append(f'''<article class="publication-entry" id="{e(paper['id'])}"><p class="eyebrow">{e(paper['display_venue'])} · {e(paper['publication_type'])}</p><h{title_heading} class="publication-title"><a href="{url(paper.get('project_url') or paper['paper_url'])}">{e(paper['title'])}</a></h{title_heading}><p class="publication-authors">{authors}</p><p class="publication-focus">{e(paper['summary'])}</p>{resource_links(paper)}<details><summary>Abstract &amp; citation</summary><div class="publication-detail"><p>{e(paper['abstract'])}</p><p class="citation"><strong>Publication details:</strong> {e(paper['citation'])}</p></div></details></article>''')
+        sections.append(f'<section class="publication-year"><h{year_heading} class="publication-year-label">{year}</h{year_heading}><div>{"".join(entries)}</div></section>')
+    return '<div class="publication-list">' + ''.join(sections) + '</div>'
 
 
 note_link = 'posts/diffusion-models-medical-image-synthesis/'
 note_card = f'<article class="note-feature"><p class="eyebrow">Research notes / Foundations</p><h3><a href="{note_link}">From noise to anatomy</a></h3><p>Diffusion models for medical image synthesis: denoising, conditioning, latent spaces, and evaluation.</p><a class="text-link" href="{note_link}">Read the article {icon("arrow-up-right")}</a></article>'
 
 write('home', f'''<div class="portfolio-home" id="main-content">
-<section class="profile-band" aria-labelledby="hero-title"><div class="section-inner profile-hero"><div class="profile-copy"><p class="profile-field">Generative medical imaging</p><h1 id="hero-title">{e(profile["name"])}</h1><p class="affiliation">{e(profile["institute"])}<br><span>{e(profile["institution"])}</span></p>{socials()}</div>{portrait()}</div></section>
-<section class="home-section" id="about" aria-labelledby="about-title"><div class="section-inner"><h2 id="about-title">About me</h2><div class="about-summary"><p class="section-lead">{e(profile["intro"])}</p><p>My work connects high-resolution image synthesis with the questions that make synthetic data useful: computational efficiency, anatomical and temporal structure, diversity, and memorization.</p></div><a class="text-link" href="about.html">More about me {icon("arrow-up-right")}</a></div></section>
-<section class="home-section home-section--tinted" id="news" aria-labelledby="news-title"><div class="section-inner"><h2 id="news-title">News</h2>{news_list(3)}<a class="text-link section-link" href="news.html">All updates {icon("arrow-up-right")}</a></div></section>
-<section class="home-section" id="research" aria-labelledby="research-title"><div class="section-inner"><h2 id="research-title">Selected research</h2><p class="section-intro">Efficient generation. Coherent anatomy. Careful evaluation.</p><div class="selected-papers">{selected_work()}</div><div class="section-actions"><a class="section-button" href="publications.html">All publications {icon("arrow-up-right")}</a><a class="text-link" href="research.html">Research directions {icon("arrow-up-right")}</a></div></div></section>
+<section class="profile-band" aria-labelledby="hero-title"><div class="section-inner profile-hero">{portrait()}<div class="profile-copy"><p class="profile-field">Generative medical imaging</p><h1 id="hero-title">{e(profile["name"])}</h1><p class="affiliation"><span class="profile-role">{e(profile["role"])}</span>{e(profile["institute"])}<br><span>{e(profile["institution"])}</span></p>{socials()}</div></div></section>
+<section class="home-section" id="about" aria-labelledby="about-title"><div class="section-inner"><h2 id="about-title">About me</h2><div class="about-summary"><p class="section-lead">{e(profile["intro"])}</p><p>My work connects high-resolution image synthesis with the questions that make synthetic data useful: computational efficiency, anatomical and temporal structure, diversity, and memorization.</p></div></div></section>
+<section class="home-section home-section--tinted" id="news" aria-labelledby="news-title"><div class="section-inner"><h2 id="news-title">News</h2>{home_news()}</div></section>
+<section class="home-section" id="publications" aria-labelledby="publications-title"><div class="section-inner"><span id="research" class="legacy-anchor" aria-hidden="true"></span><h2 id="publications-title">Publications</h2>{publication_list(year_heading=3)}<div class="section-actions"><a class="text-link" href="research.html">Research directions {icon("arrow-up-right")}</a></div></div></section>
 <section class="home-section home-section--tinted" id="talks" aria-labelledby="outreach-title"><div class="section-inner"><h2 id="outreach-title">Talks &amp; outreach</h2>{talk_list(1, compact=True)}<a class="text-link section-link" href="outreach.html">All presentations &amp; resources {icon("arrow-up-right")}</a></div></section>
 <section class="home-section" id="notes" aria-labelledby="notes-title"><div class="section-inner"><h2 id="notes-title">Research notes</h2>{note_card}<a class="text-link section-link" href="blog.html">All notes {icon("arrow-up-right")}</a></div></section>
 </div>''')
 
 write('news', '<div class="news-archive">' + news_list() + '</div>')
 write('outreach', f'<section class="talks-section"><h2>Talks &amp; presentations</h2>{talk_list()}</section><section class="outreach-resources"><h2>Explainers</h2>{note_card}</section>')
-write('about', f'''<div class="about-layout"><div><p class="about-lead">{e(profile["intro"])}</p><p>I work at the {e(profile["institute"])}, {e(profile["institution"])}.</p><p>My research connects high-resolution image generation with questions of efficiency, anatomical and temporal structure, diversity, and memorization.</p><p>This site brings together my publications, research notes, and presentations.</p><h2>Find me online</h2>{socials()}</div>{portrait()}</div>''')
+write('about', f'''<div class="about-layout"><div><p class="about-lead">{e(profile["intro"])}</p><p>I am a {e(profile["role"])} at the {e(profile["institute"])}, {e(profile["institution"])}.</p><p>My research connects high-resolution image generation with questions of efficiency, anatomical and temporal structure, diversity, and memorization.</p><p>This site brings together my publications, research notes, and presentations.</p><h2>Find me online</h2>{socials()}</div>{portrait()}</div>''')
 
-sections = []
-for year in sorted({p['year'] for p in papers}, reverse=True):
-    entries = []
-    for paper in (p for p in papers if p['year'] == year):
-        authors = ', '.join(f'<strong>{e(author)}</strong>' if author in ['Marvin Seyfarth', 'M Seyfarth'] else e(author) for author in paper['authors'])
-        entries.append(f'''<article class="publication-entry" id="{e(paper['id'])}"><p class="eyebrow">{e(paper['display_venue'])} · {e(paper['publication_type'])}</p><h3><a href="{url(paper.get('project_url') or paper['paper_url'])}">{e(paper['title'])}</a></h3><p class="publication-authors">{authors}</p><p class="publication-focus">{e(paper['summary'])}</p>{resource_links(paper)}<details><summary>Abstract &amp; citation</summary><div class="publication-detail"><p>{e(paper['abstract'])}</p><p class="citation"><strong>Publication details:</strong> {e(paper['citation'])}</p></div></details></article>''')
-    sections.append(f'<section class="publication-year"><h2>{year}</h2><div>{"".join(entries)}</div></section>')
-write('publications', '<div class="publication-list">' + ''.join(sections) + '</div>')
+write('publications', publication_list())
+
 print(f"Generated 5 content includes from {len(papers)} publications, {len(site['news'])} news items, and {len(site['talks'])} talks.")
