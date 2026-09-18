@@ -23,7 +23,6 @@ filters:
 <a href="https://github.com/Cardio-AI/cardiodit"><i class="bi bi-github" aria-hidden="true"></i> Code</a>
 <a href="#citation"><i class="bi bi-quote" aria-hidden="true"></i> Cite this work</a>
 </div>
-<p class="project-deck">Learning cardiac anatomy and motion together, across a complete 3D volume and the cardiac cycle.</p>
 </div>
 </header>
 
