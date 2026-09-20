@@ -60,5 +60,5 @@ format:
     css: styles.css
     include-before-body: includes/skip-link.html
     toc: true
-    smooth-scroll: true
+    smooth-scroll: false
     anchor-sections: false
