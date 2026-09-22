@@ -92,9 +92,10 @@ if (root) {
       </div>
       <div class="volume-canvas-wrap">
         <canvas class="volume-canvas" tabindex="0" aria-label="Interactive synthetic CT volume" aria-describedby="volume-help volume-keyboard-help">Your browser cannot display the interactive volume. The videos above remain available.</canvas>
+        <button type="button" class="volume-fullscreen" aria-label="View volume fullscreen"><i class="bi bi-fullscreen" aria-hidden="true"></i></button>
       </div>
       <div class="volume-controls">
-        <label class="volume-cutaway"><span>Cutaway</span><input type="range" min="0" max="100" step="1" value="0" aria-label="3D cutaway depth" aria-valuetext="Whole volume"><output>0%</output></label>
+        <label class="volume-cutaway"><span>Cutaway</span><span class="volume-range"><input type="range" min="0" max="100" step="1" value="0" aria-label="3D cutaway depth" aria-valuetext="Whole volume"><span class="volume-range-endpoints" aria-hidden="true"><span>Full volume</span><span>Fully cut</span></span></span><output>0%</output></label>
         <button type="button" class="volume-reset" aria-label="Reset view"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> Reset</button>
       </div>
       <div class="volume-footer"><p class="volume-help" id="volume-help"></p><p class="volume-metadata"></p></div>
@@ -102,7 +103,7 @@ if (root) {
     for (const entry of manifest) {
       const option = document.createElement('option');
       option.value = entry.id;
-      option.textContent = entry.label;
+      option.textContent = entry.label.replace(/ (\d)$/, ' 0$1');
       query('.volume-sample').append(option);
     }
     query('.volume-sample').addEventListener('change', (event) => loadSample(event.target.value));
@@ -112,6 +113,14 @@ if (root) {
     });
     query('.volume-cutaway input').addEventListener('input', applyCutaway);
     query('.volume-reset').addEventListener('click', resetView);
+    const fullscreen = query('.volume-fullscreen');
+    fullscreen.hidden = !stage.requestFullscreen;
+    fullscreen.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement === stage) await document.exitFullscreen();
+        else await stage.requestFullscreen();
+      } catch { status.textContent = 'Fullscreen is unavailable in this browser.'; }
+    });
     query('.volume-canvas').addEventListener('keydown', (event) => {
       const rotation = { ArrowLeft: [-10, 0], ArrowRight: [10, 0], ArrowUp: [0, 10], ArrowDown: [0, -10] }[event.key];
       const handled = (rotation && mode !== 'slices') || ['+', '=', '-', '_'].includes(event.key)
@@ -225,7 +234,7 @@ if (root) {
       query('.volume-sample').value = id;
       query('.volume-canvas').setAttribute('aria-label', `Interactive synthetic CT volume: ${entry.label}`);
       const dimensions = entry.dimensions.join(' × ');
-      query('.volume-metadata').textContent = `${dimensions} · Synthetic CT`;
+      query('.volume-metadata').textContent = `Synthetic ${entry.id.startsWith('tavi') ? 'cardiac' : 'lung'} CT · ${dimensions}`;
       resetView();
       applyMode();
       status.textContent = `${entry.label} ready.`;
@@ -291,3 +300,8 @@ if (root) {
     }
   });
 }
+
+document.addEventListener('fullscreenchange', () => {
+  const button = document.querySelector('.volume-fullscreen');
+  if (button) button.setAttribute('aria-label', document.fullscreenElement?.classList.contains('volume-viewer-stage') ? 'Exit volume fullscreen' : 'View volume fullscreen');
+});

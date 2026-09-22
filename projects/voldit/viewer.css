@@ -1,54 +1,66 @@
-/* A single instrument panel; typography follows the shared site scale. */
-.volume-viewer { --viewer-bg: #101d24; --viewer-panel: #192b34; --viewer-line: #3d525d; --viewer-ink: #edf3f5; --viewer-muted: #b6c7cf; --viewer-accent: #9fd8df; overflow: hidden; border: 1px solid var(--site-line); border-radius: 12px; background: var(--viewer-bg); color: var(--viewer-ink); font-family: var(--font-body); }
+/* Light instrument controls frame the original dark NiiVue canvas. */
+.volume-viewer { --viewer-bg: #101d24; flex: 1; min-height: 0; position: relative; font-family: var(--font-body); color: var(--v-ink); }
 .volume-viewer [hidden] { display: none !important; }
-.volume-viewer-launch { display: flex; align-items: center; gap: 1.25rem; padding: 1.5rem; flex-wrap: wrap; }
-.volume-viewer button, .volume-viewer select { font: 500 var(--text-control)/1.4 var(--font-body); min-height: 44px; }
+.volume-viewer-launch { height: 100%; min-height: 300px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; padding: 32px; border: 1px solid var(--v-line); border-radius: 8px; background: var(--viewer-bg); color: #edf3f5; text-align: center; }
+.volume-launch-icon { font-size: 2.5rem; color: #9fcbd0; }
+.volume-viewer button, .volume-viewer select { font: 500 var(--v-control)/1.4 var(--font-body); min-height: 34px; }
 .volume-viewer button { cursor: pointer; }
-.volume-viewer .volume-load-button { display: inline-flex; align-items: center; gap: .8rem; border: 1px solid var(--viewer-accent); border-radius: 30px; padding: .65rem 1.2rem; background: var(--viewer-accent); color: var(--viewer-bg); }
-.volume-viewer .volume-load-button:hover:not(:disabled) { background: #c4e9ed; }
+.volume-viewer .volume-load-button { display: inline-flex; align-items: center; gap: 18px; border: 1px solid #afd4d7; border-radius: 4px; padding: 10px 20px; background: #e4eff0; color: var(--v-ink); }
+.volume-viewer .volume-load-button:hover:not(:disabled) { background: #fff; }
 .volume-viewer :disabled { cursor: default; opacity: .5; }
-.volume-viewer :focus-visible { outline: 2px solid var(--viewer-accent); outline-offset: 4px; }
-.volume-viewer .volume-status, .volume-viewer .volume-help, .volume-viewer .volume-metadata { margin: 0; color: var(--viewer-muted); font-size: var(--text-meta); line-height: 1.6; }
-.volume-viewer.is-ready .volume-viewer-launch { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.volume-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--viewer-line); }
-.volume-fields { display: flex; align-items: center; gap: 1.5rem; }
-.volume-field { display: grid; gap: .25rem; color: var(--viewer-muted); font-size: var(--text-meta); }
-.volume-viewer select { appearance: none; color: var(--viewer-ink); border: 0; border-bottom: 1px solid var(--viewer-line); border-radius: 0; background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23b6c7cf' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right .2rem center; padding: .25rem 1.4rem .25rem 0; min-width: 125px; max-width: 100%; }
-.volume-viewer select:hover { border-color: var(--viewer-accent); }
-.volume-viewer option { background: var(--viewer-bg); color: var(--viewer-ink); }
-.volume-modes { display: inline-flex; gap: .15rem; padding: .25rem; border: 1px solid var(--viewer-line); border-radius: 30px; }
-.volume-modes button { color: var(--viewer-muted); background: transparent; border: 0; border-radius: 24px; padding: .4rem .95rem; }
-.volume-modes button:hover:not(:disabled) { color: var(--viewer-ink); background: var(--viewer-panel); }
-.volume-modes button[aria-pressed="true"], .volume-modes button[aria-pressed="true"]:hover { color: var(--viewer-bg); background: var(--viewer-accent); }
-.volume-canvas-wrap { position: relative; width: 100%; height: 480px; background: var(--viewer-bg); }
+.volume-viewer :focus-visible { outline: 2px solid var(--v-teal); outline-offset: 3px; }
+.volume-viewer .volume-status { margin: 0; color: #b6c7cf; font-size: var(--v-meta); }
+.volume-viewer.is-ready .volume-viewer-launch { position: absolute; width: 1px; height: 1px; min-height: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.volume-viewer:has(.volume-viewer-stage:not([hidden])):not(.is-ready) .volume-viewer-launch { position: absolute; inset: 0; z-index: 5; }
+.volume-viewer-stage { height: 100%; display: grid; grid-template-rows: 76px minmax(0,1fr) 68px 30px; }
+.volume-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 26px; border: 1px solid var(--v-line); border-bottom: 0; border-radius: 7px 7px 0 0; }
+.volume-fields { display: flex; align-items: center; gap: 26px; }
+.volume-field { display: grid; gap: 3px; color: var(--v-ink); font-size: var(--v-meta); }
+.volume-field + .volume-field { border-left: 1px solid var(--v-line); padding-left: 26px; }
+.volume-viewer select { appearance: none; color: var(--v-ink); border: 1px solid var(--v-line); border-radius: 3px; background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23142b34' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 10px center; padding: 4px 34px 4px 12px; min-width: 144px; max-width: 100%; }
+.volume-viewer select:hover { border-color: var(--v-teal); }
+.volume-viewer option { background: #fff; color: var(--v-ink); }
+.volume-modes { display: inline-flex; border: 1px solid #8ca7b0; border-radius: 24px; overflow: hidden; }
+.volume-modes button { color: var(--v-ink); background: transparent; border: 0; padding: 8px 24px; font-size: var(--v-meta); }
+.volume-modes button:hover:not(:disabled) { background: var(--v-tint); }
+.volume-modes button[aria-pressed='true'] { color: var(--v-teal); background: var(--v-tint); font-weight: 650; }
+.volume-modes button:focus-visible { outline-offset: -4px; }
+.volume-canvas-wrap { position: relative; width: 100%; min-height: 0; background: var(--viewer-bg); }
 .volume-canvas { display: block; width: 100%; height: 100%; outline-offset: -4px !important; }
+.volume-canvas:focus-visible { outline-color: #9fd8df; }
 .volume-viewer-stage.is-loading .volume-canvas-wrap { pointer-events: none; }
-.volume-viewer-stage.is-loading .volume-canvas-wrap::after { content: "Loading volume…"; position: absolute; top: 1rem; left: 50%; transform: translateX(-50%); padding: .5rem 1rem; border: 1px solid var(--viewer-line); border-radius: 24px; background: var(--viewer-panel); color: var(--viewer-ink); font-size: var(--text-meta); }
-.volume-controls { display: flex; align-items: center; justify-content: flex-end; gap: 2rem; border-top: 1px solid var(--viewer-line); padding: .9rem 1.5rem; }
-.volume-cutaway { display: flex; flex: 1; align-items: center; gap: 1rem; color: var(--viewer-muted); font-size: var(--text-meta); }
-.volume-viewer input[type="range"] { appearance: none; flex: 1; min-width: 50px; height: 32px; margin: 0; background: transparent; cursor: pointer; }
-.volume-viewer input[type="range"]::-webkit-slider-runnable-track { height: 3px; background: var(--viewer-line); border-radius: 3px; }
-.volume-viewer input[type="range"]::-moz-range-track { height: 3px; background: var(--viewer-line); border-radius: 3px; }
-.volume-viewer input[type="range"]::-webkit-slider-thumb { appearance: none; width: 14px; height: 14px; margin-top: -5.5px; border-radius: 50%; background: var(--viewer-accent); border: 2px solid var(--viewer-bg); box-shadow: 0 0 0 1px var(--viewer-accent); }
-.volume-viewer input[type="range"]::-moz-range-thumb { width: 10px; height: 10px; border-radius: 50%; background: var(--viewer-accent); border: 2px solid var(--viewer-bg); box-shadow: 0 0 0 1px var(--viewer-accent); }
-.volume-cutaway output { width: 3ch; text-align: right; color: var(--viewer-ink); font-variant-numeric: tabular-nums; }
-.volume-viewer .volume-reset { color: var(--viewer-muted); border: 0; background: transparent; display: inline-flex; align-items: center; gap: .45rem; padding: .35rem 0 .35rem .5rem; }
-.volume-viewer .volume-reset:hover { color: var(--viewer-ink); }
-.volume-footer { display: flex; justify-content: space-between; gap: .5rem 1.5rem; flex-wrap: wrap; padding: 0 1.5rem 1.1rem; }
-.volume-viewer noscript p { padding: 0 1.5rem 1rem; color: var(--viewer-muted); }
-@media (max-width: 700px) {
-  .volume-toolbar { align-items: stretch; flex-direction: column; gap: 1rem; padding: 1rem; }
-  .volume-fields { gap: 1.2rem; }
-  .volume-field { flex: 1; min-width: 0; }
-  .volume-viewer select { width: 100%; min-width: 0; }
-  .volume-modes { align-self: flex-start; }
-  .volume-canvas-wrap { height: 400px; }
-  .volume-controls { gap: 1rem; padding-inline: 1rem; }
-  .volume-cutaway { gap: .65rem; }
-  .volume-footer { padding-inline: 1rem; }
+.volume-viewer-stage.is-loading .volume-canvas-wrap::after { content: 'Loading volume…'; position: absolute; top: 16px; left: 50%; transform: translateX(-50%); padding: 8px 16px; background: var(--viewer-bg); color: #edf3f5; font-size: var(--v-meta); }
+.volume-viewer .volume-fullscreen { position: absolute; right: 12px; top: 10px; color: #fff; background: transparent; border: 0; width: 40px; height: 40px; font-size: 1.25rem; }
+.volume-viewer .volume-fullscreen:focus-visible { outline-color: #9fd8df; }
+.volume-controls { display: flex; align-items: center; justify-content: flex-end; gap: 24px; border: 1px solid var(--v-line); border-top: 0; border-radius: 0 0 5px 5px; padding: 8px 24px; }
+.volume-cutaway { display: grid; grid-template-columns: auto minmax(50px,1fr) 3ch; flex: 1; align-items: center; gap: 24px; color: var(--v-ink); font-size: var(--v-control); }
+.volume-range { display: flex; flex-direction: column; min-width: 0; }
+.volume-viewer input[type='range'] { width: 100%; min-width: 50px; height: 25px; margin: 0; accent-color: var(--v-teal); cursor: pointer; }
+.volume-range-endpoints { display: flex; justify-content: space-between; color: var(--v-muted); font-size: .8125rem; line-height: 1.2; }
+.volume-cutaway output { width: 3ch; text-align: right; font-variant-numeric: tabular-nums; }
+.volume-viewer .volume-reset { color: var(--v-ink); border: 1px solid #8ca7b0; border-radius: 3px; background: transparent; display: inline-flex; align-items: center; gap: 10px; padding: 7px 20px; font-size: var(--v-meta); }
+.volume-viewer .volume-reset:hover { background: var(--v-tint); }
+.volume-footer { display: flex; justify-content: space-between; align-items: end; gap: 8px; }
+.volume-viewer .volume-help, .volume-viewer .volume-metadata { margin: 0; color: var(--v-muted); font-size: var(--v-meta); line-height: 1.3; }
+.volume-viewer noscript p { padding: 16px; }
+.volume-viewer-stage:fullscreen { background: var(--v-paper); padding: 16px; height: 100%; width: 100%; }
+@media (max-width: 999px), (max-height: 739px) {
+  .volume-viewer { flex: none; }
+  .volume-viewer-stage { height: 650px; }
+  .volume-viewer-launch { height: 500px; }
 }
-@media (max-width: 380px) {
-  .volume-controls { flex-wrap: wrap; gap: .25rem; }
-  .volume-cutaway { flex-basis: 100%; }
-  .volume-canvas-wrap { height: 350px; }
+@media (max-width: 760px) {
+  .volume-toolbar { align-items: stretch; flex-direction: column; gap: 14px; padding: 14px; }
+  .volume-fields { gap: 14px; }
+  .volume-field { flex: 1; min-width: 0; }
+  .volume-field + .volume-field { padding-left: 14px; }
+  .volume-viewer select { width: 100%; min-width: 0; min-height: 40px; }
+  .volume-modes { align-self: center; }
+  .volume-modes button { min-height: 40px; padding-inline: 24px; }
+  .volume-viewer-stage { height: 660px; grid-template-rows: 140px minmax(0,1fr) 104px 48px; }
+  .volume-controls { padding: 10px 14px; flex-wrap: wrap; gap: 4px; }
+  .volume-cutaway { flex-basis: 100%; gap: 12px; font-size: var(--v-meta); }
+  .volume-viewer .volume-reset { padding: 4px 12px; }
+  .volume-footer { flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; }
+  .volume-viewer .volume-help, .volume-viewer .volume-metadata { font-size: .8125rem; }
 }

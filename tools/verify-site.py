@@ -22,6 +22,7 @@ class Page(HTMLParser):
         self.h1 = 0
         self.sections = []
         self.profile_h1 = 0
+        self.voldit_h1 = 0
         self.feed(path.read_text())
 
     def handle_starttag(self, tag, attrs):
@@ -33,6 +34,8 @@ class Page(HTMLParser):
         self.h1 += tag == 'h1'
         if tag == 'h1' and any('profile-band' in classes for classes in self.sections):
             self.profile_h1 += 1
+        if tag == 'h1' and any('v-landing' in classes for classes in self.sections):
+            self.voldit_h1 += 1
         if tag == 'img' and 'alt' not in attrs:
             errors.append(f'{self.path}: image without alt text')
         for key in ('href', 'src', 'poster', 'data-manifest'):
@@ -71,6 +74,10 @@ for name in routes:
 
 if pages[(SITE / 'index.html').resolve()].profile_h1 != 1:
     errors.append('Homepage name must stay inside the colored profile panel')
+
+voldit = (SITE / 'projects/voldit/index.html').resolve()
+if voldit in pages and pages[voldit].voldit_h1 != 1:
+    errors.append('VolDiT title must stay inside its landing section, not the generated Quarto header')
 
 home = (SITE / 'index.html').read_text()
 pub = pages[(SITE / 'publications.html').resolve()]

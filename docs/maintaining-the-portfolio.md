@@ -66,3 +66,13 @@ The verifier checks generated local links/assets/anchors, key routes, publicatio
 The pull-request workflow renders and checks the site. The existing publication workflow remains manual; merging a change does not automatically publish it. After reviewing the changes, run **Publish Quarto site** from GitHub Actions to deploy to the existing GitHub Pages address.
 
 Existing article URLs and research-note media remain intact. The excluded draft stays excluded from the public site and search.
+
+### VolDiT microsite layout
+
+VolDiT has a page-specific design based on the approved September 2026 concepts. Its text remains in `projects/voldit/index.qmd`; the five sections are `overview` (paper identity and samples), `explore`, `method`, `results`, and `resources` (including citation and ongoing work). The title's header must keep `id="title-block-header"` so Quarto does not move the H1 outside its hero. The project navigation, typography and light palette are isolated in `project.css`; the rest of the portfolio is unaffected. Inter is self-hosted, with provenance recorded in `assets/fonts/README.md`.
+
+At desktop sizes of at least 1000 × 740 CSS pixels, each section occupies the viewport below the 54px navigation bar. Shorter desktop layouts reduce gaps and media size. Smaller windows and mobile use normal document flow; content is never hidden to force a fixed height. Test changes at 1440 × 900, 1366 × 768, 1920 × 1080 and a narrow mobile viewport.
+
+`project.js` provides the custom video controls, four sample choices, active navigation state and citation copying. Without JavaScript, native video controls and direct sample links remain available. `viewer.js` preserves the lazy renderer and full-volume cutaway, adding fullscreen to the light controls in `viewer.css`. Media and scientific diagrams always use their original aspect ratios, even where the generated design reference illustrated them differently. The authoring mockups are not scientific assets.
+
+The sample player draws the original video into three synchronized canvas columns. Each source is an 800 × 256 triptych with complete 256 × 256 planes starting at x=0, 272 and 544; only the gutters are omitted. If replacement videos use a different layout, update these coordinates in `project.js`. Anatomy is contained within each column without stretching or cropping.

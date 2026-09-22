@@ -3,6 +3,7 @@ project:
   output-dir: _site
   resources:
     - assets/fonts/*LICENSE.md
+    - assets/fonts/InterVariable.woff2
     - projects/cardiodit/assets/**
     - projects/voldit/assets/**
     - projects/voldit/*.js
