@@ -12,7 +12,7 @@ MICCAI 2026 acceptance was confirmed by Marvin. Paper links and citation retain 
 
 ## Synthetic examples
 
-The first two numbered generated volumes, `sample_0_0.nii.gz` and `sample_1_0.nii.gz`, come from `Miccai26_DIT/sd/samples_final/luna_xl4`. No patient scans, reconstructions, or private TaviCT data are published. Selection is by filename, not visual quality.
+The first two numbered generated lung volumes, `sample_0_0.nii.gz` and `sample_1_0.nii.gz`, come from `Miccai26_DIT/sd/samples_final/luna_xl4`. The two generated cardiac volumes use the same filenames in `sd/samples_final/tavi_l2`. No patient scans, reconstructions, or conditioning masks are published. Selection is by filename, not visual quality. Marvin explicitly authorized adding TAVI-CT showcases.
 
 The original sampler (`/mnt/sds/sd20i001/marvin/code/diffusion_transformer/src/python/testing/sample.py`, lines 109–111 and 149–156) records a synthetic LPS affine with 0.7 × 0.7 × 1.25 mm spacing and maps decoded values using `(x+1)*750-1200`. Both source files are int16, 512 × 512 × 256, with actual values −1200…300 HU and empty descriptive metadata. This matches the paper's LUNA16 clipping; the current public README's generic −1000…1000 preprocessing must not be applied to these historical exports.
 
@@ -30,9 +30,11 @@ python tools/export-voldit-media.py --source-dir /path/to/sd/samples_final/luna_
 
 ## Interactive renderer
 
+The TAVI-CT exports retain their native 192 × 192 × 192 grid and LPS affine with unit spacing. Their historical sampler maps decoded values to −1000…2000 HU, verified against both files; this differs from the paper's described preprocessing and is preserved without remapping. Videos use a fixed −200…1200 HU window. The exact generating checkpoint is unavailable, so these are illustrative outputs from the evaluation archive, not presented as a particular benchmark checkpoint. `tools/export-voldit-tavi.py` records hashes, geometry, display settings and provenance in `assets/tavi-provenance.json`. Both export scripts preserve the other dataset's entries in `assets/volumes.json`.
+
 NiiVue 0.69.0 is vendored from the official npm release, verified against its registry SHA-512 integrity. The BSD-2-Clause license is included. The browser requests the renderer and one NIfTI volume only after an explicit Load action. No remote renderer service, uploaded data, analytics, or CDN dependency is involved. Sample switching retains downloaded buffers for reuse.
 
-The viewer offers actual volumetric ray casting, orthogonal slices, combined view, rotation, zoom, cutaway and fixed CT windows. Windowing cannot recover intensities clipped in the original generation export. It falls back to the videos if WebGL2 or loading fails.
+The viewer offers actual volumetric ray casting, orthogonal slices, combined view, rotation, zoom, cutaway and dataset-specific CT windows. Cutaway traverses the full normalized volume from +0.5 to −0.5, with 0% disabling clipping and 100% passing the far boundary. A compact toolbar and direct mouse/touch controls replace the navigation disclosure; keyboard rotation, zoom and axial stepping remain available on the focused canvas. Windowing cannot recover intensities clipped in the original generation export. It falls back to the videos if WebGL2 or loading fails.
 
 ## VolDiT v2 development
 

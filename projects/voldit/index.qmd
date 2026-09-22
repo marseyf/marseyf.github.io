@@ -10,8 +10,8 @@ filters:
 ---
 
 ```{=html}
-<link rel="stylesheet" href="viewer.css">
-<link rel="stylesheet" href="project.css">
+<link rel="stylesheet" href="viewer.css?v=3">
+<link rel="stylesheet" href="project.css?v=3">
 <article class="research-project">
 <header class="project-hero">
 <div class="project-inner">
@@ -29,29 +29,30 @@ filters:
 </header>
 
 <section class="project-showcase project-inner" aria-labelledby="examples-title">
-<div class="showcase-heading"><h2 id="examples-title">Synthetic lung CT</h2></div>
+<div class="showcase-heading"><h2 id="examples-title">Synthetic CT</h2></div>
 <figure class="cine-figure">
 <div class="cine-stage">
-<div class="volume-plane-labels" aria-hidden="true"><span>Axial</span><span>Coronal</span><span>Sagittal</span></div>
-<video id="voldit-cine" controls loop playsinline preload="none" poster="assets/lung-example-1.jpg" aria-label="Synthetic VolDiT example 1, scrolling through axial, coronal and sagittal views"><source src="assets/lung-example-1.mp4" type="video/mp4">Your browser cannot play this video. <a href="assets/lung-example-1.mp4">Open the synthetic CT example.</a></video>
+<video id="voldit-cine" controls loop playsinline preload="none" poster="assets/lung-example-1.jpg" aria-label="Synthetic lung CT example 1, scrolling through axial, coronal and sagittal views"><source src="assets/lung-example-1.mp4" type="video/mp4">Your browser cannot play this video. <a href="assets/lung-example-1.mp4">Open the synthetic CT example.</a></video>
 </div>
-<div class="cine-controls" role="group" aria-label="Choose a synthetic CT video">
-<span>Explore samples</span><button type="button" data-cine="1" aria-pressed="true" aria-controls="voldit-cine">Example 1</button><button type="button" data-cine="2" aria-pressed="false" aria-controls="voldit-cine">Example 2</button>
+<figcaption class="volume-plane-labels"><span>Axial</span><span>Coronal</span><span>Sagittal</span></figcaption>
+<div class="voldit-samples" role="group" aria-label="Choose a synthetic CT video">
+<div class="voldit-sample-group"><span>Lung CT</span><button type="button" data-cine="lung-example-1" aria-label="Lung CT example 1" aria-pressed="true" aria-controls="voldit-cine">01</button><button type="button" data-cine="lung-example-2" aria-label="Lung CT example 2" aria-pressed="false" aria-controls="voldit-cine">02</button></div>
+<div class="voldit-sample-group"><span>TAVI-CT</span><button type="button" data-cine="tavi-example-1" aria-label="TAVI-CT example 1" aria-pressed="false" aria-controls="voldit-cine">01</button><button type="button" data-cine="tavi-example-2" aria-label="TAVI-CT example 2" aria-pressed="false" aria-controls="voldit-cine">02</button></div>
 </div>
-<noscript><p><a href="assets/lung-example-2.mp4">Watch example 2.</a></p></noscript>
+<noscript><p>More synthetic examples: <a href="assets/lung-example-2.mp4">Lung CT 2</a> · <a href="assets/tavi-example-1.mp4">TAVI-CT 1</a> · <a href="assets/tavi-example-2.mp4">TAVI-CT 2</a>.</p></noscript>
 </figure>
 <nav class="project-jump-links" aria-label="On this project page"><a href="#explore">Explore in 3D</a><a href="#overview">Overview</a><a href="#method">Method</a><a href="#results">Results</a><a href="#development">Ongoing work</a><a href="#citation">Citation</a></nav>
 </section>
 
 <section class="project-section" id="explore" aria-labelledby="explore-title"><div class="project-inner">
 <h2 id="explore-title">Explore the full volume</h2>
-<p class="project-reading">Rotate a synthetic CT in 3D, cut into the volume, or inspect it slice by slice. Switch between lung, soft-tissue, and bone windows to explore different structures.</p>
-<section id="voldit-viewer" class="volume-viewer" data-manifest="assets/volumes.json" aria-label="Interactive 3D CT viewer">
+<p class="project-reading">Rotate a synthetic CT, cut through the full volume, or inspect it slice by slice. Choose a lung or cardiac example and adjust the window to explore its anatomy.</p>
+<section id="voldit-viewer" class="volume-viewer" data-manifest="assets/volumes.json?v=3" aria-label="Interactive 3D CT viewer">
 <div class="volume-viewer-launch"><button type="button" class="volume-load-button">Load interactive volume <i class="bi bi-box" aria-hidden="true"></i></button><p class="volume-status" role="status" aria-live="polite">Loads on request · about 13 MB for the first volume and renderer.</p></div>
 <div class="volume-viewer-stage" hidden></div>
 <noscript><p>Enable JavaScript to explore the 3D volume, or view the videos above.</p></noscript>
 </section>
-<p class="project-source">Synthetic examples from the LUNA16 experiments, reduced from 512 × 512 × 256 to 256 × 256 × 128 voxels for the browser. The full field of view is retained. Intensities are clipped to −1200…300 HU, as in the original exports. Powered by <a href="https://niivue.com/">NiiVue</a>.</p>
+<p class="project-source">Generated examples from the LUNA16 and TaviCT experiments. Lung volumes are reduced to 256 × 256 × 128 for the browser; cardiac volumes retain their original 192 × 192 × 192 resolution. Both preserve the full field of view and the original export intensity scale. Powered by <a href="https://niivue.com/">NiiVue</a>.</p>
 </div></section>
 
 <section class="project-section project-section--tinted" id="overview" aria-labelledby="overview-title"><div class="project-inner project-reading">
@@ -101,6 +102,6 @@ filters:
 <div class="resource-links"><a href="https://arxiv.org/abs/2603.25181"><i class="bi bi-file-earmark-text" aria-hidden="true"></i> Read the paper</a><a href="https://github.com/Cardio-AI/voldit"><i class="bi bi-github" aria-hidden="true"></i> Explore the code</a><a href="https://huggingface.co/AICM-HD/voldit"><i class="bi bi-box-arrow-up-right" aria-hidden="true"></i> Pretrained models</a><a href="assets/voldit.bib" download><i class="bi bi-download" aria-hidden="true"></i> Download BibTeX</a></div>
 </div></section>
 </article>
-<script src="project.js" defer></script>
-<script type="module" src="viewer.js?v=2"></script>
+<script src="project.js?v=3" defer></script>
+<script type="module" src="viewer.js?v=3"></script>
 ```

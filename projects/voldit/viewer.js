@@ -7,7 +7,7 @@ if (root) {
   const stage = root.querySelector('.volume-viewer-stage');
   // These synthetic exports are clipped at 300 HU; windowing does not imply
   // that higher-density values can be recovered from the browser examples.
-  const presets = { lung: [-1000, 300], tissue: [-160, 240], bone: [0, 300] };
+  const defaultPresets = { lung: [-1000, 300], tissue: [-160, 240], bone: [0, 300] };
   let nv;
   let manifest;
   let busy = false;
@@ -80,43 +80,25 @@ if (root) {
   function buildControls() {
     stage.innerHTML = `
       <div class="volume-toolbar">
-        <label class="volume-field">Sample<select class="volume-sample" aria-label="Synthetic volume sample"></select></label>
-        <label class="volume-field">CT window<select class="volume-preset" aria-label="CT window"><option value="lung">Lung</option><option value="tissue">Soft tissue</option><option value="bone" selected>Bone</option></select></label>
+        <div class="volume-fields">
+          <label class="volume-field">Volume<select class="volume-sample" aria-label="Synthetic volume sample"></select></label>
+          <label class="volume-field">Window<select class="volume-preset" aria-label="CT window"><option value="lung">Lung</option><option value="tissue">Soft tissue</option><option value="bone" selected>Bone</option></select></label>
+        </div>
         <div class="volume-modes" role="group" aria-label="Volume view">
           <button type="button" data-mode="render" aria-pressed="true">3D</button>
           <button type="button" data-mode="slices" aria-pressed="false">Slices</button>
-          <button type="button" data-mode="combined" aria-pressed="false">Slices + 3D</button>
+          <button type="button" data-mode="combined" aria-pressed="false">Combined</button>
         </div>
       </div>
       <div class="volume-canvas-wrap">
-        <canvas class="volume-canvas" tabindex="0" aria-label="Interactive synthetic CT volume" aria-describedby="volume-help">Your browser cannot display the interactive volume. The videos above remain available.</canvas>
+        <canvas class="volume-canvas" tabindex="0" aria-label="Interactive synthetic CT volume" aria-describedby="volume-help volume-keyboard-help">Your browser cannot display the interactive volume. The videos above remain available.</canvas>
       </div>
       <div class="volume-controls">
-        <label class="volume-cutaway">Cutaway<input type="range" min="0" max="100" step="1" value="0" aria-label="3D cutaway depth" aria-valuetext="Whole volume"><output>Whole volume</output></label>
-        <button type="button" class="volume-reset">Reset view</button>
+        <label class="volume-cutaway"><span>Cutaway</span><input type="range" min="0" max="100" step="1" value="0" aria-label="3D cutaway depth" aria-valuetext="Whole volume"><output>0%</output></label>
+        <button type="button" class="volume-reset" aria-label="Reset view"><i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> Reset</button>
       </div>
-      <p class="volume-help" id="volume-help">Drag to rotate. Focus the viewer and scroll to zoom, or use the navigation controls below.</p>
-      <details class="volume-navigation">
-        <summary>Navigation controls</summary>
-        <div class="volume-navigation-content">
-          <div class="volume-rotation" role="group" aria-label="Rotate volume">
-            <button type="button" data-rotate="left" aria-label="Rotate volume left">← Left</button>
-            <button type="button" data-rotate="right" aria-label="Rotate volume right">Right →</button>
-            <button type="button" data-rotate="up" aria-label="Tilt volume up">↑ Up</button>
-            <button type="button" data-rotate="down" aria-label="Tilt volume down">↓ Down</button>
-          </div>
-          <div class="volume-zoom" role="group" aria-label="Zoom volume">
-            <button type="button" data-zoom="out" aria-label="Zoom out">− Zoom out</button>
-            <button type="button" data-zoom="in" aria-label="Zoom in">+ Zoom in</button>
-          </div>
-          <div class="volume-slice-controls" hidden>
-            <label>Axial<input type="range" min="0" max="100" value="50" data-axis="2" aria-label="Axial slice position"></label>
-            <label>Coronal<input type="range" min="0" max="100" value="50" data-axis="1" aria-label="Coronal slice position"></label>
-            <label>Sagittal<input type="range" min="0" max="100" value="50" data-axis="0" aria-label="Sagittal slice position"></label>
-          </div>
-        </div>
-      </details>
-      <p class="volume-metadata"></p>`;
+      <div class="volume-footer"><p class="volume-help" id="volume-help"></p><p class="volume-metadata"></p></div>
+      <span class="visually-hidden" id="volume-keyboard-help">In 3D, use arrow keys to rotate. Plus and minus zoom. In slice views, Page Up and Page Down move the axial plane.</span>`;
     for (const entry of manifest) {
       const option = document.createElement('option');
       option.value = entry.id;
@@ -130,53 +112,42 @@ if (root) {
     });
     query('.volume-cutaway input').addEventListener('input', applyCutaway);
     query('.volume-reset').addEventListener('click', resetView);
-    stage.querySelectorAll('[data-rotate]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const { renderAzimuth: azimuth, renderElevation: elevation } = nv.scene;
-        const [horizontal, vertical] = { left: [-15, 0], right: [15, 0], up: [0, 15], down: [0, -15] }[button.dataset.rotate];
-        nv.setRenderAzimuthElevation(azimuth + horizontal, Math.max(-89, Math.min(89, elevation + vertical)));
-      });
-    });
-    stage.querySelectorAll('[data-zoom]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const factor = button.dataset.zoom === 'in' ? 1.15 : 1 / 1.15;
+    query('.volume-canvas').addEventListener('keydown', (event) => {
+      const rotation = { ArrowLeft: [-10, 0], ArrowRight: [10, 0], ArrowUp: [0, 10], ArrowDown: [0, -10] }[event.key];
+      const handled = (rotation && mode !== 'slices') || ['+', '=', '-', '_'].includes(event.key)
+        || (mode !== 'render' && ['PageUp', 'PageDown'].includes(event.key));
+      if (!handled) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      if (!nv || busy) return;
+      if (rotation && mode !== 'slices') {
+        event.preventDefault();
+        nv.setRenderAzimuthElevation(nv.scene.renderAzimuth + rotation[0], Math.max(-89, Math.min(89, nv.scene.renderElevation + rotation[1])));
+      } else if (['+', '=', '-', '_'].includes(event.key)) {
+        event.preventDefault();
+        const factor = ['+', '='].includes(event.key) ? 1.1 : 1 / 1.1;
         nv.setScale(Math.max(.4, Math.min(4, nv.scene.volScaleMultiplier * factor)));
         const pan = [...nv.scene.pan2Dxyzmm];
         pan[3] = Math.max(.4, Math.min(4, pan[3] * factor));
         nv.setPan2Dxyzmm(pan);
-      });
-    });
-    stage.querySelectorAll('[data-axis]').forEach((slider) => {
-      slider.addEventListener('input', () => {
+      } else if (mode !== 'render' && ['PageUp', 'PageDown'].includes(event.key)) {
+        event.preventDefault();
         const position = [...nv.scene.crosshairPos];
-        position[Number(slider.dataset.axis)] = Number(slider.value) / 100;
+        position[2] = Math.max(0, Math.min(1, position[2] + (event.key === 'PageUp' ? .02 : -.02)));
         nv.scene.crosshairPos = position;
         nv.drawScene();
-        updateSliceControls();
-      });
-    });
-  }
-
-  function updateSliceControls() {
-    if (!nv) return;
-    stage.querySelectorAll('[data-axis]').forEach((slider) => {
-      const value = Math.round(nv.scene.crosshairPos[Number(slider.dataset.axis)] * 100);
-      slider.value = value;
-      slider.setAttribute('aria-valuetext', `${value}% through volume`);
+      }
     });
   }
 
   function updateModeControls() {
-    const hasRender = mode !== 'slices';
     stage.querySelectorAll('[data-mode]').forEach((button) => {
       button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
     });
-    query('.volume-cutaway input').disabled = !hasRender || busy;
-    stage.querySelectorAll('[data-rotate]').forEach((button) => { button.disabled = !hasRender || busy; });
-    query('.volume-slice-controls').hidden = mode === 'render';
+    query('.volume-cutaway').hidden = mode === 'slices';
     query('.volume-help').textContent = mode === 'render'
-      ? 'Drag to rotate. Focus the viewer and scroll to zoom, or use the navigation controls below.'
-      : 'Click a slice to move the crosshairs. Focus the viewer and scroll through slices, or use the navigation controls below.';
+      ? 'Drag to rotate · Focus and scroll to zoom'
+      : 'Click to position · Focus and scroll through slices';
   }
 
   function applyMode() {
@@ -188,6 +159,7 @@ if (root) {
 
   function applyPreset() {
     if (!nv?.volumes.length) return;
+    const presets = currentVolume?.presets || defaultPresets;
     const [minimum, maximum] = presets[query('.volume-preset').value];
     if (nv.volumes[0].cal_min === minimum && nv.volumes[0].cal_max === maximum) return;
     nv.volumes[0].cal_min = minimum;
@@ -197,15 +169,13 @@ if (root) {
 
   function applyCutaway() {
     const value = Number(query('.volume-cutaway input').value);
-    const text = value === 0 ? 'Whole volume' : `${value}% to centre`;
-    query('.volume-cutaway output').textContent = text;
+    const text = value === 0 ? 'Whole volume' : value === 100 ? 'Fully cut through' : `${value}% through volume`;
+    query('.volume-cutaway output').textContent = `${value}%`;
     query('.volume-cutaway input').setAttribute('aria-valuetext', text);
-    // This plane is axis-aligned in NiiVue's unit cube, so the front boundary
-    // is 0.5 from its centre. A generic diagonal distance leaves most of the
-    // slider outside the volume and appears unresponsive.
-    // Remove the front half relative to the opening 150° camera view.
-    // The cut remains anatomically fixed when the user rotates the volume.
-    nv.setClipPlane([value === 0 ? 2 : .5 * (1 - value / 100), 180, 0]);
+    // Traverse the complete normalized cube: +0.5 at the front, 0 at its
+    // centre, -0.5 at the back. Slightly pass the far face to remove its edge.
+    // Keep the plane fixed in anatomical coordinates while rotating the view.
+    nv.setClipPlane([value === 0 ? 2 : value === 100 ? -.501 : .5 - value / 100, 180, 0]);
   }
 
   function resetView() {
@@ -214,10 +184,9 @@ if (root) {
     nv.setPan2Dxyzmm([0, 0, 0, 1]);
     nv.scene.crosshairPos = [.5, .5, .5];
     query('.volume-cutaway input').value = 0;
-    query('.volume-preset').value = 'bone';
+    query('.volume-preset').value = currentVolume?.defaultPreset || 'bone';
     applyPreset();
     applyCutaway();
-    updateSliceControls();
     nv.drawScene();
   }
 
@@ -236,17 +205,27 @@ if (root) {
       }
       if (token !== generation) return;
       // Passing the fetched buffer avoids an unabortable second request inside NiiVue.
-      await nv.loadVolumes([{ url: buffer, name: `${entry.id}.nii.gz`, colormap: 'gray', cal_min: presets.bone[0], cal_max: presets.bone[1] }]);
+      const presets = entry.presets || defaultPresets;
+      const [minimum, maximum] = presets[entry.defaultPreset || 'bone'];
+      await nv.loadVolumes([{ url: buffer, name: `${entry.id}.nii.gz`, colormap: 'gray', cal_min: minimum, cal_max: maximum }]);
       if (token !== generation) return;
       if (!nv.volumes.length) throw new Error('Volume did not load');
       // Keep the standard ray caster to avoid the extra GPU refresh required
       // by optional gradient illumination, especially on constrained devices.
       currentVolume = entry;
+      const windowSelect = query('.volume-preset');
+      windowSelect.replaceChildren();
+      const labels = { lung: 'Lung', cta: 'Angiography', tissue: 'Soft tissue', bone: 'Bone' };
+      for (const name of Object.keys(presets)) {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = labels[name] || name;
+        windowSelect.append(option);
+      }
       query('.volume-sample').value = id;
       query('.volume-canvas').setAttribute('aria-label', `Interactive synthetic CT volume: ${entry.label}`);
       const dimensions = entry.dimensions.join(' × ');
-      const spacing = Array.isArray(entry.spacing) ? ` · ${entry.spacing.map((number) => Number(number.toFixed(2))).join(' × ')} mm voxels` : '';
-      query('.volume-metadata').textContent = `${dimensions} voxels${spacing} · Synthetic sample`;
+      query('.volume-metadata').textContent = `${dimensions} · Synthetic CT`;
       resetView();
       applyMode();
       status.textContent = `${entry.label} ready.`;
@@ -280,7 +259,7 @@ if (root) {
       const { Niivue } = await import('../../assets/vendor/niivue/niivue-0.69.0.js');
       if (token !== generation) return;
       nv = new Niivue({
-        backColor: [.055, .09, .11, 1],
+        backColor: [16 / 255, 29 / 255, 36 / 255, 1],
         fontColor: [.8, .88, .9, 1],
         crosshairColor: [.35, .8, .88, .8],
         clipPlaneColor: [1, 1, 1, 0],
@@ -292,8 +271,7 @@ if (root) {
         clipPlaneHotKey: '',
         cycleClipPlaneHotKey: '',
         viewModeHotKey: '',
-        logLevel: 'error',
-        onLocationChange: updateSliceControls
+        logLevel: 'error'
       });
       canvas.addEventListener('webglcontextlost', (event) => {
         event.preventDefault();

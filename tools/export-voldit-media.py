@@ -85,7 +85,7 @@ def main():
                 '-i', 'pipe:0', '-an', '-c:v', 'libx264', '-crf', '20', '-pix_fmt',
                 'yuv420p', '-movflags', '+faststart', str(args.output_dir / f'{stem}.mp4')
             ], input=np.stack(frames).tobytes(), check=True)
-            manifest.append(dict(id=f'lung-{number + 1}', label=f'Example {number + 1}',
+            manifest.append(dict(id=f'lung-{number + 1}', label=f'Lung CT {number + 1}',
                                  url=volume_path.name, dimensions=list(reduced.shape),
                                  spacing=[float(v) for v in output.header.get_zooms()],
                                  sizeBytes=volume_path.stat().st_size, calMin=-1000, calMax=300))
@@ -99,7 +99,10 @@ def main():
                 video='96 positions from 10% to 90% along each axis, 12 fps, lung window [-1000,300] HU',
                 provenance_limit='Final synthetic export collection; exact generating checkpoint is not recorded.'))
             print(f'Exported {stem}: {volume_path.stat().st_size / 1024**2:.1f} MiB', flush=True)
-    (args.output_dir / 'volumes.json').write_text(json.dumps(dict(volumes=manifest), indent=2) + '\n')
+    manifest_path = args.output_dir / 'volumes.json'
+    existing = json.loads(manifest_path.read_text())['volumes'] if manifest_path.exists() else []
+    manifest += [entry for entry in existing if not entry['id'].startswith('lung-')]
+    manifest_path.write_text(json.dumps(dict(volumes=manifest), indent=2) + '\n')
     (args.output_dir / 'provenance.json').write_text(json.dumps(provenance, indent=2) + '\n')
 
 

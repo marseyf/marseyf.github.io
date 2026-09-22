@@ -1,0 +1,172 @@
+[
+  {
+    "export": "tavi-example-1",
+    "source_collection": "sd/samples_final/tavi_l2",
+    "source_file": "sample_0_0.nii.gz",
+    "source_sha256": "582e0796dac9235a5bc246f3ff638e6388d42376635dd540f8b6e9795d79b5bf",
+    "source_dimensions": [
+      192,
+      192,
+      192
+    ],
+    "source_dtype": "int16",
+    "source_affine": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_orientation": [
+      "L",
+      "P",
+      "S"
+    ],
+    "source_hu_range": [
+      -1000,
+      2000
+    ],
+    "export_dimensions": [
+      192,
+      192,
+      192
+    ],
+    "export_affine": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "export_sha256": "59115c5cf64cc064e06c228a926941f1b8103a4f9c7bbe333ee303e8485fcf03",
+    "transform": "Original int16 HU voxels and geometry retained; fresh NIfTI header with millimeter units.",
+    "video": "96 positions from 10% to 90% along each axis, 12 fps, 800x256, CTA display window [-200,1200] HU.",
+    "intensity_evidence": "Original evaluation sampler maps TAVI decoded [-1,1] values to [-1000,2000] HU; source voxel bounds verified.",
+    "geometry_evidence": "NIfTI affine encodes LPS at unit spacing; no patient-coordinate labels are burned into the videos.",
+    "provenance_limit": "Final unconditional synthetic export collection tavi_l2; exact generating checkpoint is not recorded.",
+    "source_sampler": "marvin/code/diffusion_transformer/src/python/testing/sample.py"
+  },
+  {
+    "export": "tavi-example-2",
+    "source_collection": "sd/samples_final/tavi_l2",
+    "source_file": "sample_1_0.nii.gz",
+    "source_sha256": "6d8b7d1f44681bf493b807ed224185e445006b89b4a743444da279b2b6fc0122",
+    "source_dimensions": [
+      192,
+      192,
+      192
+    ],
+    "source_dtype": "int16",
+    "source_affine": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_orientation": [
+      "L",
+      "P",
+      "S"
+    ],
+    "source_hu_range": [
+      -1000,
+      2000
+    ],
+    "export_dimensions": [
+      192,
+      192,
+      192
+    ],
+    "export_affine": [
+      [
+        -1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "export_sha256": "a765a5901fb8273a1795b1d0eaa111c353c06edcc5958be8866bf243c0c5e4a5",
+    "transform": "Original int16 HU voxels and geometry retained; fresh NIfTI header with millimeter units.",
+    "video": "96 positions from 10% to 90% along each axis, 12 fps, 800x256, CTA display window [-200,1200] HU.",
+    "intensity_evidence": "Original evaluation sampler maps TAVI decoded [-1,1] values to [-1000,2000] HU; source voxel bounds verified.",
+    "geometry_evidence": "NIfTI affine encodes LPS at unit spacing; no patient-coordinate labels are burned into the videos.",
+    "provenance_limit": "Final unconditional synthetic export collection tavi_l2; exact generating checkpoint is not recorded.",
+    "source_sampler": "marvin/code/diffusion_transformer/src/python/testing/sample.py"
+  }
+]
