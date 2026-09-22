@@ -5,6 +5,8 @@ project:
     - assets/fonts/*LICENSE.md
     - projects/cardiodit/assets/**
     - projects/voldit/assets/**
+    - projects/voldit/*.js
+    - projects/voldit/*.css
     - assets/vendor/niivue/**
   pre-render:
     - python3 tools/build-content.py
