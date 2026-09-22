@@ -33,6 +33,9 @@ body.voldit-page {
   color-scheme: light;
 }
 html:has(body.voldit-page) { scroll-padding-top: var(--v-nav-height, 54px); }
+@media (prefers-reduced-motion: no-preference) {
+  html:has(body.voldit-page) { scroll-behavior: smooth; }
+}
 body.voldit-page #quarto-content { display: block; width: 100%; max-width: none; padding: 0; margin: 0; }
 body.voldit-page #quarto-document-content { padding: 0; margin: 0; }
 body.voldit-page #quarto-header, body.voldit-page .quarto-secondary-nav,
