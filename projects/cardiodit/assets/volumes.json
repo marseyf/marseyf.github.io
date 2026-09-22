@@ -1,0 +1,94 @@
+{
+  "volumes": [
+    {
+      "id": "cine-1",
+      "label": "Example 01",
+      "url": "public-example-1.nii.gz",
+      "dimensions": [
+        256,
+        256,
+        6
+      ],
+      "frames": 32,
+      "datatype": 2,
+      "spacing": [
+        1.5,
+        1.5,
+        10.0
+      ],
+      "sizeBytes": 5174060,
+      "displayFps": 8,
+      "defaultPreset": "balanced",
+      "presets": {
+        "balanced": [
+          0,
+          255
+        ],
+        "detail": [
+          25,
+          220
+        ]
+      }
+    },
+    {
+      "id": "cine-2",
+      "label": "Example 02",
+      "url": "public-example-2.nii.gz",
+      "dimensions": [
+        256,
+        256,
+        6
+      ],
+      "frames": 32,
+      "datatype": 2,
+      "spacing": [
+        1.5,
+        1.5,
+        10.0
+      ],
+      "sizeBytes": 5959740,
+      "displayFps": 8,
+      "defaultPreset": "balanced",
+      "presets": {
+        "balanced": [
+          0,
+          255
+        ],
+        "detail": [
+          25,
+          220
+        ]
+      }
+    },
+    {
+      "id": "cine-3",
+      "label": "Example 03",
+      "url": "public-example-3.nii.gz",
+      "dimensions": [
+        256,
+        256,
+        6
+      ],
+      "frames": 32,
+      "datatype": 2,
+      "spacing": [
+        1.5,
+        1.5,
+        10.0
+      ],
+      "sizeBytes": 6239687,
+      "displayFps": 8,
+      "defaultPreset": "balanced",
+      "presets": {
+        "balanced": [
+          0,
+          255
+        ],
+        "detail": [
+          25,
+          220
+        ]
+      }
+    }
+  ]
+}

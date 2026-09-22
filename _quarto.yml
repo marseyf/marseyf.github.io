@@ -4,7 +4,10 @@ project:
   resources:
     - assets/fonts/*LICENSE.md
     - assets/fonts/InterVariable.woff2
+    - assets/project-pages.css
     - projects/cardiodit/assets/**
+    - projects/cardiodit/*.js
+    - projects/cardiodit/*.css
     - projects/voldit/assets/**
     - projects/voldit/*.js
     - projects/voldit/*.css

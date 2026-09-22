@@ -7,6 +7,8 @@ import json
 import re
 import gzip
 import struct
+import hashlib
+import math
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / '_site'
@@ -22,7 +24,7 @@ class Page(HTMLParser):
         self.h1 = 0
         self.sections = []
         self.profile_h1 = 0
-        self.voldit_h1 = 0
+        self.project_hero_h1 = 0
         self.feed(path.read_text())
 
     def handle_starttag(self, tag, attrs):
@@ -35,7 +37,7 @@ class Page(HTMLParser):
         if tag == 'h1' and any('profile-band' in classes for classes in self.sections):
             self.profile_h1 += 1
         if tag == 'h1' and any('v-landing' in classes for classes in self.sections):
-            self.voldit_h1 += 1
+            self.project_hero_h1 += 1
         if tag == 'img' and 'alt' not in attrs:
             errors.append(f'{self.path}: image without alt text')
         for key in ('href', 'src', 'poster', 'data-manifest'):
@@ -75,9 +77,21 @@ for name in routes:
 if pages[(SITE / 'index.html').resolve()].profile_h1 != 1:
     errors.append('Homepage name must stay inside the colored profile panel')
 
-voldit = (SITE / 'projects/voldit/index.html').resolve()
-if voldit in pages and pages[voldit].voldit_h1 != 1:
-    errors.append('VolDiT title must stay inside its landing section, not the generated Quarto header')
+for project in ['voldit', 'cardiodit']:
+    project_page = (SITE / f'projects/{project}/index.html').resolve()
+    if project_page in pages and pages[project_page].project_hero_h1 != 1:
+        errors.append(f'{project}: title must stay inside its landing section, not the generated Quarto header')
+
+# CSS imports and fonts are not ordinary HTML links.
+for css_path in [SITE / 'assets/project-pages.css',
+                 SITE / 'projects/voldit/project.css', SITE / 'projects/cardiodit/project.css']:
+    if not css_path.is_file():
+        errors.append(f'Missing project stylesheet: {css_path}')
+        continue
+    for url in re.findall(r'url\([\'\"]?([^\'\")]+)', css_path.read_text()):
+        parsed = urlsplit(url)
+        if not parsed.scheme and not (css_path.parent / parsed.path).resolve().is_file():
+            errors.append(f'{css_path.name}: missing CSS resource {url}')
 
 home = (SITE / 'index.html').read_text()
 pub = pages[(SITE / 'publications.html').resolve()]
@@ -110,8 +124,11 @@ if any(p.name.startswith('_data') for p in SITE.iterdir()):
     errors.append('Source content data copied to public output')
 
 # Lazy imports and manifest-selected volumes are not ordinary HTML asset links.
-viewer = SITE / 'projects/voldit/viewer.js'
-if viewer.exists():
+for project in ['voldit', 'cardiodit']:
+    viewer = SITE / f'projects/{project}/viewer.js'
+    if not viewer.exists():
+        errors.append(f'Missing {project} viewer')
+        continue
     for module in re.findall(r"import\(['\"]([^'\"]+)['\"]\)", viewer.read_text()):
         if not (viewer.parent / module).resolve().is_file():
             errors.append(f'Missing lazy viewer module: {module}')
@@ -127,14 +144,29 @@ if viewer.exists():
             if path.stat().st_size != volume['sizeBytes']:
                 errors.append(f'Volume download size differs from manifest: {path.name}')
             with gzip.open(path, 'rb') as stream:
-                header = stream.read(352)
+                contents = stream.read()
+            header = contents[:352]
             if len(header) != 352 or struct.unpack_from('<i', header)[0] != 348:
                 errors.append(f'Invalid NIfTI header: {path.name}')
                 continue
             if list(struct.unpack_from('<3h', header, 42)) != volume['dimensions']:
                 errors.append(f'Volume dimensions differ from manifest: {path.name}')
-            if struct.unpack_from('<h', header, 70)[0] != 4 or header[348:352] != b'\0\0\0\0':
-                errors.append(f'Volume must use int16 without metadata extensions: {path.name}')
+            expected_datatype = 2 if project == 'cardiodit' else 4
+            if struct.unpack_from('<h', header, 70)[0] != expected_datatype or header[348:352] != b'\0\0\0\0':
+                errors.append(f'Unexpected volume datatype or metadata extensions: {path.name}')
+            frames = volume.get('frames', 1)
+            if struct.unpack_from('<h', header, 48)[0] != frames:
+                errors.append(f'Frame count differs from manifest: {path.name}')
+            bytes_per_voxel = 1 if expected_datatype == 2 else 2
+            offset = int(struct.unpack_from('<f', header, 108)[0])
+            if len(contents) != offset + math.prod(volume['dimensions']) * frames * bytes_per_voxel:
+                errors.append(f'Incomplete volume payload: {path.name}')
+        if project == 'cardiodit':
+            provenance = json.loads((manifest_path.parent / 'volume-provenance.json').read_text())
+            for record in provenance:
+                path = manifest_path.parent / record['export']
+                if path.is_file() and hashlib.sha256(path.read_bytes()).hexdigest() != record['export_sha256']:
+                    errors.append(f'4D export differs from verified provenance: {path.name}')
 
 # Validate essential color pairs in both CSS palettes (not a browser layout test).
 css = (ROOT / 'styles.css').read_text()
@@ -155,4 +187,4 @@ if len(palettes) != 2:
 
 if errors:
     raise SystemExit('Site checks failed:\n- ' + '\n- '.join(errors))
-print(f'Passed: {len(pages)} HTML pages, local links/assets/anchors, {len(data)} publications, profile icons, draft exclusion, and light/dark text contrast.')
+print(f'Passed: {len(pages)} HTML pages, local links/assets/anchors, {len(data)} publications, project titles/styles, 3D/4D volume integrity, profile icons, draft exclusion, and light/dark text contrast.')

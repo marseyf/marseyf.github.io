@@ -3,7 +3,7 @@ title: "VolDiT — Controllable Volumetric Medical Image Synthesis with Diffusio
 description: "Native 3D diffusion transformers for controllable CT synthesis. Explore synthetic volumes in 3D, the VolDiT method, and results from the MICCAI 2026 paper."
 image: assets/lung-example-1.jpg
 page-layout: full
-body-classes: voldit-page
+body-classes: voldit-page research-project-page
 navbar: false
 sidebar: false
 page-footer: false
@@ -13,7 +13,7 @@ filters:
 ---
 
 ```{=html}
-<link rel="stylesheet" href="project.css?v=4">
+<link rel="stylesheet" href="project.css?v=5">
 <link rel="stylesheet" href="viewer.css?v=4">
 <header class="v-nav">
   <nav class="v-nav-inner" aria-label="VolDiT project">

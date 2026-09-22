@@ -6,9 +6,10 @@ MICCAI 2026 acceptance was confirmed by Marvin in the website refinement request
 
 - Paper: https://arxiv.org/abs/2603.25194 (v1, 26 March 2026).
 - Framework: existing `assets/paper-figures/cardiodit-figure-1-framework.jpg`, Figure 1 from the paper.
-- Public-dataset comparison: Table 1, public dataset block. The page reports FID, precision and recall for the three generated-data models, with the sample count and feature extractor. It does not recompute these results or present development samples as paper benchmarks.
+- Generation comparisons: Table 1, public and private dataset blocks. The page reports FID, precision and recall for the three generated-data models, with the sample count and feature extractor. The function strip reports the paper's ejection-fraction means and standard deviations. It does not recompute these results or present development samples as paper benchmarks.
 - Public implementation: https://github.com/Cardio-AI/cardiodit. Its README describes the two-stage pipeline; pretrained weights were listed as forthcoming when this page was built.
 - Layout inspiration: https://pfriedri.github.io/wdm-3d-io/. No template, prose, or assets were copied from that page.
+- September 2026 redesign: approved CardioDiT section concepts, using the VolDiT project page's shared typography, colors, controls and desktop viewport layout. Scientific figures and sample imagery remain the original assets.
 
 ## Original synthetic examples
 
@@ -17,6 +18,8 @@ MICCAI 2026 acceptance was confirmed by Marvin in the website refinement request
 Each source volume is H×W×D×T = 256×256×6×32. The videos show slices 2, 4, and 6 (one-based), with all 32 frames synchronized at 8 fps for display. Intensities are windowed once per volume using its 1st and 99.5th percentiles, held constant across slices and frames. In-plane arrays are transposed for display; no anatomical orientation or physiological timing is inferred. The exact historical checkpoint is not recorded in this collection.
 
 `tools/export-cardiodit-media.py` performs the numerical rendering and video encoding. It requires NumPy, nibabel, Pillow, and FFmpeg only when regenerating media; normal Quarto builds need none of these dependencies. Pass `--source-dir`, `--development-gif`, and `--output-dir projects/cardiodit/assets`. The source files remain outside the website repository.
+
+The interactive 4D viewer uses the same three synthetic source volumes. `tools/export-cardiodit-volumes.py` verifies their recorded hashes, preserves all 256×256×6×32 voxels and the source affine, and applies the videos' fixed intensity window to uint8 display values. No spatial interpolation, frame interpolation or segmentation is added to the exported data. The three compressed exports are approximately 5–6 MiB each and are loaded only on request. MRI values are display intensities, not Hounsfield units. `volume-provenance.json` records exact source/export hashes and round-trip checks; `volumes.json` supplies frame counts and controls. Source headers do not establish physical frame timing or anatomical orientation. The viewer therefore omits anatomical direction labels and uses 8 fps as presentation speed only. The 3D ray caster interpolates the sparse through-plane samples for display; slice views retain their source detail.
 
 ## Subsequent development
 
