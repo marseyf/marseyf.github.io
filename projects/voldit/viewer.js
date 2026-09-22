@@ -189,6 +189,7 @@ if (root) {
   function applyPreset() {
     if (!nv?.volumes.length) return;
     const [minimum, maximum] = presets[query('.volume-preset').value];
+    if (nv.volumes[0].cal_min === minimum && nv.volumes[0].cal_max === maximum) return;
     nv.volumes[0].cal_min = minimum;
     nv.volumes[0].cal_max = maximum;
     nv.updateGLVolume();
@@ -238,8 +239,8 @@ if (root) {
       await nv.loadVolumes([{ url: buffer, name: `${entry.id}.nii.gz`, colormap: 'gray', cal_min: presets.bone[0], cal_max: presets.bone[1] }]);
       if (token !== generation) return;
       if (!nv.volumes.length) throw new Error('Volume did not load');
-      await nv.setVolumeRenderIllumination(.4);
-      if (token !== generation) return;
+      // Keep the standard ray caster to avoid the extra GPU refresh required
+      // by optional gradient illumination, especially on constrained devices.
       currentVolume = entry;
       query('.volume-sample').value = id;
       query('.volume-canvas').setAttribute('aria-label', `Interactive synthetic CT volume: ${entry.label}`);
