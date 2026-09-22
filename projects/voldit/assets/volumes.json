@@ -1,0 +1,40 @@
+{
+  "volumes": [
+    {
+      "id": "lung-1",
+      "label": "Example 1",
+      "url": "lung-example-1.nii.gz",
+      "dimensions": [
+        256,
+        256,
+        128
+      ],
+      "spacing": [
+        1.399999976158142,
+        1.399999976158142,
+        2.5
+      ],
+      "sizeBytes": 9708057,
+      "calMin": -1000,
+      "calMax": 300
+    },
+    {
+      "id": "lung-2",
+      "label": "Example 2",
+      "url": "lung-example-2.nii.gz",
+      "dimensions": [
+        256,
+        256,
+        128
+      ],
+      "spacing": [
+        1.399999976158142,
+        1.399999976158142,
+        2.5
+      ],
+      "sizeBytes": 8642864,
+      "calMin": -1000,
+      "calMax": 300
+    }
+  ]
+}

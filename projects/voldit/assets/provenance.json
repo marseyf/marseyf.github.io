@@ -1,0 +1,154 @@
+[
+  {
+    "export": "lung-example-1",
+    "source_collection": "sd/samples_final/luna_xl4",
+    "source_file": "sample_0_0.nii.gz",
+    "source_sha256": "2b359a259e72c76982f4f3233139afd292c92b32dbcf2df9c65a52b2181033cd",
+    "source_dimensions": [
+      512,
+      512,
+      256
+    ],
+    "source_affine": [
+      [
+        -0.699999988079071,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.699999988079071,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.25,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_hu_range": [
+      -1200,
+      300
+    ],
+    "export_dimensions": [
+      256,
+      256,
+      128
+    ],
+    "export_affine": [
+      [
+        -1.399999976158142,
+        0.0,
+        0.0,
+        -0.3499999940395355
+      ],
+      [
+        0.0,
+        -1.399999976158142,
+        0.0,
+        -0.3499999940395355
+      ],
+      [
+        0.0,
+        0.0,
+        2.5,
+        0.625
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "export_sha256": "fd547686f429eb555f8a24732eee070c9b503128646d7cdd2b32747ba1a30c3b",
+    "transform": "2x2x2 block average, rounded to int16 HU; preserve block-center geometry",
+    "video": "96 positions from 10% to 90% along each axis, 12 fps, lung window [-1000,300] HU",
+    "provenance_limit": "Final synthetic export collection; exact generating checkpoint is not recorded."
+  },
+  {
+    "export": "lung-example-2",
+    "source_collection": "sd/samples_final/luna_xl4",
+    "source_file": "sample_1_0.nii.gz",
+    "source_sha256": "35d6fda3ce64141b42ea8ead755a3ab22d415b740492e0f0d37a40615d7e7176",
+    "source_dimensions": [
+      512,
+      512,
+      256
+    ],
+    "source_affine": [
+      [
+        -0.699999988079071,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -0.699999988079071,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.25,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_hu_range": [
+      -1200,
+      300
+    ],
+    "export_dimensions": [
+      256,
+      256,
+      128
+    ],
+    "export_affine": [
+      [
+        -1.399999976158142,
+        0.0,
+        0.0,
+        -0.3499999940395355
+      ],
+      [
+        0.0,
+        -1.399999976158142,
+        0.0,
+        -0.3499999940395355
+      ],
+      [
+        0.0,
+        0.0,
+        2.5,
+        0.625
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "export_sha256": "c0e491431cf9a2bf33f238fc40f6fe34136580072ea368a3ac33feba9c0401fa",
+    "transform": "2x2x2 block average, rounded to int16 HU; preserve block-center geometry",
+    "video": "96 positions from 10% to 90% along each axis, 12 fps, lung window [-1000,300] HU",
+    "provenance_limit": "Final synthetic export collection; exact generating checkpoint is not recorded."
+  }
+]

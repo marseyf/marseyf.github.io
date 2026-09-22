@@ -4,6 +4,8 @@ project:
   resources:
     - assets/fonts/*LICENSE.md
     - projects/cardiodit/assets/**
+    - projects/voldit/assets/**
+    - assets/vendor/niivue/**
   pre-render:
     - python3 tools/build-content.py
   render:

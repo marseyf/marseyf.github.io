@@ -1,0 +1,2 @@
+.volume-plane-labels { display: grid; grid-template-columns: repeat(3, 1fr); padding: .7rem 0; text-align: center; background: #102830; color: #d1e5eb; font-size: var(--text-meta); line-height: 1.6; }
+.voldit-control-result { margin-top: 2.5rem; }

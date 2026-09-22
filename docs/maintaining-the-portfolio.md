@@ -52,6 +52,8 @@ CardioDiT is the first project page at `projects/cardiodit/`. Publication titles
 
 The CardioDiT page uses native video controls, three selectable synthetic examples, and a separate development update. Its sources and export details are in `docs/cardiodit-project-sources.md`. Media generation is a separate authoring step; the build serves committed assets. Add project assets referenced only through JavaScript to Quarto resources so they are included in the output.
 
+VolDiT at `projects/voldit/` adds two synthetic CT videos and a lazy-loaded NiiVue volume renderer. `assets/volumes.json` defines the available NIfTI files. The bundled renderer in `assets/vendor/niivue/` and all volume assets must remain in Quarto resources. The verifier checks the lazy import, volume sizes, NIfTI dimensions and metadata-extension exclusion. Sources, intensity conventions, export instructions and development caveats are in `docs/voldit-project-sources.md`.
+
 ## Verification and publishing
 
 ```bash

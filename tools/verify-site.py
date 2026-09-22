@@ -5,6 +5,8 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 import json
 import re
+import gzip
+import struct
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / '_site'
@@ -33,7 +35,7 @@ class Page(HTMLParser):
             self.profile_h1 += 1
         if tag == 'img' and 'alt' not in attrs:
             errors.append(f'{self.path}: image without alt text')
-        for key in ('href', 'src', 'poster'):
+        for key in ('href', 'src', 'poster', 'data-manifest'):
             if key in attrs:
                 self.links.append(attrs[key])
         if tag == 'a' and attrs.get('href') == '' and 'quarto-color-scheme-toggle' not in attrs.get('class', '').split():
@@ -99,6 +101,33 @@ if '2026-11-13' not in (SITE / 'outreach.html').read_text():
     errors.append('Missing ESC talk date')
 if any(p.name.startswith('_data') for p in SITE.iterdir()):
     errors.append('Source content data copied to public output')
+
+# Lazy imports and manifest-selected volumes are not ordinary HTML asset links.
+viewer = SITE / 'projects/voldit/viewer.js'
+if viewer.exists():
+    for module in re.findall(r"import\(['\"]([^'\"]+)['\"]\)", viewer.read_text()):
+        if not (viewer.parent / module).resolve().is_file():
+            errors.append(f'Missing lazy viewer module: {module}')
+    manifest_path = viewer.parent / 'assets/volumes.json'
+    if not manifest_path.exists():
+        errors.append('Missing interactive-volume manifest')
+    else:
+        for volume in json.loads(manifest_path.read_text())['volumes']:
+            path = manifest_path.parent / volume['url']
+            if not path.is_file():
+                errors.append(f'Missing interactive volume: {path.name}')
+                continue
+            if path.stat().st_size != volume['sizeBytes']:
+                errors.append(f'Volume download size differs from manifest: {path.name}')
+            with gzip.open(path, 'rb') as stream:
+                header = stream.read(352)
+            if len(header) != 352 or struct.unpack_from('<i', header)[0] != 348:
+                errors.append(f'Invalid NIfTI header: {path.name}')
+                continue
+            if list(struct.unpack_from('<3h', header, 42)) != volume['dimensions']:
+                errors.append(f'Volume dimensions differ from manifest: {path.name}')
+            if struct.unpack_from('<h', header, 70)[0] != 4 or header[348:352] != b'\0\0\0\0':
+                errors.append(f'Volume must use int16 without metadata extensions: {path.name}')
 
 # Validate essential color pairs in both CSS palettes (not a browser layout test).
 css = (ROOT / 'styles.css').read_text()

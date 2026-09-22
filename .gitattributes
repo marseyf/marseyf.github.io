@@ -1,0 +1,2 @@
+# Keep the verified upstream bundle byte-for-byte, including shader whitespace.
+assets/vendor/** linguist-vendored -whitespace

@@ -43,17 +43,17 @@
       "Sandy Engelhardt."
     ],
     "year": 2026,
-    "status": "arXiv preprint",
+    "status": "Accepted at MICCAI 2026",
     "topic": "Volume + time",
     "summary": "Transformer-based 3D medical-image synthesis with mask-based spatial control.",
-    "citation": "arXiv preprint arXiv:2603.25181 [cs.CV], submitted 26 Mar 2026.",
+    "citation": "Accepted at MICCAI 2026. Preprint: arXiv:2603.25181 [cs.CV], submitted 26 Mar 2026.",
     "abstract": "Diffusion models have become a leading approach for high-fidelity medical image synthesis. However, most existing methods for 3D medical image generation rely on convolutional U-Net backbones within latent diffusion frameworks. While effective, these architectures impose strong locality biases and limited receptive fields, which may constrain scalability, global context integration, and flexible conditioning. In this work, we introduce VolDiT, the first purely transformer-based 3D Diffusion Transformer for volumetric medical image synthesis. Our approach extends diffusion transformers to native 3D data through volumetric patch embeddings and global self-attention operating directly over 3D tokens. To enable structured control, we propose a timestep-gated control adapter that maps segmentation masks into learnable control tokens that modulate transformer layers during denoising. This token-level conditioning mechanism allows precise spatial guidance while preserving the modeling advantages of transformer architectures. We evaluate our model on high-resolution 3D medical image synthesis tasks and compare it to state-of-the-art 3D latent diffusion models based on U-Nets. Results demonstrate improved global coherence, superior generative fidelity, and enhanced controllability. Our findings suggest that fully transformerbased diffusion models provide a flexible foundation for volumetric medical image synthesis. The code and models trained on public data are available at https://github.com/Cardio-AI/voldit.",
     "paper_url": "https://arxiv.org/abs/2603.25181",
     "code_url": "https://github.com/Cardio-AI/voldit",
-    "project_url": null,
+    "project_url": "projects/voldit/",
     "featured": false,
-    "display_venue": "arXiv",
-    "publication_type": "Preprint"
+    "display_venue": "MICCAI 2026",
+    "publication_type": "Accepted paper"
   },
   {
     "id": "wad-div",
