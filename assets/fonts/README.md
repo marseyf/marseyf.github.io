@@ -6,9 +6,9 @@ Unmodified Adobe font releases, distributed under the SIL Open Font License. Eac
 
 - [source-sans](https://github.com/adobe-fonts/source-sans/tree/87b37a2daaed80fcb8e8ccb0085c4d72ddade12e): `87b37a2daaed80fcb8e8ccb0085c4d72ddade12e`
 
-## Inter (VolDiT project page)
+## Inter (project pages)
 
-The VolDiT microsite uses a self-hosted upright variable Inter font to match its approved concepts; the portfolio and CardioDiT keep their existing fonts.
+VolDiT and CardioDiT use self-hosted upright variable Inter to match their approved concepts. The homepage uses the bundled Source Sans 3 upright face; archive headings retain Source Serif 4.
 
 - Upstream: https://github.com/rsms/inter
 - Revision: `353b61b9f4430d5f420d56605a6e7993e0941470`

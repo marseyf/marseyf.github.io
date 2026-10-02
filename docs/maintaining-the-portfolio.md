@@ -14,7 +14,7 @@ ISO dates (`YYYY-MM-DD`) keep sorting reliable; the upcoming talk label is calcu
 
 ### Typography
 
-The homepage uses self-hosted Inter, flat slate backgrounds, pale teal accents, and one responsive scale for name, section headings, subheadings, item titles, body, metadata, and controls. Its CSS and small progressive-enhancement script are isolated in `assets/homepage.css` and `assets/homepage.js`, loaded only by the homepage. At shorter desktop heights, publication resource links sit alongside author lines to preserve readable text and viewport fit.
+The homepage uses self-hosted Source Sans 3, flat slate backgrounds, and pale teal accents. Its desktop type scale is fixed by role: name 52 px, section headings 36 px, subheadings 24 px, item titles 20 px, body 17 px, metadata/authors 14 px, and controls 15 px. Headings use semibold weight with restrained tracking; descriptive copy uses regular weight. Mobile reduces the larger heading sizes and keeps body text at 16 px. Do not introduce viewport-dependent desktop scaling or per-section font sizes. Its CSS and small progressive-enhancement script are isolated in `assets/homepage.css` and `assets/homepage.js`, loaded only by the homepage. At shorter desktop heights, publication resource links sit alongside author lines to preserve readable text and viewport fit.
 
 The archive pages retain Source Serif 4 and Source Sans 3 through `styles.css`. Project pages retain their independent shared stylesheet, `assets/project-pages.css`. Do not change those styles to adjust the homepage. Font provenance and licenses are recorded in `assets/fonts/`.
 

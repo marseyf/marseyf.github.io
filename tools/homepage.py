@@ -91,7 +91,7 @@ def render_homepage(site, papers):
         <h3><a href="{link(talk['url'])}">{e(content['talk_preview_title'])} {icon('arrow-up-right')}</a></h3>
         <p>{e(talk['event'])} · {e(talk['location'].split(',')[0])}</p></article>'''
 
-    markup = f'''<link rel="stylesheet" href="assets/homepage.css?v=1">
+    markup = f'''<link rel="stylesheet" href="assets/homepage.css?v=2">
     <a class="skip-link h-skip-link" href="#main-content">Skip to main content</a>
     <header class="h-nav"><div class="h-nav-inner h-container">
       <a class="h-wordmark" href="#about">{e(profile['name'])}</a>
