@@ -5,6 +5,8 @@ project:
     - assets/fonts/*LICENSE.md
     - assets/fonts/InterVariable.woff2
     - assets/project-pages.css
+    - assets/homepage.css
+    - assets/homepage.js
     - projects/cardiodit/assets/**
     - projects/cardiodit/*.js
     - projects/cardiodit/*.css

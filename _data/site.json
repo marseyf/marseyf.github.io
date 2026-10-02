@@ -16,19 +16,22 @@
       "date": "2026-03-26",
       "title": "CardioDiT preprint released",
       "text": "Joint spatial and temporal modeling for 4D cardiac MRI synthesis with diffusion transformers.",
-      "url": "https://arxiv.org/abs/2603.25194"
+      "url": "https://arxiv.org/abs/2603.25194",
+      "homepage_text": "Joint spatial and temporal modeling for 4D cardiac MRI synthesis."
     },
     {
       "date": "2026-03-26",
       "title": "VolDiT preprint released",
       "text": "Transformer-based volumetric medical image synthesis with segmentation-guided spatial control.",
-      "url": "https://arxiv.org/abs/2603.25181"
+      "url": "https://arxiv.org/abs/2603.25181",
+      "homepage_text": "Controllable volumetric medical image synthesis with diffusion transformers."
     },
     {
       "date": "2026-03-12",
       "title": "Rethinking diversity evaluation",
       "text": "Our BVM 2026 paper introduces WAD-Div, a feature-based measure of medical-image dataset diversity.",
-      "url": "https://doi.org/10.1007/978-3-658-51100-5_83"
+      "url": "https://doi.org/10.1007/978-3-658-51100-5_83",
+      "homepage_text": "WAD-Div measures diversity beyond visual similarity."
     },
     {
       "date": "2025-09-21",
@@ -55,5 +58,44 @@
       "slides": null,
       "video": null
     }
-  ]
+  ],
+  "homepage": {
+    "about_detail": "My research connects high-resolution image synthesis with computational efficiency, anatomical and temporal structure, diversity, and memorization.",
+    "publications_subtitle": "Generative medical imaging, from models to evaluation.",
+    "publication_order": [
+      "cardiodit",
+      "voldit",
+      "memorization-ldm",
+      "medlord",
+      "wad-div",
+      "latent-pollution",
+      "single-pass-4d-cmr",
+      "coronary-dominance-diversity"
+    ],
+    "talk_preview_title": "AI-empowered science",
+    "milestone": {
+      "venue": "MICCAI 2026",
+      "preview_title": "CardioDiT and VolDiT accepted",
+      "preview_text": "Two perspectives on generative medical imaging.",
+      "title": "CardioDiT and VolDiT accepted at MICCAI 2026",
+      "text": "Our work on 4D cardiac MRI and controllable 3D synthesis will appear at MICCAI.",
+      "publications": [
+        "cardiodit",
+        "voldit"
+      ]
+    },
+    "note": {
+      "title": "From noise to anatomy",
+      "subtitle": "Diffusion models for medical image synthesis",
+      "category": "Foundations",
+      "date": "2026-07-27",
+      "text": "An introduction to denoising, conditioning, latent spaces, and evaluation.",
+      "topics": [
+        "From noise to images",
+        "Structure and conditioning",
+        "Evaluating synthetic data"
+      ],
+      "url": "posts/diffusion-models-medical-image-synthesis/"
+    }
+  }
 }

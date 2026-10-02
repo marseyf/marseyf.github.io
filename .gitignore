@@ -7,3 +7,5 @@
 **/*.quarto_ipynb
 
 /_generated/
+
+**/__pycache__/

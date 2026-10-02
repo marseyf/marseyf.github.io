@@ -83,7 +83,7 @@ for project in ['voldit', 'cardiodit']:
         errors.append(f'{project}: title must stay inside its landing section, not the generated Quarto header')
 
 # CSS imports and fonts are not ordinary HTML links.
-for css_path in [SITE / 'assets/project-pages.css',
+for css_path in [SITE / 'assets/homepage.css', SITE / 'assets/project-pages.css',
                  SITE / 'projects/voldit/project.css', SITE / 'projects/cardiodit/project.css']:
     if not css_path.is_file():
         errors.append(f'Missing project stylesheet: {css_path}')
@@ -97,6 +97,12 @@ home = (SITE / 'index.html').read_text()
 pub = pages[(SITE / 'publications.html').resolve()]
 data = json.loads((ROOT / '_data/publications.json').read_text())
 profile = json.loads((ROOT / '_data/site.json').read_text())['profile']
+if profile['portrait'] not in pages[(SITE / 'index.html').resolve()].links:
+    errors.append('Homepage must use the configured original portrait')
+for project in ['voldit', 'cardiodit']:
+    project_html = (SITE / f'projects/{project}/index.html').read_text()
+    if 'assets/homepage.' in project_html or 'slate-homepage' in project_html:
+        errors.append(f'{project}: homepage styles or scripts leaked into project page')
 for paper in data:
     if paper['id'] not in pub.ids or paper['id'] not in pages[(SITE / 'index.html').resolve()].ids:
         errors.append(f'Missing publication: {paper["id"]}')
@@ -104,6 +110,8 @@ for paper in data:
         project_page = (SITE / paper['project_url'] / 'index.html').resolve()
         if project_page not in pages or pages[project_page].h1 != 1:
             errors.append(f'Missing project page or invalid H1: {paper["id"]}')
+    if home.count(f'id="{paper["id"]}"') != 1:
+        errors.append(f'Homepage must include publication exactly once: {paper["id"]}')
 for key in ['linkedin', 'github', 'lab_github']:
     if profile.get(key) and profile[key] not in home:
         errors.append(f'Missing homepage profile link: {key}')
@@ -185,6 +193,14 @@ for block in palettes:
 if len(palettes) != 2:
     errors.append('Expected light and dark palettes')
 
+home_css = (ROOT / 'assets/homepage.css').read_text()
+home_colors = dict(re.findall(r'(--h-[\w-]+):\s*(#[0-9a-fA-F]{6})', home_css))
+for foreground in ['--h-heading', '--h-body', '--h-secondary', '--h-accent']:
+    for background in ['--h-canvas', '--h-panel', '--h-nav']:
+        a, b = sorted([luminance(home_colors[foreground]), luminance(home_colors[background])])
+        if (b+.05)/(a+.05) < 4.5:
+            errors.append(f'Homepage contrast below 4.5:1: {foreground} / {background}')
+
 if errors:
     raise SystemExit('Site checks failed:\n- ' + '\n- '.join(errors))
-print(f'Passed: {len(pages)} HTML pages, local links/assets/anchors, {len(data)} publications, project titles/styles, 3D/4D volume integrity, profile icons, draft exclusion, and light/dark text contrast.')
+print(f'Passed: {len(pages)} HTML pages, local links/assets/anchors, {len(data)} publications, original homepage portrait, project style isolation, 3D/4D volume integrity, profile icons, draft exclusion, and light/dark/slate text contrast.')

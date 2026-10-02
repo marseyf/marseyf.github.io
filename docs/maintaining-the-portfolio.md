@@ -6,23 +6,27 @@ The site stays on Quarto and GitHub Pages. Install Quarto and Python 3, then use
 
 Edit `_data/site.json` for the profile, News, and Talks & Outreach. Edit `_data/publications.json` for papers. Quarto's pre-render hook runs `tools/build-content.py`; the `portfolio` shortcode inserts the resulting HTML. `_generated/` is build output and should not be edited or committed.
 
-The homepage opens with one introduction panel containing the profile, portrait, and About text, followed by News, Publications, Talks & Outreach, and Notes. Every section heading sits above its content. Navigation jumps to these sections. All publications appear on the homepage, grouped by citation year, with concise summaries and direct resource links. Abstracts and citations remain in the publication data for future project pages. News uses a compact date-and-headline layout and shows the three newest items and reveals the remaining entries inline with a native “See more” disclosure; it needs no JavaScript. The homepage shows the newest talk; the talk's wider session title stays on the full Outreach page. Existing About, News, and Publications URLs remain available for older links. ISO dates (`YYYY-MM-DD`) keep sorting reliable; the upcoming label is calculated at build time. Rebuild the site after an event to update that label. Resource links appear only when a URL is supplied.
+The slate homepage follows five screens: introduction and latest news, two publication screens, News, and Talks & Research Notes. At standard desktop sizes (1366 × 768 and larger), each screen fills the viewport below the navigation. Smaller windows use natural document flow. Expanding News may lengthen its screen. Section links scroll smoothly unless the visitor requests reduced motion.
+
+Homepage-only copy and presentation settings live in the `homepage` object in `_data/site.json`: the second About paragraph, featured milestone, publication order, short talk preview, and research note. The shared profile, news records, talks, and publications remain the source of their corresponding content. `tools/homepage.py` renders the homepage; the archive includes still come from `tools/build-content.py`. News initially shows three records; the centered button reveals older records above itself. If JavaScript is unavailable, every record is visible. Existing About, News, Publications, and article URLs remain available.
+
+ISO dates (`YYYY-MM-DD`) keep sorting reliable; the upcoming talk label is calculated at build time. Rebuild after an event to update that label. Resource links appear only when a URL is supplied.
 
 ### Typography
 
-Page and section headings use Source Serif 4; item titles, body text, and navigation use Source Sans 3. The shared CSS type scale defines display titles (40–56 px), section headings (32 px), item titles (20 px), body text (18 px), metadata (14 px), and controls (16 px). Use these roles instead of adding per-section font sizes. Sections use flat backgrounds and restrained rules, without gradients or decorative animation. Variable WOFF2 files are self-hosted in `assets/fonts/`, with upstream revisions and licenses recorded there. Font faces and fallback stacks are defined in `styles.css`; `theme.scss` disables external theme font imports.
+The homepage uses self-hosted Inter, flat slate backgrounds, pale teal accents, and one responsive scale for name, section headings, subheadings, item titles, body, metadata, and controls. Its CSS and small progressive-enhancement script are isolated in `assets/homepage.css` and `assets/homepage.js`, loaded only by the homepage. At shorter desktop heights, publication resource links sit alongside author lines to preserve readable text and viewport fit.
+
+The archive pages retain Source Serif 4 and Source Sans 3 through `styles.css`. Project pages retain their independent shared stylesheet, `assets/project-pages.css`. Do not change those styles to adjust the homepage. Font provenance and licenses are recorded in `assets/fonts/`.
 
 ### Portrait and social icons
 
-1. Place your portrait at `assets/profile.jpg` (or another image path). A 6:7 portrait around 960 × 1120 pixels works well. The small mobile layout uses a square crop.
-2. Set `profile.portrait` in `_data/site.json` to `assets/profile.jpg` and check `portrait_alt`.
-3. Rebuild. Without an image, the profile shows a deliberate initials block with the same reserved space.
+The homepage uses the original uploaded portrait at `assets/profile.png`, displayed at its original 3:4 aspect ratio without cropping or image generation. To replace it, supply an actual portrait, update `profile.portrait` and `profile.portrait_alt`, and update the intrinsic dimensions in `tools/homepage.py` if needed. Keep the original asset unless a replacement is explicitly requested.
 
-The `linkedin`, `lab_github`, and `github` values control the labeled icon links on Home and About. A null value hides the corresponding icon. Icons have accessible names and native hover tooltips. No broken/disabled social placeholders are published.
+The `linkedin`, `lab_github`, and `github` values control labeled icon links in the homepage navigation, contact band, and About archive. A null value hides the corresponding icon. Icons have accessible names and native hover tooltips.
 
 ### News
 
-Append an object with `date`, `title`, `text`, and `url` to `news`. Use an actual announcement or publication date, not an inferred conference acceptance date. The initial records were checked against the linked arXiv and publisher pages.
+Append an object with `date`, `title`, `text`, and `url` to `news`. Use an actual announcement or publication date, not an inferred conference acceptance date. The initial records were checked against the linked arXiv and publisher pages. An optional `homepage_text` supplies a shorter homepage summary while the archive keeps the full `text`. The featured milestone has no invented acceptance date and is edited separately under `homepage.milestone`.
 
 ### Talks and outreach
 
@@ -46,7 +50,7 @@ Use `type` for Talk, Poster, Workshop, or Panel. Leave optional links null until
 
 ## Publications and future project pages
 
-Each publication has a stable `id`, authors, summary, abstract, citation, type, and resource URLs. `year` is the citation year. Conference year and online date can differ; preserve those in the citation and optional date fields. Homepage and publication archive use the same renderer: descending citation year, then data-file order within each year. The earlier `featured` fields are retained as metadata but do not restrict the homepage list.
+Each publication has a stable `id`, authors, summary, abstract, citation, type, and resource URLs. `year` is the citation year. Conference year and online date can differ; preserve those in the citation and optional date fields. The publication archive uses descending citation year, then data-file order within each year. The homepage displays every paper in groups of four, ordered by `homepage.publication_order`, with concise author lines and separate Paper/Code links. New records omitted from that order are appended automatically; update the order when curating the next screen. Full author lists, abstracts, and citations remain in the shared data and archive. The earlier `featured` fields are retained as metadata but do not restrict the homepage list.
 
 CardioDiT is the first project page at `projects/cardiodit/`. Publication titles link only to their configured `project_url`; records without a project page use plain titles, with Paper and Code links still available. To add the next page, create `projects/<id>/index.qmd` and set its `project_url` to `projects/<id>/`. The project render glob is already enabled. Keep IDs stable so existing publication anchors continue to work. The verifier requires each configured project URL to resolve to a page with one H1.
 

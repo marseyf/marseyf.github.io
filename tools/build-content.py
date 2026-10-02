@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from homepage import render_homepage
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "_generated"
 OUT.mkdir(exist_ok=True)
@@ -92,16 +94,6 @@ def talk_list(limit=None, compact=False):
     return ''.join(rows)
 
 
-def home_news():
-    latest = news_list(3)
-    if len(site["news"]) <= 3:
-        return latest
-    return latest + ('<details class="news-more"><summary>'
-                     '<span class="when-collapsed">See more</span>'
-                     '<span class="when-expanded">See less</span>'
-                     '</summary>' + news_list(offset=3) + '</details>')
-
-
 def publication_list(year_heading=2):
     sections = []
     title_heading = year_heading + 1
@@ -120,13 +112,7 @@ def publication_list(year_heading=2):
 note_link = 'posts/diffusion-models-medical-image-synthesis/'
 note_card = f'<article class="note-feature"><p class="eyebrow">Research notes / Foundations</p><h3><a href="{note_link}">From noise to anatomy</a></h3><p>Diffusion models for medical image synthesis: denoising, conditioning, latent spaces, and evaluation.</p><a class="text-link" href="{note_link}">Read the article {icon("arrow-up-right")}</a></article>'
 
-write('home', f'''<div class="portfolio-home" id="main-content">
-<section class="profile-band" id="about" aria-labelledby="hero-title"><div class="section-inner profile-hero"><header id="title-block-header" class="profile-copy quarto-title-block"><h1 id="hero-title">{e(profile["name"])}</h1><p class="affiliation"><span class="profile-role">{e(profile["role"])}</span>{e(profile["institute"])}<br><span>{e(profile["institution"])}</span></p>{socials()}</header>{portrait()}<div class="profile-about"><h2 id="about-title">About me</h2><p>{e(profile["intro"])}</p><p>My research connects high-resolution image synthesis with computational efficiency, anatomical and temporal structure, diversity, and memorization.</p></div></div></section>
-<section class="home-section home-news" id="news" aria-labelledby="news-title"><div class="section-inner"><h2 id="news-title">News</h2><div class="news-content">{home_news()}</div></div></section>
-<section class="home-section" id="publications" aria-labelledby="publications-title"><div class="section-inner"><span id="research" class="legacy-anchor" aria-hidden="true"></span><h2 id="publications-title">Publications</h2>{publication_list(year_heading=3)}<div class="section-actions"><a class="text-link" href="research.html">Research directions {icon("arrow-up-right")}</a></div></div></section>
-<section class="home-section" id="talks" aria-labelledby="outreach-title"><div class="section-inner"><h2 id="outreach-title">Talks &amp; outreach</h2>{talk_list(1, compact=True)}<a class="text-link section-link" href="outreach.html">All presentations &amp; resources {icon("arrow-up-right")}</a></div></section>
-<section class="home-section" id="notes" aria-labelledby="notes-title"><div class="section-inner"><h2 id="notes-title">Research notes</h2>{note_card}<a class="text-link section-link" href="blog.html">All notes {icon("arrow-up-right")}</a></div></section>
-</div>''')
+write('home', render_homepage(site, papers))
 
 write('news', '<div class="news-archive">' + news_list() + '</div>')
 write('outreach', f'<section class="talks-section"><h2>Talks &amp; presentations</h2>{talk_list()}</section><section class="outreach-resources"><h2>Explainers</h2>{note_card}</section>')
