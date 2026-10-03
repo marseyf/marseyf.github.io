@@ -2,9 +2,11 @@
 
 ## Scientific content
 
-MICCAI 2026 acceptance was confirmed by Marvin. Paper links and citation retain the available arXiv version until proceedings details are supplied.
+Paper links and BibTeX use the published Springer MICCAI 2026 proceedings chapter. Springer’s official citation year is 2027; the conference year is 2026 and the chapter was published online on 25 September 2026.
 
-- Paper: https://arxiv.org/abs/2603.25181 (v1, 26 March 2026).
+- Proceedings chapter: https://doi.org/10.1007/978-3-032-38189-7_57 (LNCS 16890, pp. 596–606; publisher citation year 2027).
+- Citation metadata: https://link.springer.com/chapter/10.1007/978-3-032-38189-7_57 and the linked Springer BibTeX export.
+- Original figure and result sources: https://arxiv.org/abs/2603.25181 (v1, 26 March 2026).
 - Framework: existing `assets/paper-figures/voldit-figure-1-framework.jpg`, Figure 1.
 - Table 1 supplies the two unconditional comparisons, each with 100 generated volumes. LUNA16 uses MedicalNet 3D features; TaviCT uses ImageNet features and 2.5D FID averaged over three axes. Absolute FID scales are not comparable between datasets. No metrics were recomputed for this page.
 - Table 3 supplies the learned-gate heart/aorta Dice and U-Net comparison.

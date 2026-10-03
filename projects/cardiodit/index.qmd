@@ -39,7 +39,7 @@ filters:
     <p class="c-author-note"><span aria-hidden="true">†</span> Joint last authorship</p>
     <p class="v-affiliation">University Hospital Heidelberg <span aria-hidden="true">·</span> Institute for Artificial Intelligence in Cardiovascular Medicine</p>
     <div class="v-resource-buttons">
-      <a class="v-button v-button-primary" href="https://arxiv.org/abs/2603.25194"><i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i> Paper <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+      <a class="v-button v-button-primary" href="https://doi.org/10.1007/978-3-032-38189-7_7"><i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i> Paper <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
       <a class="v-button" href="https://github.com/Cardio-AI/cardiodit"><i class="bi bi-github" aria-hidden="true"></i> Code <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
       <a class="v-button" href="#resources"><i class="bi bi-quote" aria-hidden="true"></i> Cite</a>
     </div>
@@ -95,7 +95,7 @@ filters:
       <div class="v-dice-group"><h4>Public cohorts</h4><dl><div><dt>CardioDiT</dt><dd>49.3 ± 15.1</dd></div><div><dt>Real</dt><dd>47.6 ± 17.1</dd></div></dl></div>
       <div class="v-dice-group"><h4>Private cohort</h4><dl><div><dt>CardioDiT</dt><dd>42.3 ± 6.3</dd></div><div><dt>Real</dt><dd>44.6 ± 7.3</dd></div></dl></div>
     </div></div>
-    <div class="v-results-scope"><p class="v-caption">Fixed spatial sizes and 32-frame standardization. Full structural and function analyses are reported in the paper.</p><a href="https://arxiv.org/html/2603.25194v1#S2.T1">Full results and ablations <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
+    <div class="v-results-scope"><p class="v-caption">Fixed spatial sizes and 32-frame standardization. Full structural and function analyses are reported in the paper.</p><a href="https://doi.org/10.1007/978-3-032-38189-7_7">Full results and ablations <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
   </div><a class="v-next" href="#development">Ongoing research <i class="bi bi-arrow-down" aria-hidden="true"></i></a>
 </section>
 
@@ -121,22 +121,25 @@ filters:
   <div class="v-resources-body">
     <div class="v-resource-layout">
       <div class="v-research-resources"><h3>Research resources</h3><ul>
-        <li><a href="https://arxiv.org/abs/2603.25194"><i class="bi bi-file-earmark-text" aria-hidden="true"></i><span>Read the paper<small>arXiv · 2603.25194</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
+        <li><a href="https://doi.org/10.1007/978-3-032-38189-7_7"><i class="bi bi-file-earmark-text" aria-hidden="true"></i><span>Read the paper<small>MICCAI 2026 · Springer proceedings</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
         <li><a href="https://github.com/Cardio-AI/cardiodit"><i class="bi bi-github" aria-hidden="true"></i><span>Explore the code<small>Cardio-AI / cardiodit</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
         <li><a href="assets/cardiodit.bib" download><i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i><span>Download BibTeX<small>Citation file</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
       </ul><p class="c-weights-note">Pretrained weights are listed as forthcoming in the public repository.</p></div>
-      <div class="v-citation" id="citation"><div class="v-citation-heading"><h3>Cite this work</h3><button type="button" class="v-copy" aria-label="Copy BibTeX citation" hidden><i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span></button></div><pre><code>@misc{seyfarth2026cardiodit,
-  title = {CardioDiT: Latent Diffusion Transformers
-           for 4D Cardiac MRI Synthesis},
-  author = {Marvin Seyfarth and Sarah Kaye Müller and
-            Arman Ghanaat and Isabelle Ayx and
-            Fabian Fastenrath and Philipp Wild and
-            Alexander Hertel and Theano Papavassiliu and
-            Salman Ul Hassan Dar and Sandy Engelhardt},
-  year = {2026},
-  eprint = {2603.25194},
-  archivePrefix = {arXiv},
-  primaryClass = {cs.CV}
+      <div class="v-citation" id="citation"><div class="v-citation-heading"><h3>Cite this work</h3><button type="button" class="v-copy" aria-label="Copy BibTeX citation" hidden><i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span></button></div><pre><code>@inproceedings{seyfarth2026cardiodit,
+  title = {CardioDiT: Latent Diffusion Transformers for 4D Cardiac MRI
+           Synthesis},
+  author = {Seyfarth, Marvin and M{\"u}ller, Sarah Kaye and Ghanaat, Arman
+            and Ayx, Isabelle and Fastenrath, Fabian and Wild, Philipp and
+            Hertel, Alexander and Papavassiliu, Theano and Dar, Salman Ul
+            Hassan and Engelhardt, Sandy},
+  booktitle = {Medical Image Computing and Computer Assisted Intervention --
+               MICCAI 2026},
+  year = {2027},
+  publisher = {Springer Nature Switzerland},
+  series = {Lecture Notes in Computer Science},
+  volume = {16890},
+  pages = {69--79},
+  doi = {10.1007/978-3-032-38189-7_7}
 }</code></pre><span class="v-copy-status visually-hidden" role="status" aria-live="polite"></span></div>
     </div>
   </div>
