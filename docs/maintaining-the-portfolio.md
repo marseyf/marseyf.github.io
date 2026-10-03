@@ -79,6 +79,8 @@ Edit text in `projects/<project>/index.qmd`. VolDiT's five sections are `overvie
 
 At desktop sizes of at least 1000 × 740 CSS pixels for VolDiT and 1200 × 740 for CardioDiT, each section occupies the viewport below the 54px navigation bar. Shorter desktop layouts reduce gaps and media size. Smaller windows and mobile use normal document flow; content is never hidden to force a fixed height. Test changes at 1440 × 900, 1366 × 768, 1920 × 1080 and a narrow mobile viewport.
 
+VolDiT's Resources section may grow beyond one desktop viewport to accommodate the proceedings citation and ongoing-research text without overlap. Its page stylesheet keeps the footer below this content.
+
 Each page's `project.js` provides custom video controls, sample choices, smooth section navigation, active navigation state, and citation copying. Without JavaScript, native video controls and direct sample links remain available. Each `viewer.js` lazy-loads the renderer and supports full-volume cutaway and fullscreen. Media and scientific diagrams always use their original aspect ratios, even where the generated design reference illustrated them differently. The authoring mockups are not scientific assets.
 
 The sample player draws the original video into three synchronized canvas columns. Each source is an 800 × 256 triptych with complete 256 × 256 planes starting at x=0, 272 and 544; only the gutters are omitted. If replacement videos use a different layout, update these coordinates in `project.js`. Anatomy is contained within each column without stretching or cropping.

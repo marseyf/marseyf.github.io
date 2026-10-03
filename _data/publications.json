@@ -15,19 +15,21 @@
       "Salman Ul Hassan Dar",
       "Sandy Engelhardt."
     ],
-    "year": 2026,
-    "status": "Accepted at MICCAI 2026",
+    "year": 2027,
+    "status": "MICCAI · version of record",
     "topic": "Volume + time",
     "summary": "A fully 4D latent-diffusion framework for short-axis cine CMR synthesis.",
-    "citation": "Accepted at MICCAI 2026. Preprint: arXiv:2603.25194 [cs.CV], submitted 26 Mar 2026.",
+    "citation": "Medical Image Computing and Computer Assisted Intervention – MICCAI 2026, Proceedings, Part XIII, Lecture Notes in Computer Science 16890, pp. 69–79. Springer Nature Switzerland, Cham (2027). Published online 25 September 2026. DOI: 10.1007/978-3-032-38189-7_7.",
     "abstract": "Latent diffusion models (LDMs) have recently achieved strong performance in 3D medical image synthesis. However, modalities like cine cardiac MRI (CMR), representing a temporally synchronized 3D volume across the cardiac cycle, add an additional dimension that most generative approaches do not model directly. Instead, they factorize space and time or enforce temporal consistency through auxiliary mechanisms such as anatomical masks. Such strategies introduce structural biases that may limit global context integration and lead to subtle spatiotemporal discontinuities or physiologically inconsistent cardiac dynamics. We investigate whether a unified 4D generative model can learn continuous cardiac dynamics without architectural factorization. We propose CardioDiT, a fully 4D latent diffusion framework for short-axis cine CMR synthesis based on diffusion transformers. A spatiotemporal VQ-VAE encodes 2D+t slices into compact latents, which a diffusion transformer then models jointly as complete 3D+t volumes, coupling space and time throughout the generative process. We evaluate CardioDiT on public CMR datasets and a larger private cohort, comparing it to baselines with progressively stronger spatiotemporal coupling. Results show improved inter-slice consistency, temporally coherent motion, and realistic cardiac function distributions, suggesting that explicit 4D modeling with a diffusion transformer provides a principled foundation for spatiotemporal cardiac image synthesis. Code and models trained on public data are available at https://github.com/Cardio-AI/cardiodit.",
-    "paper_url": "https://arxiv.org/abs/2603.25194",
+    "paper_url": "https://doi.org/10.1007/978-3-032-38189-7_7",
     "code_url": "https://github.com/Cardio-AI/cardiodit",
     "project_url": "projects/cardiodit/",
     "featured": true,
     "display_venue": "MICCAI 2026",
-    "publication_type": "Accepted paper",
-    "featured_order": 1
+    "publication_type": "Conference paper",
+    "featured_order": 1,
+    "conference_year": 2026,
+    "online_date": "2026-09-25"
   },
   {
     "id": "voldit",
@@ -42,18 +44,20 @@
       "Florian André",
       "Sandy Engelhardt."
     ],
-    "year": 2026,
-    "status": "Accepted at MICCAI 2026",
+    "year": 2027,
+    "status": "MICCAI · version of record",
     "topic": "Volume + time",
     "summary": "Transformer-based 3D medical-image synthesis with mask-based spatial control.",
-    "citation": "Accepted at MICCAI 2026. Preprint: arXiv:2603.25181 [cs.CV], submitted 26 Mar 2026.",
+    "citation": "Medical Image Computing and Computer Assisted Intervention – MICCAI 2026, Proceedings, Part XIII, Lecture Notes in Computer Science 16890, pp. 596–606. Springer Nature Switzerland, Cham (2027). Published online 25 September 2026. DOI: 10.1007/978-3-032-38189-7_57.",
     "abstract": "Diffusion models have become a leading approach for high-fidelity medical image synthesis. However, most existing methods for 3D medical image generation rely on convolutional U-Net backbones within latent diffusion frameworks. While effective, these architectures impose strong locality biases and limited receptive fields, which may constrain scalability, global context integration, and flexible conditioning. In this work, we introduce VolDiT, the first purely transformer-based 3D Diffusion Transformer for volumetric medical image synthesis. Our approach extends diffusion transformers to native 3D data through volumetric patch embeddings and global self-attention operating directly over 3D tokens. To enable structured control, we propose a timestep-gated control adapter that maps segmentation masks into learnable control tokens that modulate transformer layers during denoising. This token-level conditioning mechanism allows precise spatial guidance while preserving the modeling advantages of transformer architectures. We evaluate our model on high-resolution 3D medical image synthesis tasks and compare it to state-of-the-art 3D latent diffusion models based on U-Nets. Results demonstrate improved global coherence, superior generative fidelity, and enhanced controllability. Our findings suggest that fully transformerbased diffusion models provide a flexible foundation for volumetric medical image synthesis. The code and models trained on public data are available at https://github.com/Cardio-AI/voldit.",
-    "paper_url": "https://arxiv.org/abs/2603.25181",
+    "paper_url": "https://doi.org/10.1007/978-3-032-38189-7_57",
     "code_url": "https://github.com/Cardio-AI/voldit",
     "project_url": "projects/voldit/",
     "featured": false,
     "display_venue": "MICCAI 2026",
-    "publication_type": "Accepted paper"
+    "publication_type": "Conference paper",
+    "conference_year": 2026,
+    "online_date": "2026-09-25"
   },
   {
     "id": "wad-div",

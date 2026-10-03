@@ -1,2 +1,7 @@
 /* Shared with CardioDiT; keep both project pages visually consistent. */
 @import url('../../assets/project-pages.css?v=1');
+
+/* Let the proceedings citation and ongoing research determine the section height. */
+.voldit-page .v-resources { height: auto; min-height: calc(100svh - var(--v-nav-height)); }
+.voldit-page .v-resources-body { flex: none; }
+.voldit-page .v-resources .v-footer { margin-top: auto; }

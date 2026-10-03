@@ -13,7 +13,7 @@ filters:
 ---
 
 ```{=html}
-<link rel="stylesheet" href="project.css?v=5">
+<link rel="stylesheet" href="project.css?v=6">
 <link rel="stylesheet" href="viewer.css?v=4">
 <header class="v-nav">
   <nav class="v-nav-inner" aria-label="VolDiT project">
@@ -38,7 +38,7 @@ filters:
     <p class="v-authors"><span><a href="../../index.html#about">Marvin Seyfarth</a> <b aria-hidden="true">·</b> Salman Ul Hassan Dar <b aria-hidden="true">·</b> Yannik Frisch <b aria-hidden="true">·</b> Philipp Wild</span><span>Norbert Frey <b aria-hidden="true">·</b> Florian André <b aria-hidden="true">·</b> <a href="https://www.klinikum.uni-heidelberg.de/chirurgische-klinik-zentrum/herzchirurgie/forschung/institute-for-artificial-intelligence-in-cardiovascular-medicine-aicm/#layer=/personen/prof-dr-sandy-engelhardt-7654/">Sandy Engelhardt</a></span></p>
     <p class="v-affiliation">University Hospital Heidelberg <span aria-hidden="true">·</span> Institute for Artificial Intelligence in Cardiovascular Medicine</p>
     <div class="v-resource-buttons">
-      <a class="v-button v-button-primary" href="https://arxiv.org/abs/2603.25181"><i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i> Paper <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+      <a class="v-button v-button-primary" href="https://doi.org/10.1007/978-3-032-38189-7_57"><i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i> Paper <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
       <a class="v-button" href="https://github.com/Cardio-AI/voldit"><i class="bi bi-github" aria-hidden="true"></i> Code <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
       <a class="v-button" href="#resources"><i class="bi bi-quote" aria-hidden="true"></i> Cite</a>
     </div>
@@ -117,7 +117,7 @@ filters:
       <div class="v-dice-group"><h4>Heart</h4><dl><div><dt>VolDiT</dt><dd>0.94</dd></div><div><dt>U-Net</dt><dd>0.89</dd></div></dl></div>
       <div class="v-dice-group"><h4>Aorta</h4><dl><div><dt>VolDiT</dt><dd>0.92</dd></div><div><dt>U-Net</dt><dd>0.83</dd></div></dl></div>
     </div></div>
-    <div class="v-results-scope"><p class="v-caption">Fixed-size volumes and dataset-specific autoencoders. Synthetic examples illustrate generation, not clinical validity.</p><a href="https://arxiv.org/html/2603.25181v1">Full results and ablations <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
+    <div class="v-results-scope"><p class="v-caption">Fixed-size volumes and dataset-specific autoencoders. Synthetic examples illustrate generation, not clinical validity.</p><a href="https://doi.org/10.1007/978-3-032-38189-7_57">Full results and ablations <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a></div>
   </div>
   <a class="v-next" href="#resources">Resources &amp; next steps <i class="bi bi-arrow-down" aria-hidden="true"></i></a>
 </section>
@@ -127,28 +127,32 @@ filters:
   <div class="v-resources-body">
     <div class="v-resource-layout">
       <div class="v-research-resources"><h3>Research resources</h3><ul>
-        <li><a href="https://arxiv.org/abs/2603.25181"><i class="bi bi-file-earmark-text" aria-hidden="true"></i><span>Read the paper<small>arXiv · 2603.25181</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
+        <li><a href="https://doi.org/10.1007/978-3-032-38189-7_57"><i class="bi bi-file-earmark-text" aria-hidden="true"></i><span>Read the paper<small>MICCAI 2026 · Springer proceedings</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
         <li><a href="https://github.com/Cardio-AI/voldit"><i class="bi bi-github" aria-hidden="true"></i><span>Explore the code<small>Cardio-AI / voldit</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
         <li><a href="https://huggingface.co/AICM-HD/voldit"><i class="bi bi-database" aria-hidden="true"></i><span>Pretrained models<small>AICM-HD / voldit</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
         <li><a href="assets/voldit.bib" download><i class="bi bi-file-earmark-arrow-down" aria-hidden="true"></i><span>Download BibTeX<small>Citation file</small></span><i class="bi bi-arrow-right" aria-hidden="true"></i></a></li>
       </ul></div>
-      <div class="v-citation" id="citation"><div class="v-citation-heading"><h3>Cite this work</h3><button type="button" class="v-copy" aria-label="Copy BibTeX citation" hidden><i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span></button></div><pre><code>@misc{seyfarth2026voldit,
-  title = {VolDiT: Controllable Volumetric Medical
-           Image Synthesis with Diffusion Transformers},
-  author = {Marvin Seyfarth and Salman Ul Hassan Dar and
-            Yannik Frisch and Philipp Wild and Norbert Frey
-            and Florian André and Sandy Engelhardt},
-  year = {2026},
-  eprint = {2603.25181},
-  archivePrefix = {arXiv},
-  primaryClass = {cs.CV}
+      <div class="v-citation" id="citation"><div class="v-citation-heading"><h3>Cite this work</h3><button type="button" class="v-copy" aria-label="Copy BibTeX citation" hidden><i class="bi bi-copy" aria-hidden="true"></i><span>Copy</span></button></div><pre><code>@inproceedings{seyfarth2026volditcontrollablevolumetricmedical,
+  title = {VolDiT: Controllable Volumetric Medical Image Synthesis with
+           Diffusion Transformers},
+  author = {Seyfarth, Marvin and Dar, Salman Ul Hassan and Frisch, Yannik
+            and Wild, Philipp and Frey, Norbert and Andr{\'e}, Florian and
+            Engelhardt, Sandy},
+  booktitle = {Medical Image Computing and Computer Assisted Intervention --
+               MICCAI 2026},
+  year = {2027},
+  publisher = {Springer Nature Switzerland},
+  series = {Lecture Notes in Computer Science},
+  volume = {16890},
+  pages = {596--606},
+  doi = {10.1007/978-3-032-38189-7_57}
 }</code></pre><span class="v-copy-status visually-hidden" role="status" aria-live="polite"></span></div>
     </div>
     <div class="v-development" id="development"><h3>Ongoing research <span>VolDiT v2</span></h3><div class="v-directions">
       <div><h4>Flow matching</h4><p>Alternative objectives for training and sampling.</p></div>
       <div><h4>Spacing-aware positions</h4><p>Position encodings that reflect volume geometry.</p></div>
       <div><h4>Latent normalization</h4><p>Channel-wise scaling and controlled ablations.</p></div>
-    </div><p class="v-caption">These directions are under investigation; results above refer to the accepted paper.</p></div>
+    </div><p class="v-caption">These directions are under investigation; results above refer to the MICCAI 2026 paper.</p></div>
   </div>
   <footer class="v-footer"><span>Marvin Seyfarth · University Hospital Heidelberg</span><a href="#overview">Back to top <i class="bi bi-arrow-up" aria-hidden="true"></i></a></footer>
 </section>

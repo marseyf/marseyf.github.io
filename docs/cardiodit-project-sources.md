@@ -2,9 +2,11 @@
 
 ## Scientific content
 
-MICCAI 2026 acceptance was confirmed by Marvin in the website refinement request. The page and publication listing reflect that status; the paper link and BibTeX still identify the available arXiv version until proceedings details are supplied.
+Paper links and BibTeX use the published Springer MICCAI 2026 proceedings chapter. Springer’s official citation year is 2027; the conference year is 2026 and the chapter was published online on 25 September 2026.
 
-- Paper: https://arxiv.org/abs/2603.25194 (v1, 26 March 2026).
+- Proceedings chapter: https://doi.org/10.1007/978-3-032-38189-7_7 (LNCS 16890, pp. 69–79; publisher citation year 2027).
+- Citation metadata: https://link.springer.com/chapter/10.1007/978-3-032-38189-7_7 and the linked Springer BibTeX export.
+- Original figure and result sources: https://arxiv.org/abs/2603.25194 (v1, 26 March 2026).
 - Framework: existing `assets/paper-figures/cardiodit-figure-1-framework.jpg`, Figure 1 from the paper.
 - Generation comparisons: Table 1, public and private dataset blocks. The page reports FID, precision and recall for the three generated-data models, with the sample count and feature extractor. The function strip reports the paper's ejection-fraction means and standard deviations. It does not recompute these results or present development samples as paper benchmarks.
 - Public implementation: https://github.com/Cardio-AI/cardiodit. Its README describes the two-stage pipeline; pretrained weights were listed as forthcoming when this page was built.
