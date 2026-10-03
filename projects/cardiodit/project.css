@@ -3,6 +3,8 @@
 
 /* Content-specific fit within the shared VolDiT design. */
 .cardiodit-page .v-nav-sections { gap: 23px; }
+.cardiodit-page .v-authors sup { font-size: .75em; line-height: 0; }
+.v-project .c-author-note { margin-top: 4px; font-size: var(--v-meta); line-height: 1.4; color: var(--v-muted); }
 .c-motion-player { grid-template-rows: 28px minmax(0,1fr) 36px; }
 .c-depth { display: flex; align-items: center; gap: 12px; padding: 0 32px; background: #000; color: #edf3f5; font-size: .8125rem; }
 .c-depth::before, .c-depth::after { content: ''; height: 1px; flex: 1; background: #bdc7cc; }

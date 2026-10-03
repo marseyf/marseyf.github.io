@@ -13,7 +13,7 @@ filters:
 ---
 
 ```{=html}
-<link rel="stylesheet" href="project.css?v=1">
+<link rel="stylesheet" href="project.css?v=2">
 <header class="v-nav">
   <nav class="v-nav-inner" aria-label="CardioDiT project">
     <a class="v-wordmark" href="#overview" aria-label="CardioDiT overview">CardioDiT</a>
@@ -35,7 +35,8 @@ filters:
     <h1 id="v-title">CardioDiT</h1>
     <p class="v-subtitle">Latent Diffusion Transformers<br> for 4D Cardiac MRI Synthesis</p>
     <p class="v-venue">MICCAI 2026</p>
-    <p class="v-authors"><span><a href="../../index.html#about">Marvin Seyfarth</a> · Sarah Kaye Müller · Arman Ghanaat · Isabelle Ayx · Fabian Fastenrath</span><span>Philipp Wild · Alexander Hertel · Theano Papavassiliu · Salman Ul Hassan Dar · <a href="https://www.klinikum.uni-heidelberg.de/chirurgische-klinik-zentrum/herzchirurgie/forschung/institute-for-artificial-intelligence-in-cardiovascular-medicine-aicm/#layer=/personen/prof-dr-sandy-engelhardt-7654/">Sandy Engelhardt</a></span></p>
+    <p class="v-authors"><span><a href="../../index.html#about">Marvin Seyfarth</a> · Sarah Kaye Müller · Arman Ghanaat · Isabelle Ayx · Fabian Fastenrath</span><span>Philipp Wild · Alexander Hertel · Theano Papavassiliu · Salman Ul Hassan Dar<sup aria-label="joint last author">†</sup> · <a href="https://www.klinikum.uni-heidelberg.de/chirurgische-klinik-zentrum/herzchirurgie/forschung/institute-for-artificial-intelligence-in-cardiovascular-medicine-aicm/#layer=/personen/prof-dr-sandy-engelhardt-7654/">Sandy Engelhardt</a><sup aria-label="joint last author">†</sup></span></p>
+    <p class="c-author-note"><span aria-hidden="true">†</span> Joint last authorship</p>
     <p class="v-affiliation">University Hospital Heidelberg <span aria-hidden="true">·</span> Institute for Artificial Intelligence in Cardiovascular Medicine</p>
     <div class="v-resource-buttons">
       <a class="v-button v-button-primary" href="https://arxiv.org/abs/2603.25194"><i class="bi bi-file-earmark-text-fill" aria-hidden="true"></i> Paper <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
